@@ -6,660 +6,142 @@
 <title>Fala Português — Learn Brazilian Portuguese</title>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --cream: #F4F1EA;
-    --ivory: #FDFBF6;
-    --green: #1A4731;
-    --green-mid: #2D6A4F;
-    --gold: #D4A017;
-    --gold-light: #EDD98A;
-    --blue: #1B3A6B;
-    --teal: #3A7D6E;
-    --text: #1E1A10;
-    --text-light: #5C5440;
-    --border: rgba(212,160,23,0.28);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--text);
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background:
-      radial-gradient(ellipse at 15% 25%, rgba(26,71,49,0.07) 0%, transparent 55%),
-      radial-gradient(ellipse at 85% 75%, rgba(212,160,23,0.07) 0%, transparent 55%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  body::after {
-    content: '❧';
-    position: fixed;
-    bottom: 20px;
-    right: 28px;
-    font-size: 2rem;
-    color: var(--gold);
-    opacity: 0.22;
-    pointer-events: none;
-  }
-
-  /* ── HEADER ── */
-  header {
-    text-align: center;
-    padding: 2.5rem 2rem 1.5rem;
-    position: relative;
-    z-index: 1;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .header-ornament {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    color: var(--gold);
-    font-size: 0.85rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    margin-bottom: 0.4rem;
-    opacity: 0.9;
-  }
-
-  h1 {
-    font-family: 'Libre Baskerville', serif;
-    font-size: clamp(2rem, 5vw, 3rem);
-    color: var(--green);
-    font-weight: 700;
-    letter-spacing: -0.01em;
-  }
-
-  h1 em {
-    font-style: italic;
-    color: var(--blue);
-  }
-
-  .subtitle {
-    font-family: 'Lora', serif;
-    font-size: 1rem;
-    color: var(--text-light);
-    margin-top: 0.3rem;
-    letter-spacing: 0.08em;
-  }
-
-  /* ── PROGRESS ── */
-  .progress-section {
-    max-width: 700px;
-    margin: 1.5rem auto 0;
-    padding: 0 1.5rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .progress-label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.78rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-light);
-    margin-bottom: 0.5rem;
-  }
-
-  .progress-bar-outer {
-    height: 6px;
-    background: rgba(212,160,23,0.18);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .progress-bar-inner {
-    height: 100%;
-    background: linear-gradient(90deg, var(--green-mid), var(--gold));
-    border-radius: 3px;
-    transition: width 0.5s ease;
-  }
-
-  .stats-row {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-top: 0.8rem;
-  }
-
-  .stat { text-align: center; }
-
-  .stat-num {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.3rem;
-    color: var(--green);
-    display: block;
-  }
-
-  .stat-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-light);
-  }
-
-  /* ── NAV ── */
-  nav {
-    display: flex;
-    justify-content: center;
-    max-width: 600px;
-    margin: 1.8rem auto 0;
-    padding: 0 1.5rem;
-    position: relative;
-    z-index: 1;
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-
-  .tab-btn {
-    flex: 1;
-    padding: 0.75rem 0.5rem;
-    background: transparent;
-    border: none;
-    border-right: 1px solid var(--border);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-light);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .tab-btn:last-child { border-right: none; }
-  .tab-btn.active { background: var(--green); color: var(--gold-light); }
-  .tab-btn:not(.active):hover { background: rgba(26,71,49,0.06); color: var(--green); }
-
-  /* ── MAIN ── */
-  main {
-    max-width: 700px;
-    margin: 2rem auto;
-    padding: 0 1.5rem 4rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .panel { display: none; }
-  .panel.active { display: block; }
-
-  /* ── FLASHCARD ── */
-  .flashcard-controls {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .category-select {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.78rem;
-    letter-spacing: 0.08em;
-    padding: 0.45rem 0.9rem;
-    border: 1px solid var(--border);
-    background: var(--ivory);
-    color: var(--green);
-    border-radius: 2px;
-    cursor: pointer;
-    outline: none;
-  }
-
-  .fc-counter {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    color: var(--text-light);
-    font-size: 0.95rem;
-  }
-
-  .flashcard-scene {
-    perspective: 1000px;
-    cursor: pointer;
-    margin-bottom: 1.5rem;
-    min-height: 260px;
-  }
-
-  .flashcard {
-    width: 100%;
-    min-height: 260px;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .flashcard.flipped { transform: rotateY(180deg); }
-
-  .fc-face {
-    position: absolute;
-    inset: 0;
-    backface-visibility: hidden;
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    background: var(--ivory);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2.5rem;
-    box-shadow: 0 4px 30px rgba(26,71,49,0.08), inset 0 0 0 6px var(--cream);
-  }
-
-  .fc-back {
-    transform: rotateY(180deg);
-    background: var(--green);
-    box-shadow: 0 4px 30px rgba(26,71,49,0.2), inset 0 0 0 6px rgba(255,255,255,0.04);
-  }
-
-  .fc-hint {
-    position: absolute;
-    top: 1rem;
-    right: 1.2rem;
-    font-size: 0.68rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-light);
-    opacity: 0.6;
-  }
-
-  .fc-back .fc-hint { color: rgba(255,255,255,0.35); }
-
-  .fc-category {
-    font-size: 0.68rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1rem;
-  }
-
-  .fc-word {
-    font-family: 'Libre Baskerville', serif;
-    font-size: clamp(2.2rem, 6vw, 3.2rem);
-    color: var(--green);
-    text-align: center;
-    line-height: 1.1;
-  }
-
-  .fc-back .fc-word { color: var(--gold-light); }
-
-  .fc-pronunciation {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    font-size: 1.05rem;
-    color: var(--text-light);
-    margin-top: 0.4rem;
-  }
-
-  .fc-back .fc-pronunciation { color: rgba(255,255,255,0.45); }
-
-  .fc-translation {
-    font-family: 'Lora', serif;
-    font-size: 1.5rem;
-    font-weight: 300;
-    color: rgba(255,255,255,0.85);
-    margin-top: 0.3rem;
-    text-align: center;
-  }
-
-  .fc-example {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    font-size: 0.95rem;
-    color: rgba(255,255,255,0.48);
-    margin-top: 1rem;
-    text-align: center;
-    max-width: 300px;
-  }
-
-  .audio-btn {
-    margin-top: 1.2rem;
-    background: rgba(212,160,23,0.12);
-    border: 1px solid rgba(212,160,23,0.35);
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: var(--gold);
-    font-size: 1.1rem;
-  }
-
-  .audio-btn:hover { background: rgba(212,160,23,0.28); transform: scale(1.05); }
-
-  .fc-nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .btn {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0.65rem 1.4rem;
-    border-radius: 2px;
-    border: 1px solid transparent;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .btn-primary { background: var(--green); color: var(--gold-light); border-color: var(--green); }
-  .btn-primary:hover { background: var(--green-mid); border-color: var(--green-mid); }
-  .btn-outline { background: transparent; color: var(--green); border-color: var(--border); }
-  .btn-outline:hover { border-color: var(--green); background: rgba(26,71,49,0.05); }
-  .btn-success { background: var(--teal); color: white; border-color: var(--teal); }
-  .btn-danger { background: var(--blue); color: white; border-color: var(--blue); }
-
-  /* ── SENTENCES ── */
-  .sentences-grid { display: flex; flex-direction: column; gap: 1rem; }
-
-  .sentence-card {
-    border: 1px solid var(--border);
-    background: var(--ivory);
-    border-radius: 3px;
-    padding: 1.4rem 1.6rem;
-    display: flex;
-    align-items: flex-start;
-    gap: 1.2rem;
-    transition: box-shadow 0.2s;
-  }
-
-  .sentence-card:hover { box-shadow: 0 4px 20px rgba(26,71,49,0.08); }
-
-  .sentence-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 0.1rem; }
-  .sentence-content { flex: 1; }
-
-  .sentence-pt {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.1rem;
-    color: var(--green);
-    margin-bottom: 0.3rem;
-  }
-
-  .sentence-en {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    color: var(--text-light);
-    font-size: 0.95rem;
-  }
-
-  .sentence-situation {
-    font-size: 0.68rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.5rem;
-  }
-
-  .sentence-audio {
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--gold);
-    flex-shrink: 0;
-    transition: all 0.2s;
-    font-size: 0.9rem;
-  }
-
-  .sentence-audio:hover { background: rgba(212,160,23,0.15); }
-
-  .sentences-filter {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.2rem;
-  }
-
-  .filter-chip {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.35rem 0.85rem;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    background: transparent;
-    color: var(--text-light);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .filter-chip.active, .filter-chip:hover {
-    background: var(--green);
-    color: var(--gold-light);
-    border-color: var(--green);
-  }
-
-  /* ── QUIZ ── */
-  .quiz-question {
-    border: 1px solid var(--border);
-    background: var(--ivory);
-    border-radius: 3px;
-    padding: 2rem;
-    margin-bottom: 1.2rem;
-    text-align: center;
-  }
-
-  .quiz-q-label {
-    font-size: 0.72rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1rem;
-  }
-
-  .quiz-q-word {
-    font-family: 'Libre Baskerville', serif;
-    font-size: clamp(1.8rem, 4vw, 2.5rem);
-    color: var(--green);
-    margin-bottom: 0.3rem;
-  }
-
-  .quiz-q-type {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    color: var(--text-light);
-    font-size: 0.95rem;
-  }
-
-  .quiz-options {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
-    margin-bottom: 1.2rem;
-  }
-
-  .quiz-option {
-    padding: 0.9rem 1rem;
-    border: 1px solid var(--border);
-    background: var(--ivory);
-    border-radius: 3px;
-    font-family: 'Lora', serif;
-    font-size: 1.05rem;
-    color: var(--green);
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
-  }
-
-  .quiz-option:hover:not(:disabled) { border-color: var(--green); background: rgba(26,71,49,0.04); }
-  .quiz-option.correct { background: rgba(58,125,110,0.15); border-color: var(--teal); color: var(--teal); }
-  .quiz-option.wrong { background: rgba(27,58,107,0.1); border-color: var(--blue); color: var(--blue); }
-  .quiz-option:disabled { cursor: default; }
-
-  .quiz-feedback {
-    text-align: center;
-    font-family: 'Lora', serif;
-    font-style: italic;
-    font-size: 1.1rem;
-    min-height: 1.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .quiz-feedback.correct { color: var(--teal); }
-  .quiz-feedback.wrong { color: var(--blue); }
-
-  .quiz-score-display {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    padding: 1.2rem;
-    border: 1px solid var(--border);
-    background: var(--ivory);
-    border-radius: 3px;
-    margin-bottom: 1.2rem;
-  }
-
-  /* ── PROGRESS ── */
-  .progress-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .progress-card {
-    border: 1px solid var(--border);
-    background: var(--ivory);
-    border-radius: 3px;
-    padding: 1.4rem;
-    text-align: center;
-  }
-
-  .progress-card-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
-
-  .progress-card-num {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 2rem;
-    color: var(--green);
-    display: block;
-  }
-
-  .progress-card-label {
-    font-size: 0.72rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-light);
-  }
-
-  .word-mastery-list { border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
-
-  .word-mastery-header {
-    background: var(--green);
-    color: var(--gold-light);
-    padding: 0.75rem 1.2rem;
-    font-size: 0.72rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    display: grid;
-    grid-template-columns: 1fr 1fr auto;
-    gap: 1rem;
-  }
-
-  .word-mastery-item {
-    display: grid;
-    grid-template-columns: 1fr 1fr auto;
-    gap: 1rem;
-    padding: 0.7rem 1.2rem;
-    border-bottom: 1px solid var(--border);
-    align-items: center;
-    background: var(--ivory);
-    font-size: 0.9rem;
-  }
-
-  .word-mastery-item:last-child { border-bottom: none; }
-
-  .mastery-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-  .mastery-0 { background: #ddd; }
-  .mastery-1 { background: var(--gold); }
-  .mastery-2 { background: var(--teal); }
-
-  .section-title {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.1rem;
-    color: var(--green);
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .divider {
-    text-align: center;
-    color: var(--gold);
-    font-size: 1.2rem;
-    letter-spacing: 0.5em;
-    margin: 1.5rem 0;
-    opacity: 0.4;
-  }
-
-  @media (max-width: 500px) {
-    .quiz-options { grid-template-columns: 1fr; }
-    .stats-row { gap: 1rem; }
-  }
+  :root{--cream:#F4F1EA;--ivory:#FDFBF6;--green:#1A4731;--green-mid:#2D6A4F;--gold:#D4A017;--gold-light:#EDD98A;--blue:#1B3A6B;--teal:#3A7D6E;--text:#1E1A10;--text-light:#5C5440;--border:rgba(212,160,23,0.28);}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;position:relative;overflow-x:hidden;}
+  body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 25%,rgba(26,71,49,0.07) 0%,transparent 55%),radial-gradient(ellipse at 85% 75%,rgba(212,160,23,0.07) 0%,transparent 55%);pointer-events:none;z-index:0;}
+  body::after{content:'❧';position:fixed;bottom:20px;right:28px;font-size:2rem;color:var(--gold);opacity:0.22;pointer-events:none;}
+  header{text-align:center;padding:2rem 2rem 1.2rem;position:relative;z-index:1;border-bottom:1px solid var(--border);}
+  .header-ornament{font-family:'Lora',serif;font-style:italic;color:var(--gold);font-size:0.85rem;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:0.4rem;opacity:0.9;}
+  h1{font-family:'Libre Baskerville',serif;font-size:clamp(1.8rem,5vw,3rem);color:var(--green);font-weight:700;}
+  h1 em{font-style:italic;color:var(--blue);}
+  .subtitle{font-family:'Lora',serif;font-size:1rem;color:var(--text-light);margin-top:0.3rem;letter-spacing:0.08em;}
+  .save-indicator{font-size:0.7rem;letter-spacing:0.1em;color:var(--teal);margin-top:0.3rem;opacity:0;transition:opacity 0.5s;}
+  .save-indicator.show{opacity:1;}
+  .progress-section{max-width:700px;margin:1.2rem auto 0;padding:0 1.5rem;position:relative;z-index:1;}
+  .progress-label{display:flex;justify-content:space-between;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:0.5rem;}
+  .progress-bar-outer{height:6px;background:rgba(212,160,23,0.18);border-radius:3px;overflow:hidden;}
+  .progress-bar-inner{height:100%;background:linear-gradient(90deg,var(--green-mid),var(--gold));border-radius:3px;transition:width 0.5s ease;}
+  .stats-row{display:flex;justify-content:center;gap:1.5rem;margin-top:0.8rem;flex-wrap:wrap;}
+  .stat{text-align:center;}
+  .stat-num{font-family:'Libre Baskerville',serif;font-size:1.3rem;color:var(--green);display:block;}
+  .stat-label{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);}
+  nav{display:flex;justify-content:center;max-width:600px;margin:1.5rem auto 0;padding:0 1.5rem;position:relative;z-index:1;border:1px solid var(--border);border-radius:2px;overflow:hidden;}
+  .tab-btn{flex:1;padding:0.75rem 0.5rem;background:transparent;border:none;border-right:1px solid var(--border);font-family:'DM Sans',sans-serif;font-size:0.75rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);cursor:pointer;transition:all 0.2s;}
+  .tab-btn:last-child{border-right:none;}
+  .tab-btn.active{background:var(--green);color:var(--gold-light);}
+  .tab-btn:not(.active):hover{background:rgba(26,71,49,0.06);color:var(--green);}
+  main{max-width:700px;margin:1.5rem auto;padding:0 1.5rem 4rem;position:relative;z-index:1;}
+  .panel{display:none;}.panel.active{display:block;}
+  .flashcard-controls{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;}
+  .category-select{font-family:'DM Sans',sans-serif;font-size:0.78rem;padding:0.45rem 0.9rem;border:1px solid var(--border);background:var(--ivory);color:var(--green);border-radius:2px;cursor:pointer;outline:none;}
+  .fc-counter{font-family:'Lora',serif;font-style:italic;color:var(--text-light);font-size:0.95rem;}
+  .flashcard-scene{perspective:1000px;cursor:pointer;margin-bottom:1.5rem;min-height:260px;}
+  .flashcard{width:100%;min-height:260px;position:relative;transform-style:preserve-3d;transition:transform 0.55s cubic-bezier(0.4,0,0.2,1);}
+  .flashcard.flipped{transform:rotateY(180deg);}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--border);border-radius:3px;background:var(--ivory);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;box-shadow:0 4px 30px rgba(26,71,49,0.08),inset 0 0 0 6px var(--cream);}
+  .fc-back{transform:rotateY(180deg);background:var(--green);box-shadow:0 4px 30px rgba(26,71,49,0.2),inset 0 0 0 6px rgba(255,255,255,0.04);}
+  .fc-hint{position:absolute;top:1rem;right:1.2rem;font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-light);opacity:0.6;}
+  .fc-back .fc-hint{color:rgba(255,255,255,0.35);}
+  .fc-srs-info{position:absolute;top:1rem;left:1.2rem;font-size:0.68rem;color:var(--gold);opacity:0.8;}
+  .fc-category{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;}
+  .fc-word{font-family:'Libre Baskerville',serif;font-size:clamp(2rem,6vw,3rem);color:var(--green);text-align:center;line-height:1.1;}
+  .fc-back .fc-word{color:var(--gold-light);}
+  .fc-pronunciation{font-family:'Lora',serif;font-style:italic;font-size:1.05rem;color:var(--text-light);margin-top:0.4rem;}
+  .fc-back .fc-pronunciation{color:rgba(255,255,255,0.45);}
+  .fc-translation{font-family:'Lora',serif;font-size:1.4rem;font-weight:300;color:rgba(255,255,255,0.85);margin-top:0.3rem;text-align:center;}
+  .fc-example{font-family:'Lora',serif;font-style:italic;font-size:0.92rem;color:rgba(255,255,255,0.48);margin-top:0.8rem;text-align:center;max-width:300px;}
+  .audio-btn{margin-top:1rem;background:rgba(212,160,23,0.12);border:1px solid rgba(212,160,23,0.35);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;color:var(--gold);font-size:1.1rem;}
+  .audio-btn:hover{background:rgba(212,160,23,0.28);transform:scale(1.05);}
+  .fc-nav{display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-top:1rem;flex-wrap:wrap;}
+  .btn{font-family:'DM Sans',sans-serif;font-size:0.73rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:0.6rem 1rem;border-radius:2px;border:1px solid transparent;cursor:pointer;transition:all 0.2s;}
+  .btn-primary{background:var(--green);color:var(--gold-light);border-color:var(--green);}
+  .btn-primary:hover{background:var(--green-mid);border-color:var(--green-mid);}
+  .btn-outline{background:transparent;color:var(--green);border-color:var(--border);}
+  .btn-outline:hover{border-color:var(--green);background:rgba(26,71,49,0.05);}
+  .btn-success{background:var(--teal);color:white;border-color:var(--teal);}
+  .btn-danger{background:var(--blue);color:white;border-color:var(--blue);}
+  .btn-srs{background:rgba(212,160,23,0.12);color:var(--green);border-color:var(--gold);}
+  .srs-mode-bar{background:rgba(27,58,107,0.08);border:1px solid rgba(27,58,107,0.2);border-radius:3px;padding:0.6rem 1rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;font-size:0.78rem;color:var(--blue);}
+  .srs-hint{text-align:center;font-size:0.72rem;color:var(--text-light);margin-top:0.6rem;font-style:italic;}
+  .sentences-grid{display:flex;flex-direction:column;gap:1rem;}
+  .sentence-card{border:1px solid var(--border);background:var(--ivory);border-radius:3px;padding:1.2rem 1.4rem;display:flex;align-items:flex-start;gap:1rem;transition:box-shadow 0.2s;}
+  .sentence-card:hover{box-shadow:0 4px 20px rgba(26,71,49,0.08);}
+  .sentence-icon{font-size:1.3rem;flex-shrink:0;margin-top:0.1rem;}
+  .sentence-content{flex:1;}
+  .sentence-pt{font-family:'Libre Baskerville',serif;font-size:1.05rem;color:var(--green);margin-bottom:0.3rem;}
+  .sentence-en{font-family:'Lora',serif;font-style:italic;color:var(--text-light);font-size:0.92rem;}
+  .sentence-situation{font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;}
+  .sentence-audio{background:none;border:1px solid var(--border);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--gold);flex-shrink:0;transition:all 0.2s;font-size:0.9rem;}
+  .sentence-audio:hover{background:rgba(212,160,23,0.15);}
+  .sentences-filter{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.2rem;}
+  .filter-chip{font-family:'DM Sans',sans-serif;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.35rem 0.85rem;border:1px solid var(--border);border-radius:20px;background:transparent;color:var(--text-light);cursor:pointer;transition:all 0.2s;}
+  .filter-chip.active,.filter-chip:hover{background:var(--green);color:var(--gold-light);border-color:var(--green);}
+  .quiz-question{border:1px solid var(--border);background:var(--ivory);border-radius:3px;padding:1.8rem;margin-bottom:1.2rem;text-align:center;}
+  .quiz-q-label{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+  .quiz-q-word{font-family:'Libre Baskerville',serif;font-size:clamp(1.6rem,4vw,2.4rem);color:var(--green);margin-bottom:0.3rem;}
+  .quiz-q-type{font-family:'Lora',serif;font-style:italic;color:var(--text-light);font-size:0.92rem;}
+  .quiz-options{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1.2rem;}
+  .quiz-option{padding:0.85rem 1rem;border:1px solid var(--border);background:var(--ivory);border-radius:3px;font-family:'Lora',serif;font-size:1.05rem;color:var(--green);cursor:pointer;transition:all 0.2s;text-align:center;}
+  .quiz-option:hover:not(:disabled){border-color:var(--green);background:rgba(26,71,49,0.04);}
+  .quiz-option.correct{background:rgba(58,125,110,0.15);border-color:var(--teal);color:var(--teal);}
+  .quiz-option.wrong{background:rgba(27,58,107,0.1);border-color:var(--blue);color:var(--blue);}
+  .quiz-option:disabled{cursor:default;}
+  .quiz-feedback{text-align:center;font-family:'Lora',serif;font-style:italic;font-size:1.1rem;min-height:1.5rem;margin-bottom:1rem;}
+  .quiz-feedback.correct{color:var(--teal);}.quiz-feedback.wrong{color:var(--blue);}
+  .quiz-score-display{display:flex;justify-content:center;gap:2rem;padding:1rem;border:1px solid var(--border);background:var(--ivory);border-radius:3px;margin-bottom:1.2rem;}
+  .progress-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1rem;margin-bottom:1.5rem;}
+  .progress-card{border:1px solid var(--border);background:var(--ivory);border-radius:3px;padding:1.2rem;text-align:center;}
+  .progress-card-icon{font-size:1.5rem;margin-bottom:0.4rem;}
+  .progress-card-num{font-family:'Libre Baskerville',serif;font-size:1.7rem;color:var(--green);display:block;}
+  .progress-card-label{font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);}
+  .word-mastery-list{border:1px solid var(--border);border-radius:3px;overflow:hidden;max-height:420px;overflow-y:auto;}
+  .word-mastery-header{background:var(--green);color:var(--gold-light);padding:0.75rem 1.2rem;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;display:grid;grid-template-columns:1fr 1fr auto auto;gap:0.5rem;position:sticky;top:0;}
+  .word-mastery-item{display:grid;grid-template-columns:1fr 1fr auto auto;gap:0.5rem;padding:0.6rem 1.2rem;border-bottom:1px solid var(--border);align-items:center;background:var(--ivory);font-size:0.85rem;}
+  .word-mastery-item:last-child{border-bottom:none;}
+  .mastery-dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+  .mastery-0{background:#ddd;}.mastery-1{background:var(--gold);}.mastery-2{background:var(--teal);}
+  .next-review{font-size:0.68rem;color:var(--text-light);white-space:nowrap;}
+  .next-review.due{color:var(--blue);font-weight:500;}
+  .section-title{font-family:'Libre Baskerville',serif;font-size:1.05rem;color:var(--green);margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);}
+  .divider{text-align:center;color:var(--gold);font-size:1.2rem;letter-spacing:0.5em;margin:1.2rem 0;opacity:0.4;}
+  .reset-btn{font-size:0.72rem;color:var(--blue);background:none;border:none;cursor:pointer;text-decoration:underline;letter-spacing:0.05em;}
+  @media(max-width:500px){.quiz-options{grid-template-columns:1fr;}.stats-row{gap:1rem;}}
 </style>
 </head>
 <body>
-
 <header>
   <div class="header-ornament">✦ &nbsp; Uma bela aventura &nbsp; ✦</div>
   <h1>Fala <em>Português</em> ?</h1>
   <p class="subtitle">An elegant journey into Brazilian Portuguese</p>
+  <div class="save-indicator" id="saveIndicator">✓ Progresso salvo</div>
 </header>
 
 <div class="progress-section">
-  <div class="progress-label">
-    <span>Vocabulary Mastered</span>
-    <span id="progressPct">0%</span>
-  </div>
-  <div class="progress-bar-outer">
-    <div class="progress-bar-inner" id="progressBar" style="width:0%"></div>
-  </div>
+  <div class="progress-label"><span>Vocabulary Mastered</span><span id="progressPct">0%</span></div>
+  <div class="progress-bar-outer"><div class="progress-bar-inner" id="progressBar" style="width:0%"></div></div>
   <div class="stats-row">
     <div class="stat"><span class="stat-num" id="statMastered">0</span><span class="stat-label">Mastered</span></div>
     <div class="stat"><span class="stat-num" id="statLearning">0</span><span class="stat-label">Learning</span></div>
+    <div class="stat"><span class="stat-num" id="statDue">0</span><span class="stat-label">Due Today</span></div>
     <div class="stat"><span class="stat-num" id="statQuizScore">0%</span><span class="stat-label">Quiz Score</span></div>
     <div class="stat"><span class="stat-num" id="statStreak">0</span><span class="stat-label">Streak</span></div>
   </div>
 </div>
 
 <nav>
-  <button class="tab-btn active" onclick="showTab('flashcards')">Flashcards</button>
-  <button class="tab-btn" onclick="showTab('sentences')">Phrases</button>
-  <button class="tab-btn" onclick="showTab('quiz')">Quiz</button>
-  <button class="tab-btn" onclick="showTab('progress')">Progress</button>
+  <button class="tab-btn active" onclick="showTab('flashcards',this)">Flashcards</button>
+  <button class="tab-btn" onclick="showTab('sentences',this)">Phrases</button>
+  <button class="tab-btn" onclick="showTab('quiz',this)">Quiz</button>
+  <button class="tab-btn" onclick="showTab('progress',this)">Progress</button>
 </nav>
 
 <main>
-
-  <!-- FLASHCARDS -->
   <div class="panel active" id="panel-flashcards">
+    <div id="srsModeBar" class="srs-mode-bar" style="display:none;">
+      🔁 Review Mode — <span id="srsDueCount">0</span> cards due
+      <button class="btn btn-outline" style="font-size:0.68rem;padding:0.3rem 0.7rem;" onclick="exitSrsMode()">Exit</button>
+    </div>
     <div class="flashcard-controls">
       <select class="category-select" id="categorySelect" onchange="filterCategory()">
         <option value="all">All Categories</option>
@@ -668,22 +150,26 @@
         <option value="Time">Time</option>
         <option value="People">People</option>
         <option value="Places">Places</option>
-        <option value="Food">Food & Drink</option>
+        <option value="Food">Food &amp; Drink</option>
         <option value="Actions">Actions</option>
         <option value="Descriptions">Descriptions</option>
+        <option value="Travel">Travel</option>
+        <option value="Health">Health</option>
+        <option value="Weather">Weather</option>
       </select>
-      <span class="fc-counter" id="fcCounter">Card 1 of 57</span>
+      <span class="fc-counter" id="fcCounter">Card 1 of 150</span>
+      <button class="btn btn-srs" onclick="startSrsMode()">Review Due</button>
       <button class="btn btn-outline" onclick="shuffleCards()">Shuffle</button>
     </div>
-
     <div class="flashcard-scene" onclick="flipCard()">
       <div class="flashcard" id="flashcard">
         <div class="fc-face fc-front">
           <span class="fc-hint">tap to reveal</span>
+          <div class="fc-srs-info" id="fcSrsInfo"></div>
           <div class="fc-category" id="fcCategory">Essentials</div>
           <div class="fc-word" id="fcPortuguese">olá</div>
           <div class="fc-pronunciation" id="fcPronunciation">/o.ˈlɐ/</div>
-          <button class="audio-btn" onclick="event.stopPropagation(); speakWord()" title="Hear pronunciation">🔊</button>
+          <button class="audio-btn" onclick="event.stopPropagation();speakWord()">🔊</button>
         </div>
         <div class="fc-face fc-back">
           <span class="fc-hint">tap to flip back</span>
@@ -692,34 +178,36 @@
           <div class="fc-pronunciation" id="fcPronunciationBack">/o.ˈlɐ/</div>
           <div class="fc-translation" id="fcExample">Olá, tudo bem?</div>
           <div class="fc-example" id="fcExampleEn">Hello, how are you?</div>
-          <button class="audio-btn" onclick="event.stopPropagation(); speakWord()" title="Hear pronunciation" style="margin-top:0.8rem;">🔊</button>
+          <button class="audio-btn" onclick="event.stopPropagation();speakWord()" style="margin-top:0.8rem;">🔊</button>
         </div>
       </div>
     </div>
-
     <div class="fc-nav">
-      <button class="btn btn-outline" onclick="prevCard()">← Previous</button>
-      <button class="btn btn-danger" onclick="markCard(0)">Still Learning</button>
-      <button class="btn btn-success" onclick="markCard(2)">Mastered ✓</button>
-      <button class="btn btn-primary" onclick="nextCard()">Next →</button>
+      <button class="btn btn-outline" onclick="prevCard()">← Prev</button>
+      <button class="btn btn-danger" onclick="markCard(0)">Again</button>
+      <button class="btn btn-outline" onclick="markCard(1)">Hard</button>
+      <button class="btn btn-success" onclick="markCard(2)">Good ✓</button>
+      <button class="btn btn-primary" onclick="markCard(3)">Easy ⭐</button>
+      <button class="btn btn-outline" onclick="nextCard()">Next →</button>
     </div>
+    <p class="srs-hint">Again = review today · Hard = 1 day · Good = 3 days · Easy = 7 days</p>
   </div>
 
-  <!-- SENTENCES -->
   <div class="panel" id="panel-sentences">
     <div class="sentences-filter">
-      <button class="filter-chip active" onclick="filterSentences('all', this)">All</button>
-      <button class="filter-chip" onclick="filterSentences('Greetings', this)">Greetings</button>
-      <button class="filter-chip" onclick="filterSentences('Dining', this)">Dining</button>
-      <button class="filter-chip" onclick="filterSentences('Shopping', this)">Shopping</button>
-      <button class="filter-chip" onclick="filterSentences('Directions', this)">Directions</button>
-      <button class="filter-chip" onclick="filterSentences('Emergencies', this)">Help</button>
-      <button class="filter-chip" onclick="filterSentences('Social', this)">Social</button>
+      <button class="filter-chip active" onclick="filterSentences('all',this)">All</button>
+      <button class="filter-chip" onclick="filterSentences('Greetings',this)">Greetings</button>
+      <button class="filter-chip" onclick="filterSentences('Dining',this)">Dining</button>
+      <button class="filter-chip" onclick="filterSentences('Shopping',this)">Shopping</button>
+      <button class="filter-chip" onclick="filterSentences('Directions',this)">Directions</button>
+      <button class="filter-chip" onclick="filterSentences('Emergencies',this)">Help</button>
+      <button class="filter-chip" onclick="filterSentences('Social',this)">Social</button>
+      <button class="filter-chip" onclick="filterSentences('Travel',this)">Travel</button>
+      <button class="filter-chip" onclick="filterSentences('Health',this)">Health</button>
     </div>
     <div class="sentences-grid" id="sentencesGrid"></div>
   </div>
 
-  <!-- QUIZ -->
   <div class="panel" id="panel-quiz">
     <div class="quiz-score-display">
       <div class="stat"><span class="stat-num" id="qCorrect">0</span><span class="stat-label">Correct</span></div>
@@ -733,253 +221,361 @@
     </div>
     <div class="quiz-options" id="quizOptions"></div>
     <div class="quiz-feedback" id="quizFeedback"></div>
-    <div style="text-align:center;">
+    <div style="text-align:center;display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;">
       <button class="btn btn-primary" id="nextQuizBtn" onclick="loadQuizQuestion()" style="display:none;">Next Question →</button>
       <button class="btn btn-outline" onclick="resetQuiz()">Reset Quiz</button>
     </div>
   </div>
 
-  <!-- PROGRESS -->
   <div class="panel" id="panel-progress">
     <div class="progress-cards">
-      <div class="progress-card">
-        <div class="progress-card-icon">⭐</div>
-        <span class="progress-card-num" id="pMastered">0</span>
-        <span class="progress-card-label">Words Mastered</span>
-      </div>
-      <div class="progress-card">
-        <div class="progress-card-icon">📖</div>
-        <span class="progress-card-num" id="pLearning">0</span>
-        <span class="progress-card-label">Words Learning</span>
-      </div>
-      <div class="progress-card">
-        <div class="progress-card-icon">🎯</div>
-        <span class="progress-card-num" id="pAccuracy">—</span>
-        <span class="progress-card-label">Quiz Accuracy</span>
-      </div>
-      <div class="progress-card">
-        <div class="progress-card-icon">🔥</div>
-        <span class="progress-card-num" id="pStreak">0</span>
-        <span class="progress-card-label">Correct Streak</span>
-      </div>
+      <div class="progress-card"><div class="progress-card-icon">⭐</div><span class="progress-card-num" id="pMastered">0</span><span class="progress-card-label">Mastered</span></div>
+      <div class="progress-card"><div class="progress-card-icon">📖</div><span class="progress-card-num" id="pLearning">0</span><span class="progress-card-label">Learning</span></div>
+      <div class="progress-card"><div class="progress-card-icon">🔁</div><span class="progress-card-num" id="pDue">0</span><span class="progress-card-label">Due Today</span></div>
+      <div class="progress-card"><div class="progress-card-icon">🎯</div><span class="progress-card-num" id="pAccuracy">—</span><span class="progress-card-label">Accuracy</span></div>
+      <div class="progress-card"><div class="progress-card-icon">🔥</div><span class="progress-card-num" id="pStreak">0</span><span class="progress-card-label">Streak</span></div>
+    </div>
+    <div style="text-align:right;margin-bottom:0.8rem;">
+      <button class="reset-btn" onclick="confirmReset()">Reset all progress</button>
     </div>
     <div class="divider">· · · ✦ · · ·</div>
     <h3 class="section-title">Word Progress</h3>
     <div class="word-mastery-list">
-      <div class="word-mastery-header">
-        <span>Portuguese</span><span>English</span><span>Level</span>
-      </div>
+      <div class="word-mastery-header"><span>Portuguese</span><span>English</span><span>Level</span><span>Next Review</span></div>
       <div id="masteryList"></div>
     </div>
   </div>
-
 </main>
 
 <script>
 const words = [
-  // Essentials
-  { pt:'olá', en:'hello', ipa:'/o.ˈlɐ/', cat:'Essentials', ex:'Olá, tudo bem?', exEn:'Hello, how are you?' },
-  { pt:'bom dia', en:'good morning', ipa:'/bõ ˈdʒi.ɐ/', cat:'Essentials', ex:'Bom dia, como vai?', exEn:'Good morning, how are you?' },
-  { pt:'boa tarde', en:'good afternoon', ipa:'/ˈbo.ɐ ˈtaʁ.dʒi/', cat:'Essentials', ex:'Boa tarde, tudo bem?', exEn:'Good afternoon, all well?' },
-  { pt:'boa noite', en:'good evening / night', ipa:'/ˈbo.ɐ ˈnoj.tʃi/', cat:'Essentials', ex:'Boa noite a todos!', exEn:'Good evening everyone!' },
-  { pt:'tchau', en:'bye / goodbye', ipa:'/ˈtʃaw/', cat:'Essentials', ex:'Tchau, até logo!', exEn:'Bye, see you soon!' },
-  { pt:'por favor', en:'please', ipa:'/poʁ fa.ˈvoʁ/', cat:'Essentials', ex:'Um café, por favor.', exEn:'A coffee, please.' },
-  { pt:'obrigado / obrigada', en:'thank you (m/f)', ipa:'/o.bɾi.ˈga.du/', cat:'Essentials', ex:'Muito obrigada!', exEn:'Thank you very much!' },
-  { pt:'de nada', en:"you're welcome", ipa:'/dʒi ˈna.dɐ/', cat:'Essentials', ex:'Obrigado! – De nada!', exEn:"Thank you! – You're welcome!" },
-  { pt:'com licença', en:'excuse me', ipa:'/kõ li.ˈsẽ.sɐ/', cat:'Essentials', ex:'Com licença, posso passar?', exEn:'Excuse me, may I get through?' },
-  { pt:'desculpe', en:'sorry', ipa:'/dʒis.ˈkuw.pi/', cat:'Essentials', ex:'Desculpe, não entendi.', exEn:"Sorry, I didn't understand." },
-  { pt:'sim', en:'yes', ipa:'/sĩ/', cat:'Essentials', ex:'Sim, com certeza!', exEn:'Yes, of course!' },
-  { pt:'não', en:'no', ipa:'/nɐ̃w̃/', cat:'Essentials', ex:'Não, obrigado.', exEn:'No, thank you.' },
-
-  // Numbers
-  { pt:'um / uma', en:'one', ipa:'/ũ / ˈu.mɐ/', cat:'Numbers', ex:'Tenho um filho.', exEn:'I have one child.' },
-  { pt:'dois / duas', en:'two', ipa:'/ˈdoj.s/', cat:'Numbers', ex:'Duas cervejas, por favor.', exEn:'Two beers, please.' },
-  { pt:'três', en:'three', ipa:'/ˈtɾes/', cat:'Numbers', ex:'Somos três pessoas.', exEn:'We are three people.' },
-  { pt:'quatro', en:'four', ipa:'/ˈkwa.tɾu/', cat:'Numbers', ex:'Quatro horas da tarde.', exEn:'Four in the afternoon.' },
-  { pt:'cinco', en:'five', ipa:'/ˈsĩ.ku/', cat:'Numbers', ex:'Cinco minutos, por favor.', exEn:'Five minutes, please.' },
-  { pt:'dez', en:'ten', ipa:'/ˈdes/', cat:'Numbers', ex:'Volto em dez minutos.', exEn:"I'll be back in ten minutes." },
-  { pt:'cem', en:'one hundred', ipa:'/sẽj̃/', cat:'Numbers', ex:'Cem reais, por favor.', exEn:'One hundred reais, please.' },
-
-  // Time
-  { pt:'hoje', en:'today', ipa:'/ˈo.ʒi/', cat:'Time', ex:'Hoje está lindo!', exEn:"Today it's beautiful!" },
-  { pt:'amanhã', en:'tomorrow', ipa:'/a.mɐ.ˈɲɐ̃/', cat:'Time', ex:'A gente se vê amanhã.', exEn:"We'll see each other tomorrow." },
-  { pt:'ontem', en:'yesterday', ipa:'/ˈõ.tẽj̃/', cat:'Time', ex:'Ontem foi ótimo.', exEn:'Yesterday was great.' },
-  { pt:'agora', en:'now', ipa:'/a.ˈɡo.ɾɐ/', cat:'Time', ex:'Estou pronta agora.', exEn:"I'm ready now." },
-  { pt:'manhã', en:'morning', ipa:'/mɐ.ˈɲɐ̃/', cat:'Time', ex:'Acordo cedo de manhã.', exEn:'I wake up early in the morning.' },
-  { pt:'noite', en:'night / evening', ipa:'/ˈnoj.tʃi/', cat:'Time', ex:'Jantamos juntos à noite.', exEn:'We have dinner together at night.' },
-
-  // People
-  { pt:'eu', en:'I', ipa:'/ˈew/', cat:'People', ex:'Eu sou inglesa.', exEn:'I am English.' },
-  { pt:'você', en:'you', ipa:'/vo.ˈse/', cat:'People', ex:'Você fala português?', exEn:'Do you speak Portuguese?' },
-  { pt:'ele / ela', en:'he / she', ipa:'/ˈe.li / ˈe.lɐ/', cat:'People', ex:'Ela se chama Ana.', exEn:'Her name is Ana.' },
-  { pt:'a gente / nós', en:'we', ipa:'/ɐ ˈʒẽ.tʃi/', cat:'People', ex:'A gente adora o Brasil.', exEn:'We love Brazil.' },
-  { pt:'amigo / amiga', en:'friend (m/f)', ipa:'/a.ˈmi.ɡu/', cat:'People', ex:'Ela é minha melhor amiga.', exEn:'She is my best friend.' },
-  { pt:'família', en:'family', ipa:'/fa.ˈmi.ljɐ/', cat:'People', ex:'Minha família mora em Londres.', exEn:'My family lives in London.' },
-  { pt:'homem', en:'man', ipa:'/ˈo.mẽj̃/', cat:'People', ex:'O homem é alto.', exEn:'The man is tall.' },
-  { pt:'mulher', en:'woman / wife', ipa:'/mu.ˈʎeʁ/', cat:'People', ex:'Minha mulher fala português.', exEn:'My wife speaks Portuguese.' },
-  { pt:'criança', en:'child', ipa:'/kɾi.ˈɐ̃.sɐ/', cat:'People', ex:'A criança brinca no jardim.', exEn:'The child plays in the garden.' },
-
-  // Places
-  { pt:'casa', en:'house / home', ipa:'/ˈka.zɐ/', cat:'Places', ex:'Vou para casa agora.', exEn:"I'm going home now." },
-  { pt:'rua', en:'street', ipa:'/ˈʁu.ɐ/', cat:'Places', ex:'A padaria fica nessa rua.', exEn:'The bakery is on this street.' },
-  { pt:'cidade', en:'city', ipa:'/si.ˈda.dʒi/', cat:'Places', ex:'São Paulo é uma cidade incrível.', exEn:'São Paulo is an incredible city.' },
-  { pt:'restaurante', en:'restaurant', ipa:'/ʁes.taw.ˈɾɐ̃.tʃi/', cat:'Places', ex:'Vamos ao restaurante hoje à noite.', exEn:"We're going to the restaurant tonight." },
-  { pt:'hotel', en:'hotel', ipa:'/o.ˈtɛw/', cat:'Places', ex:'O hotel fica perto da praia.', exEn:'The hotel is near the beach.' },
-  { pt:'aeroporto', en:'airport', ipa:'/a.e.ɾo.ˈpoʁ.tu/', cat:'Places', ex:'O aeroporto está longe daqui.', exEn:'The airport is far from here.' },
-  { pt:'praia', en:'beach', ipa:'/ˈpɾaj.ɐ/', cat:'Places', ex:'Adoro ir à praia no verão.', exEn:'I love going to the beach in summer.' },
-
-  // Food & Drink
-  { pt:'pão', en:'bread', ipa:'/pɐ̃w̃/', cat:'Food', ex:'Um pão de queijo, por favor.', exEn:'A cheese bread, please.' },
-  { pt:'café', en:'coffee', ipa:'/ka.ˈfɛ/', cat:'Food', ex:'Tomo café todo dia.', exEn:'I have coffee every day.' },
-  { pt:'água', en:'water', ipa:'/ˈa.ɡwɐ/', cat:'Food', ex:'Uma garrafa de água, por favor.', exEn:'A bottle of water, please.' },
-  { pt:'cerveja', en:'beer', ipa:'/seʁ.ˈve.ʒɐ/', cat:'Food', ex:'Uma cerveja gelada, por favor.', exEn:'A cold beer, please.' },
-  { pt:'churrasco', en:'barbecue', ipa:'/ʃu.ˈʁas.ku/', cat:'Food', ex:'Vamos fazer um churrasco no domingo.', exEn:"Let's have a barbecue on Sunday." },
-  { pt:'fruta', en:'fruit', ipa:'/ˈfɾu.tɐ/', cat:'Food', ex:'O Brasil tem frutas deliciosas.', exEn:'Brazil has delicious fruits.' },
-  { pt:'sobremesa', en:'dessert', ipa:'/so.bɾi.ˈme.zɐ/', cat:'Food', ex:'O que tem de sobremesa?', exEn:"What's for dessert?" },
-
-  // Actions
-  { pt:'falar', en:'to speak / talk', ipa:'/fa.ˈlaʁ/', cat:'Actions', ex:'Eu falo um pouco de português.', exEn:'I speak a little Portuguese.' },
-  { pt:'comer', en:'to eat', ipa:'/ko.ˈmeʁ/', cat:'Actions', ex:'Gostamos de comer fora.', exEn:'We like to eat out.' },
-  { pt:'beber', en:'to drink', ipa:'/be.ˈbeʁ/', cat:'Actions', ex:'Quero beber alguma coisa.', exEn:'I want to drink something.' },
-  { pt:'ir', en:'to go', ipa:'/ˈiʁ/', cat:'Actions', ex:'Vamos à praia amanhã.', exEn:"We're going to the beach tomorrow." },
-  { pt:'vir', en:'to come', ipa:'/ˈviʁ/', cat:'Actions', ex:'Você pode vir esta noite?', exEn:'Can you come tonight?' },
-  { pt:'entender', en:'to understand', ipa:'/ẽ.tẽ.ˈdeʁ/', cat:'Actions', ex:'Não entendo muito bem.', exEn:"I don't understand very well." },
-  { pt:'querer', en:'to want', ipa:'/ke.ˈɾeʁ/', cat:'Actions', ex:'Quero aprender português.', exEn:'I want to learn Portuguese.' },
-  { pt:'amar', en:'to love', ipa:'/a.ˈmaʁ/', cat:'Actions', ex:'Amo o Brasil!', exEn:'I love Brazil!' },
-
-  // Descriptions
-  { pt:'grande', en:'big / large', ipa:'/ˈɡɾɐ̃.dʒi/', cat:'Descriptions', ex:'É um país muito grande.', exEn:"It's a very large country." },
-  { pt:'pequeno / pequena', en:'small / little', ipa:'/pe.ˈke.nu/', cat:'Descriptions', ex:'Um café pequeno, por favor.', exEn:'A small coffee, please.' },
-  { pt:'bonito / bonita', en:'beautiful / handsome', ipa:'/bo.ˈni.tu/', cat:'Descriptions', ex:'Que dia bonito!', exEn:'What a beautiful day!' },
-  { pt:'bom / boa', en:'good', ipa:'/bõ / ˈbo.ɐ/', cat:'Descriptions', ex:'A comida estava boa demais.', exEn:'The food was incredibly good.' },
-  { pt:'caro / cara', en:'expensive', ipa:'/ˈka.ɾu/', cat:'Descriptions', ex:'Está um pouco caro.', exEn:"It's a bit expensive." },
-  { pt:'quente / frio', en:'hot / cold', ipa:'/ˈkẽ.tʃi / ˈfɾi.u/', cat:'Descriptions', ex:'O café está quente demais.', exEn:'The coffee is too hot.' },
-  { pt:'novo / nova', en:'new', ipa:'/ˈno.vu/', cat:'Descriptions', ex:'Tenho uma bolsa nova.', exEn:'I have a new bag.' },
+  {pt:'olá',en:'hello',ipa:'/o.ˈlɐ/',cat:'Essentials',ex:'Olá, tudo bem?',exEn:'Hello, how are you?'},
+  {pt:'bom dia',en:'good morning',ipa:'/bõ ˈdʒi.ɐ/',cat:'Essentials',ex:'Bom dia, como vai?',exEn:'Good morning, how are you?'},
+  {pt:'boa tarde',en:'good afternoon',ipa:'/ˈbo.ɐ ˈtaʁ.dʒi/',cat:'Essentials',ex:'Boa tarde, tudo bem?',exEn:'Good afternoon, all well?'},
+  {pt:'boa noite',en:'good evening / night',ipa:'/ˈbo.ɐ ˈnoj.tʃi/',cat:'Essentials',ex:'Boa noite a todos!',exEn:'Good evening everyone!'},
+  {pt:'tchau',en:'bye / goodbye',ipa:'/ˈtʃaw/',cat:'Essentials',ex:'Tchau, até logo!',exEn:'Bye, see you soon!'},
+  {pt:'até logo',en:'see you soon',ipa:'/a.ˈtɛ ˈlo.ɡu/',cat:'Essentials',ex:'Até logo, amigo!',exEn:'See you soon, friend!'},
+  {pt:'por favor',en:'please',ipa:'/poʁ fa.ˈvoʁ/',cat:'Essentials',ex:'Um café, por favor.',exEn:'A coffee, please.'},
+  {pt:'obrigado / obrigada',en:'thank you (m/f)',ipa:'/o.bɾi.ˈga.du/',cat:'Essentials',ex:'Muito obrigada!',exEn:'Thank you very much!'},
+  {pt:'muito obrigado',en:'thank you very much',ipa:'/ˈmuj.tu o.bɾi.ˈga.du/',cat:'Essentials',ex:'Muito obrigado pela ajuda.',exEn:'Thank you very much for your help.'},
+  {pt:'de nada',en:"you're welcome",ipa:'/dʒi ˈna.dɐ/',cat:'Essentials',ex:'Obrigado! – De nada!',exEn:"Thank you! – You're welcome!"},
+  {pt:'com licença',en:'excuse me',ipa:'/kõ li.ˈsẽ.sɐ/',cat:'Essentials',ex:'Com licença, posso passar?',exEn:'Excuse me, may I get through?'},
+  {pt:'desculpe',en:'sorry',ipa:'/dʒis.ˈkuw.pi/',cat:'Essentials',ex:'Desculpe, não entendi.',exEn:"Sorry, I didn't understand."},
+  {pt:'sim',en:'yes',ipa:'/sĩ/',cat:'Essentials',ex:'Sim, com certeza!',exEn:'Yes, of course!'},
+  {pt:'não',en:'no',ipa:'/nɐ̃w̃/',cat:'Essentials',ex:'Não, obrigado.',exEn:'No, thank you.'},
+  {pt:'talvez',en:'maybe / perhaps',ipa:'/taw.ˈves/',cat:'Essentials',ex:'Talvez amanhã.',exEn:'Maybe tomorrow.'},
+  {pt:'claro',en:'of course / sure',ipa:'/ˈkla.ɾu/',cat:'Essentials',ex:'Claro, com prazer!',exEn:'Of course, with pleasure!'},
+  {pt:'tudo bem',en:'everything OK / fine',ipa:'/ˈtu.du bẽj̃/',cat:'Essentials',ex:'Tudo bem por aqui.',exEn:'Everything is fine here.'},
+  {pt:'como',en:'how',ipa:'/ˈko.mu/',cat:'Essentials',ex:'Como vai você?',exEn:'How are you?'},
+  {pt:'onde',en:'where',ipa:'/ˈõ.dʒi/',cat:'Essentials',ex:'Onde fica o restaurante?',exEn:'Where is the restaurant?'},
+  {pt:'quando',en:'when',ipa:'/ˈkwɐ̃.du/',cat:'Essentials',ex:'Quando você chega?',exEn:'When do you arrive?'},
+  {pt:'por que',en:'why',ipa:'/poʁ ˈke/',cat:'Essentials',ex:'Por que não?',exEn:'Why not?'},
+  {pt:'quem',en:'who',ipa:'/kẽj̃/',cat:'Essentials',ex:'Quem é você?',exEn:'Who are you?'},
+  {pt:'quanto',en:'how much / how many',ipa:'/ˈkwɐ̃.tu/',cat:'Essentials',ex:'Quanto custa?',exEn:'How much does it cost?'},
+  {pt:'zero',en:'zero',ipa:'/ˈze.ɾu/',cat:'Numbers',ex:'Meu número começa com zero.',exEn:'My number starts with zero.'},
+  {pt:'um / uma',en:'one',ipa:'/ũ / ˈu.mɐ/',cat:'Numbers',ex:'Tenho um filho.',exEn:'I have one child.'},
+  {pt:'dois / duas',en:'two',ipa:'/ˈdoj.s/',cat:'Numbers',ex:'Duas cervejas, por favor.',exEn:'Two beers, please.'},
+  {pt:'três',en:'three',ipa:'/ˈtɾes/',cat:'Numbers',ex:'Somos três pessoas.',exEn:'We are three people.'},
+  {pt:'quatro',en:'four',ipa:'/ˈkwa.tɾu/',cat:'Numbers',ex:'Quatro horas da tarde.',exEn:'Four in the afternoon.'},
+  {pt:'cinco',en:'five',ipa:'/ˈsĩ.ku/',cat:'Numbers',ex:'Cinco minutos, por favor.',exEn:'Five minutes, please.'},
+  {pt:'seis',en:'six',ipa:'/ˈsejs/',cat:'Numbers',ex:'Seis pessoas ao total.',exEn:'Six people in total.'},
+  {pt:'sete',en:'seven',ipa:'/ˈse.tʃi/',cat:'Numbers',ex:'São sete horas.',exEn:"It's seven o'clock."},
+  {pt:'oito',en:'eight',ipa:'/ˈoj.tu/',cat:'Numbers',ex:'Oito dias, uma semana.',exEn:'Eight days, one week.'},
+  {pt:'nove',en:'nine',ipa:'/ˈno.vi/',cat:'Numbers',ex:'Nove reais, obrigado.',exEn:'Nine reais, thank you.'},
+  {pt:'dez',en:'ten',ipa:'/ˈdes/',cat:'Numbers',ex:'Volto em dez minutos.',exEn:"I'll be back in ten minutes."},
+  {pt:'vinte',en:'twenty',ipa:'/ˈvĩ.tʃi/',cat:'Numbers',ex:'Vinte reais, por favor.',exEn:'Twenty reais, please.'},
+  {pt:'trinta',en:'thirty',ipa:'/ˈtɾĩ.tɐ/',cat:'Numbers',ex:'Tenho trinta anos.',exEn:'I am thirty years old.'},
+  {pt:'cem',en:'one hundred',ipa:'/sẽj̃/',cat:'Numbers',ex:'Cem reais, por favor.',exEn:'One hundred reais, please.'},
+  {pt:'mil',en:'one thousand',ipa:'/miw/',cat:'Numbers',ex:'Custa mil reais.',exEn:'It costs one thousand reais.'},
+  {pt:'hoje',en:'today',ipa:'/ˈo.ʒi/',cat:'Time',ex:'Hoje está lindo!',exEn:"Today it's beautiful!"},
+  {pt:'amanhã',en:'tomorrow',ipa:'/a.mɐ.ˈɲɐ̃/',cat:'Time',ex:'A gente se vê amanhã.',exEn:"We'll see each other tomorrow."},
+  {pt:'ontem',en:'yesterday',ipa:'/ˈõ.tẽj̃/',cat:'Time',ex:'Ontem foi ótimo.',exEn:'Yesterday was great.'},
+  {pt:'agora',en:'now',ipa:'/a.ˈɡo.ɾɐ/',cat:'Time',ex:'Estou pronta agora.',exEn:"I'm ready now."},
+  {pt:'logo',en:'soon',ipa:'/ˈlo.ɡu/',cat:'Time',ex:'A gente se vê logo.',exEn:"We'll see each other soon."},
+  {pt:'sempre',en:'always',ipa:'/ˈsẽ.pɾi/',cat:'Time',ex:'Sempre tomo café.',exEn:'I always have coffee.'},
+  {pt:'nunca',en:'never',ipa:'/ˈnũ.kɐ/',cat:'Time',ex:'Nunca fumo.',exEn:'I never smoke.'},
+  {pt:'às vezes',en:'sometimes',ipa:'/az ˈve.zis/',cat:'Time',ex:'Às vezes eu cozinho.',exEn:'Sometimes I cook.'},
+  {pt:'manhã',en:'morning',ipa:'/mɐ.ˈɲɐ̃/',cat:'Time',ex:'Acordo cedo de manhã.',exEn:'I wake up early in the morning.'},
+  {pt:'tarde',en:'afternoon',ipa:'/ˈtaʁ.dʒi/',cat:'Time',ex:'Durmo à tarde.',exEn:'I nap in the afternoon.'},
+  {pt:'noite',en:'night / evening',ipa:'/ˈnoj.tʃi/',cat:'Time',ex:'Jantamos juntos à noite.',exEn:'We have dinner together at night.'},
+  {pt:'semana',en:'week',ipa:'/se.ˈmɐ.nɐ/',cat:'Time',ex:'Na semana que vem.',exEn:'Next week.'},
+  {pt:'mês',en:'month',ipa:'/mes/',cat:'Time',ex:'O mês de junho.',exEn:'The month of June.'},
+  {pt:'ano',en:'year',ipa:'/ˈɐ.nu/',cat:'Time',ex:'Feliz Ano Novo!',exEn:'Happy New Year!'},
+  {pt:'hora',en:'hour / time',ipa:'/ˈo.ɾɐ/',cat:'Time',ex:'Que horas são?',exEn:'What time is it?'},
+  {pt:'eu',en:'I',ipa:'/ˈew/',cat:'People',ex:'Eu sou inglesa.',exEn:'I am English.'},
+  {pt:'você',en:'you',ipa:'/vo.ˈse/',cat:'People',ex:'Você fala português?',exEn:'Do you speak Portuguese?'},
+  {pt:'ele / ela',en:'he / she',ipa:'/ˈe.li / ˈe.lɐ/',cat:'People',ex:'Ela se chama Ana.',exEn:'Her name is Ana.'},
+  {pt:'a gente / nós',en:'we',ipa:'/ɐ ˈʒẽ.tʃi/',cat:'People',ex:'A gente adora o Brasil.',exEn:'We love Brazil.'},
+  {pt:'eles / elas',en:'they',ipa:'/ˈe.lis/',cat:'People',ex:'Eles chegam amanhã.',exEn:"They're arriving tomorrow."},
+  {pt:'amigo / amiga',en:'friend (m/f)',ipa:'/a.ˈmi.ɡu/',cat:'People',ex:'Ela é minha melhor amiga.',exEn:'She is my best friend.'},
+  {pt:'família',en:'family',ipa:'/fa.ˈmi.ljɐ/',cat:'People',ex:'Minha família mora em Londres.',exEn:'My family lives in London.'},
+  {pt:'homem',en:'man',ipa:'/ˈo.mẽj̃/',cat:'People',ex:'O homem é alto.',exEn:'The man is tall.'},
+  {pt:'mulher',en:'woman / wife',ipa:'/mu.ˈʎeʁ/',cat:'People',ex:'Minha mulher fala português.',exEn:'My wife speaks Portuguese.'},
+  {pt:'criança',en:'child',ipa:'/kɾi.ˈɐ̃.sɐ/',cat:'People',ex:'A criança brinca no jardim.',exEn:'The child plays in the garden.'},
+  {pt:'pai',en:'father',ipa:'/ˈpaj/',cat:'People',ex:'Meu pai é médico.',exEn:'My father is a doctor.'},
+  {pt:'mãe',en:'mother',ipa:'/mɐ̃j̃/',cat:'People',ex:'Minha mãe cozinha muito bem.',exEn:'My mother cooks very well.'},
+  {pt:'irmão / irmã',en:'brother / sister',ipa:'/iʁ.ˈmɐ̃w̃/',cat:'People',ex:'Meu irmão mora em São Paulo.',exEn:'My brother lives in São Paulo.'},
+  {pt:'marido',en:'husband',ipa:'/ma.ˈɾi.du/',cat:'People',ex:'Meu marido é simpático.',exEn:'My husband is nice.'},
+  {pt:'casa',en:'house / home',ipa:'/ˈka.zɐ/',cat:'Places',ex:'Vou para casa agora.',exEn:"I'm going home now."},
+  {pt:'apartamento',en:'apartment',ipa:'/a.paʁ.ta.ˈmẽ.tu/',cat:'Places',ex:'Moro num apartamento.',exEn:'I live in an apartment.'},
+  {pt:'rua',en:'street',ipa:'/ˈʁu.ɐ/',cat:'Places',ex:'A padaria fica nessa rua.',exEn:'The bakery is on this street.'},
+  {pt:'cidade',en:'city',ipa:'/si.ˈda.dʒi/',cat:'Places',ex:'São Paulo é uma cidade incrível.',exEn:'São Paulo is an incredible city.'},
+  {pt:'país',en:'country',ipa:'/pa.ˈis/',cat:'Places',ex:'O Brasil é um país lindo.',exEn:'Brazil is a beautiful country.'},
+  {pt:'restaurante',en:'restaurant',ipa:'/ʁes.taw.ˈɾɐ̃.tʃi/',cat:'Places',ex:'Vamos ao restaurante hoje à noite.',exEn:"We're going to the restaurant tonight."},
+  {pt:'padaria',en:'bakery',ipa:'/pa.da.ˈɾi.ɐ/',cat:'Places',ex:'A padaria abre às seis.',exEn:'The bakery opens at six.'},
+  {pt:'hotel',en:'hotel',ipa:'/o.ˈtɛw/',cat:'Places',ex:'O hotel fica perto da praia.',exEn:'The hotel is near the beach.'},
+  {pt:'aeroporto',en:'airport',ipa:'/a.e.ɾo.ˈpoʁ.tu/',cat:'Places',ex:'O aeroporto está longe daqui.',exEn:'The airport is far from here.'},
+  {pt:'praia',en:'beach',ipa:'/ˈpɾaj.ɐ/',cat:'Places',ex:'Adoro ir à praia no verão.',exEn:'I love going to the beach in summer.'},
+  {pt:'mercado',en:'market / supermarket',ipa:'/meʁ.ˈka.du/',cat:'Places',ex:'Vou ao mercado sábado.',exEn:'I go to the market on Saturdays.'},
+  {pt:'hospital',en:'hospital',ipa:'/os.pi.ˈtaw/',cat:'Places',ex:'O hospital fica no centro.',exEn:'The hospital is in the centre.'},
+  {pt:'farmácia',en:'pharmacy',ipa:'/faʁ.ˈma.sjɐ/',cat:'Places',ex:'A farmácia está aberta.',exEn:'The pharmacy is open.'},
+  {pt:'museu',en:'museum',ipa:'/mu.ˈzew/',cat:'Places',ex:'O museu é incrível.',exEn:'The museum is incredible.'},
+  {pt:'pão',en:'bread',ipa:'/pɐ̃w̃/',cat:'Food',ex:'Um pão de queijo, por favor.',exEn:'A cheese bread, please.'},
+  {pt:'café',en:'coffee',ipa:'/ka.ˈfɛ/',cat:'Food',ex:'Tomo café todo dia.',exEn:'I have coffee every day.'},
+  {pt:'água',en:'water',ipa:'/ˈa.ɡwɐ/',cat:'Food',ex:'Uma garrafa de água, por favor.',exEn:'A bottle of water, please.'},
+  {pt:'suco',en:'juice',ipa:'/ˈsu.ku/',cat:'Food',ex:'Um suco de laranja, por favor.',exEn:'An orange juice, please.'},
+  {pt:'cerveja',en:'beer',ipa:'/seʁ.ˈve.ʒɐ/',cat:'Food',ex:'Uma cerveja gelada, por favor.',exEn:'A cold beer, please.'},
+  {pt:'churrasco',en:'barbecue',ipa:'/ʃu.ˈʁas.ku/',cat:'Food',ex:'Vamos fazer um churrasco no domingo.',exEn:"Let's have a barbecue on Sunday."},
+  {pt:'feijão',en:'beans',ipa:'/fej.ˈʒɐ̃w̃/',cat:'Food',ex:'Arroz com feijão é delicioso.',exEn:'Rice and beans is delicious.'},
+  {pt:'arroz',en:'rice',ipa:'/a.ˈʁos/',cat:'Food',ex:'Arroz com feijão todo dia.',exEn:'Rice and beans every day.'},
+  {pt:'fruta',en:'fruit',ipa:'/ˈfɾu.tɐ/',cat:'Food',ex:'O Brasil tem frutas deliciosas.',exEn:'Brazil has delicious fruits.'},
+  {pt:'sobremesa',en:'dessert',ipa:'/so.bɾi.ˈme.zɐ/',cat:'Food',ex:'O que tem de sobremesa?',exEn:"What's for dessert?"},
+  {pt:'almoço',en:'lunch',ipa:'/aw.ˈmo.su/',cat:'Food',ex:'A gente almoça juntos?',exEn:'Shall we have lunch together?'},
+  {pt:'jantar',en:'dinner',ipa:'/ʒɐ̃.ˈtaʁ/',cat:'Food',ex:'O jantar é às oito.',exEn:'Dinner is at eight.'},
+  {pt:'ser',en:'to be (permanent)',ipa:'/seʁ/',cat:'Actions',ex:'Sou inglesa.',exEn:'I am English.'},
+  {pt:'estar',en:'to be (temporary)',ipa:'/es.ˈtaʁ/',cat:'Actions',ex:'Estou bem, obrigada.',exEn:"I'm fine, thank you."},
+  {pt:'ter',en:'to have',ipa:'/teʁ/',cat:'Actions',ex:'Tenho fome.',exEn:'I am hungry.'},
+  {pt:'fazer',en:'to do / make',ipa:'/fa.ˈzeʁ/',cat:'Actions',ex:'O que você está fazendo?',exEn:'What are you doing?'},
+  {pt:'ir',en:'to go',ipa:'/ˈiʁ/',cat:'Actions',ex:'Vamos à praia amanhã.',exEn:"We're going to the beach tomorrow."},
+  {pt:'vir',en:'to come',ipa:'/ˈviʁ/',cat:'Actions',ex:'Você pode vir esta noite?',exEn:'Can you come tonight?'},
+  {pt:'falar',en:'to speak / talk',ipa:'/fa.ˈlaʁ/',cat:'Actions',ex:'Eu falo um pouco de português.',exEn:'I speak a little Portuguese.'},
+  {pt:'comer',en:'to eat',ipa:'/ko.ˈmeʁ/',cat:'Actions',ex:'Gostamos de comer fora.',exEn:'We like to eat out.'},
+  {pt:'beber',en:'to drink',ipa:'/be.ˈbeʁ/',cat:'Actions',ex:'Quero beber alguma coisa.',exEn:'I want to drink something.'},
+  {pt:'entender',en:'to understand',ipa:'/ẽ.tẽ.ˈdeʁ/',cat:'Actions',ex:'Não entendo muito bem.',exEn:"I don't understand very well."},
+  {pt:'saber',en:'to know (a fact)',ipa:'/sa.ˈbeʁ/',cat:'Actions',ex:'Não sei.',exEn:"I don't know."},
+  {pt:'querer',en:'to want',ipa:'/ke.ˈɾeʁ/',cat:'Actions',ex:'Quero aprender português.',exEn:'I want to learn Portuguese.'},
+  {pt:'poder',en:'to be able to / can',ipa:'/po.ˈdeʁ/',cat:'Actions',ex:'Você pode repetir?',exEn:'Can you repeat?'},
+  {pt:'precisar',en:'to need',ipa:'/pɾe.si.ˈzaʁ/',cat:'Actions',ex:'Preciso de ajuda.',exEn:'I need help.'},
+  {pt:'amar',en:'to love',ipa:'/a.ˈmaʁ/',cat:'Actions',ex:'Amo o Brasil!',exEn:'I love Brazil!'},
+  {pt:'gostar',en:'to like',ipa:'/ɡos.ˈtaʁ/',cat:'Actions',ex:'Gosto muito de música.',exEn:'I really like music.'},
+  {pt:'procurar',en:'to look for',ipa:'/pɾo.ku.ˈɾaʁ/',cat:'Actions',ex:'Estou procurando a farmácia.',exEn:"I'm looking for the pharmacy."},
+  {pt:'comprar',en:'to buy',ipa:'/kõ.ˈpɾaʁ/',cat:'Actions',ex:'Quero comprar um souvenir.',exEn:'I want to buy a souvenir.'},
+  {pt:'pagar',en:'to pay',ipa:'/pa.ˈɡaʁ/',cat:'Actions',ex:'Quero pagar.',exEn:'I want to pay.'},
+  {pt:'ligar',en:'to call / phone',ipa:'/li.ˈɡaʁ/',cat:'Actions',ex:'Vou ligar um táxi.',exEn:"I'll call a taxi."},
+  {pt:'reservar',en:'to book / reserve',ipa:'/ʁe.zeʁ.ˈvaʁ/',cat:'Actions',ex:'Reservei uma mesa.',exEn:"I've booked a table."},
+  {pt:'esperar',en:'to wait',ipa:'/es.pe.ˈɾaʁ/',cat:'Actions',ex:'Preciso esperar.',exEn:'I need to wait.'},
+  {pt:'sair',en:'to leave / go out',ipa:'/sa.ˈiʁ/',cat:'Actions',ex:'Saio amanhã.',exEn:"I'm leaving tomorrow."},
+  {pt:'chegar',en:'to arrive',ipa:'/ʃe.ˈɡaʁ/',cat:'Actions',ex:'Chego ao meio-dia.',exEn:"I'm arriving at noon."},
+  {pt:'grande',en:'big / large',ipa:'/ˈɡɾɐ̃.dʒi/',cat:'Descriptions',ex:'É um país muito grande.',exEn:"It's a very large country."},
+  {pt:'pequeno / pequena',en:'small / little',ipa:'/pe.ˈke.nu/',cat:'Descriptions',ex:'Um café pequeno, por favor.',exEn:'A small coffee, please.'},
+  {pt:'bonito / bonita',en:'beautiful / handsome',ipa:'/bo.ˈni.tu/',cat:'Descriptions',ex:'Que dia bonito!',exEn:'What a beautiful day!'},
+  {pt:'bom / boa',en:'good',ipa:'/bõ / ˈbo.ɐ/',cat:'Descriptions',ex:'A comida estava boa demais.',exEn:'The food was incredibly good.'},
+  {pt:'ruim',en:'bad',ipa:'/ʁuˈĩ/',cat:'Descriptions',ex:'O tempo está ruim.',exEn:'The weather is bad.'},
+  {pt:'caro / cara',en:'expensive',ipa:'/ˈka.ɾu/',cat:'Descriptions',ex:'Está um pouco caro.',exEn:"It's a bit expensive."},
+  {pt:'grátis',en:'free (no cost)',ipa:'/ˈɡɾa.tʃis/',cat:'Descriptions',ex:'A entrada é grátis.',exEn:'Entry is free.'},
+  {pt:'quente',en:'hot / warm',ipa:'/ˈkẽ.tʃi/',cat:'Descriptions',ex:'O café está quente demais.',exEn:'The coffee is too hot.'},
+  {pt:'frio',en:'cold',ipa:'/ˈfɾi.u/',cat:'Descriptions',ex:'Hoje está frio.',exEn:"Today it's cold."},
+  {pt:'novo / nova',en:'new',ipa:'/ˈno.vu/',cat:'Descriptions',ex:'Tenho uma bolsa nova.',exEn:'I have a new bag.'},
+  {pt:'velho / velha',en:'old',ipa:'/ˈve.ʎu/',cat:'Descriptions',ex:'Este prédio é muito velho.',exEn:'This building is very old.'},
+  {pt:'rápido / rápida',en:'fast / quick',ipa:'/ˈʁa.pi.du/',cat:'Descriptions',ex:'O metrô é muito rápido.',exEn:'The metro is very fast.'},
+  {pt:'devagar',en:'slow / slowly',ipa:'/de.va.ˈɡaʁ/',cat:'Descriptions',ex:'Fale mais devagar, por favor.',exEn:'Please speak more slowly.'},
+  {pt:'fácil',en:'easy',ipa:'/ˈfa.siw/',cat:'Descriptions',ex:'O português não é fácil!',exEn:"Portuguese isn't easy!"},
+  {pt:'difícil',en:'difficult',ipa:'/dʒi.ˈfi.siw/',cat:'Descriptions',ex:'A gramática é difícil.',exEn:'Grammar is difficult.'},
+  {pt:'feliz',en:'happy',ipa:'/fe.ˈlis/',cat:'Descriptions',ex:'Estou muito feliz.',exEn:'I am very happy.'},
+  {pt:'cansado / cansada',en:'tired',ipa:'/kɐ̃.ˈza.du/',cat:'Descriptions',ex:'Estou muito cansada.',exEn:'I am very tired.'},
+  {pt:'doente',en:'ill / sick',ipa:'/do.ˈẽ.tʃi/',cat:'Descriptions',ex:'Estou me sentindo doente.',exEn:'I am feeling sick.'},
+  {pt:'passagem',en:'ticket',ipa:'/pa.ˈsa.ʒẽj̃/',cat:'Travel',ex:'Uma passagem de ida e volta, por favor.',exEn:'A return ticket, please.'},
+  {pt:'passaporte',en:'passport',ipa:'/pa.sa.ˈpoʁ.tʃi/',cat:'Travel',ex:'Meu passaporte é válido.',exEn:'My passport is valid.'},
+  {pt:'mala',en:'suitcase',ipa:'/ˈma.lɐ/',cat:'Travel',ex:'Perdi minha mala.',exEn:"I've lost my suitcase."},
+  {pt:'táxi',en:'taxi',ipa:'/ˈtak.si/',cat:'Travel',ex:'Vou chamar um táxi.',exEn:"I'll call a taxi."},
+  {pt:'ônibus',en:'bus',ipa:'/ˈo.ni.bus/',cat:'Travel',ex:'O ônibus chega em cinco minutos.',exEn:'The bus arrives in five minutes.'},
+  {pt:'metrô',en:'metro / subway',ipa:'/me.ˈtɾo/',cat:'Travel',ex:'Pegue o metrô linha dois.',exEn:'Take metro line two.'},
+  {pt:'avião',en:'plane',ipa:"/a.vˈjɐ̃w̃/",cat:'Travel',ex:'O avião decola ao meio-dia.',exEn:'The plane takes off at noon.'},
+  {pt:'carro',en:'car',ipa:'/ˈka.ʁu/',cat:'Travel',ex:'Estou alugando um carro.',exEn:"I'm renting a car."},
+  {pt:'direita',en:'right',ipa:'/dʒi.ˈɾej.tɐ/',cat:'Travel',ex:'Vire à direita.',exEn:'Turn right.'},
+  {pt:'esquerda',en:'left',ipa:'/es.ˈkeʁ.dɐ/',cat:'Travel',ex:'Vire à esquerda.',exEn:'Turn left.'},
+  {pt:'em frente',en:'straight ahead',ipa:'/ẽj̃ ˈfɾẽ.tʃi/',cat:'Travel',ex:'Siga em frente.',exEn:'Go straight ahead.'},
+  {pt:'perto de',en:'near / close to',ipa:'/ˈpeʁ.tu dʒi/',cat:'Travel',ex:'Fica perto da praia.',exEn:"It's near the beach."},
+  {pt:'longe de',en:'far from',ipa:'/ˈlõ.ʒi dʒi/',cat:'Travel',ex:'Está longe daqui.',exEn:"It's far from here."},
+  {pt:'médico / médica',en:'doctor',ipa:'/ˈme.dʒi.ku/',cat:'Health',ex:'Preciso de um médico.',exEn:'I need a doctor.'},
+  {pt:'dor',en:'pain',ipa:'/doʁ/',cat:'Health',ex:'Tenho uma dor aqui.',exEn:'I have a pain here.'},
+  {pt:'alergia',en:'allergy',ipa:'/a.leʁ.ˈʒi.ɐ/',cat:'Health',ex:'Tenho alergia a amendoim.',exEn:'I have a peanut allergy.'},
+  {pt:'remédio',en:'medicine / medication',ipa:'/ʁe.ˈme.dʒju/',cat:'Health',ex:'Preciso de remédio.',exEn:'I need medication.'},
+  {pt:'emergência',en:'emergency',ipa:'/e.meʁ.ˈʒẽ.sjɐ/',cat:'Health',ex:'É uma emergência!',exEn:"It's an emergency!"},
+  {pt:'tempo',en:'weather / time',ipa:'/ˈtẽ.pu/',cat:'Weather',ex:'Como está o tempo?',exEn:"What's the weather like?"},
+  {pt:'sol',en:'sun / sunshine',ipa:'/soɫ/',cat:'Weather',ex:'Está com sol.',exEn:"It's sunny."},
+  {pt:'chuva',en:'rain',ipa:'/ˈʃu.vɐ/',cat:'Weather',ex:'Vai chover.',exEn:"It's going to rain."},
+  {pt:'vento',en:'wind',ipa:'/ˈvẽ.tu/',cat:'Weather',ex:'Está muito ventoso.',exEn:"It's very windy."},
+  {pt:'nuvem',en:'cloud',ipa:'/ˈnu.vẽj̃/',cat:'Weather',ex:'Tem muitas nuvens.',exEn:"It's cloudy."},
+  {pt:'calor',en:'heat / hot weather',ipa:'/ka.ˈloʁ/',cat:'Weather',ex:'O calor está intenso.',exEn:'The heat is intense.'},
 ];
 
 const sentences = [
-  { pt:"Olá, me chamo [seu nome].", en:"Hello, my name is [your name].", cat:'Greetings', icon:'👋' },
-  { pt:"Como você se chama?", en:"What is your name?", cat:'Greetings', icon:'👋' },
-  { pt:"Muito prazer em te conhecer.", en:"Very pleased to meet you.", cat:'Greetings', icon:'👋' },
-  { pt:"Tudo bem / tudo bom?", en:"Everything OK? / How are you?", cat:'Greetings', icon:'👋' },
-  { pt:"Tudo ótimo, obrigada!", en:"Everything's great, thank you!", cat:'Greetings', icon:'👋' },
-  { pt:"Não falo português muito bem.", en:"I don't speak Portuguese very well.", cat:'Greetings', icon:'👋' },
-  { pt:"Você fala inglês?", en:"Do you speak English?", cat:'Greetings', icon:'👋' },
-  { pt:"Pode falar mais devagar, por favor?", en:"Can you speak more slowly, please?", cat:'Greetings', icon:'👋' },
-
-  { pt:"Uma mesa para dois, por favor.", en:"A table for two, please.", cat:'Dining', icon:'🍽️' },
-  { pt:"O cardápio, por favor.", en:"The menu, please.", cat:'Dining', icon:'🍽️' },
-  { pt:"Gostaria de fazer o pedido.", en:"I'd like to order.", cat:'Dining', icon:'🍽️' },
-  { pt:"O que você recomenda?", en:"What do you recommend?", cat:'Dining', icon:'🍽️' },
-  { pt:"A conta, por favor.", en:"The bill, please.", cat:'Dining', icon:'🍽️' },
-  { pt:"Estava delicioso, obrigado!", en:"It was delicious, thank you!", cat:'Dining', icon:'🍽️' },
-  { pt:"Sou alérgico a amendoim.", en:"I'm allergic to peanuts.", cat:'Dining', icon:'🍽️' },
-  { pt:"Uma caipirinha, por favor.", en:"A caipirinha, please.", cat:'Dining', icon:'🍽️' },
-
-  { pt:"Quanto custa?", en:"How much does it cost?", cat:'Shopping', icon:'🛍️' },
-  { pt:"Está muito caro.", en:"It's too expensive.", cat:'Shopping', icon:'🛍️' },
-  { pt:"Tem um tamanho maior?", en:"Do you have a larger size?", cat:'Shopping', icon:'🛍️' },
-  { pt:"Estou procurando um presente.", en:"I'm looking for a gift.", cat:'Shopping', icon:'🛍️' },
-  { pt:"Posso experimentar?", en:"Can I try it on?", cat:'Shopping', icon:'🛍️' },
-  { pt:"Aceita cartão de crédito?", en:"Do you accept credit cards?", cat:'Shopping', icon:'🛍️' },
-
-  { pt:"Onde fica o metrô, por favor?", en:"Where is the metro, please?", cat:'Directions', icon:'🗺️' },
-  { pt:"É longe daqui?", en:"Is it far from here?", cat:'Directions', icon:'🗺️' },
-  { pt:"Vire à esquerda / à direita.", en:"Turn left / right.", cat:'Directions', icon:'🗺️' },
-  { pt:"Siga em frente.", en:"Go straight ahead.", cat:'Directions', icon:'🗺️' },
-  { pt:"A que horas sai o ônibus?", en:"What time does the bus leave?", cat:'Directions', icon:'🗺️' },
-  { pt:"Estou perdido / perdida.", en:"I'm lost.", cat:'Directions', icon:'🗺️' },
-
-  { pt:"Socorro!", en:"Help!", cat:'Emergencies', icon:'🆘' },
-  { pt:"Chame a polícia, por favor.", en:"Please call the police.", cat:'Emergencies', icon:'🆘' },
-  { pt:"Preciso de um médico.", en:"I need a doctor.", cat:'Emergencies', icon:'🆘' },
-  { pt:"Perdi o meu passaporte.", en:"I've lost my passport.", cat:'Emergencies', icon:'🆘' },
-  { pt:"Onde fica o hospital mais próximo?", en:"Where is the nearest hospital?", cat:'Emergencies', icon:'🆘' },
-
-  { pt:"Posso sentar aqui?", en:"May I sit here?", cat:'Social', icon:'💬' },
-  { pt:"Você quer sair para jantar?", en:"Would you like to go out for dinner?", cat:'Social', icon:'💬' },
-  { pt:"Que legal!", en:"How cool / awesome!", cat:'Social', icon:'💬' },
-  { pt:"Parabéns!", en:"Congratulations!", cat:'Social', icon:'💬' },
-  { pt:"Boa sorte!", en:"Good luck!", cat:'Social', icon:'💬' },
-  { pt:"Sou de Londres.", en:"I'm from London.", cat:'Social', icon:'💬' },
+  {pt:"Olá, me chamo [seu nome].",en:"Hello, my name is [your name].",cat:'Greetings',icon:'👋'},
+  {pt:"Como você se chama?",en:"What is your name?",cat:'Greetings',icon:'👋'},
+  {pt:"Muito prazer em te conhecer.",en:"Very pleased to meet you.",cat:'Greetings',icon:'👋'},
+  {pt:"Tudo bem / tudo bom?",en:"Everything OK? / How are you?",cat:'Greetings',icon:'👋'},
+  {pt:"Tudo ótimo, obrigada!",en:"Everything's great, thank you!",cat:'Greetings',icon:'👋'},
+  {pt:"Não falo português muito bem.",en:"I don't speak Portuguese very well.",cat:'Greetings',icon:'👋'},
+  {pt:"Você fala inglês?",en:"Do you speak English?",cat:'Greetings',icon:'👋'},
+  {pt:"Pode falar mais devagar, por favor?",en:"Can you speak more slowly, please?",cat:'Greetings',icon:'👋'},
+  {pt:"Pode repetir, por favor?",en:"Can you repeat that, please?",cat:'Greetings',icon:'👋'},
+  {pt:"Uma mesa para dois, por favor.",en:"A table for two, please.",cat:'Dining',icon:'🍽️'},
+  {pt:"O cardápio, por favor.",en:"The menu, please.",cat:'Dining',icon:'🍽️'},
+  {pt:"Gostaria de fazer o pedido.",en:"I'd like to order.",cat:'Dining',icon:'🍽️'},
+  {pt:"O que você recomenda?",en:"What do you recommend?",cat:'Dining',icon:'🍽️'},
+  {pt:"A conta, por favor.",en:"The bill, please.",cat:'Dining',icon:'🍽️'},
+  {pt:"Estava delicioso, obrigado!",en:"It was delicious, thank you!",cat:'Dining',icon:'🍽️'},
+  {pt:"Sou alérgico a amendoim.",en:"I'm allergic to peanuts.",cat:'Dining',icon:'🍽️'},
+  {pt:"Uma caipirinha, por favor.",en:"A caipirinha, please.",cat:'Dining',icon:'🍽️'},
+  {pt:"Sou vegetariano / vegetariana.",en:"I am vegetarian.",cat:'Dining',icon:'🍽️'},
+  {pt:"Quanto custa?",en:"How much does it cost?",cat:'Shopping',icon:'🛍️'},
+  {pt:"Está muito caro.",en:"It's too expensive.",cat:'Shopping',icon:'🛍️'},
+  {pt:"Tem um tamanho maior?",en:"Do you have a larger size?",cat:'Shopping',icon:'🛍️'},
+  {pt:"Estou procurando um presente.",en:"I'm looking for a gift.",cat:'Shopping',icon:'🛍️'},
+  {pt:"Posso experimentar?",en:"Can I try it on?",cat:'Shopping',icon:'🛍️'},
+  {pt:"Aceita cartão de crédito?",en:"Do you accept credit cards?",cat:'Shopping',icon:'🛍️'},
+  {pt:"Onde fica o metrô, por favor?",en:"Where is the metro, please?",cat:'Directions',icon:'🗺️'},
+  {pt:"É longe daqui?",en:"Is it far from here?",cat:'Directions',icon:'🗺️'},
+  {pt:"Vire à esquerda / à direita.",en:"Turn left / right.",cat:'Directions',icon:'🗺️'},
+  {pt:"Siga em frente.",en:"Go straight ahead.",cat:'Directions',icon:'🗺️'},
+  {pt:"A que horas sai o ônibus?",en:"What time does the bus leave?",cat:'Directions',icon:'🗺️'},
+  {pt:"Estou perdido / perdida.",en:"I'm lost.",cat:'Directions',icon:'🗺️'},
+  {pt:"Socorro!",en:"Help!",cat:'Emergencies',icon:'🆘'},
+  {pt:"Chame a polícia, por favor.",en:"Please call the police.",cat:'Emergencies',icon:'🆘'},
+  {pt:"Preciso de um médico.",en:"I need a doctor.",cat:'Emergencies',icon:'🆘'},
+  {pt:"Perdi o meu passaporte.",en:"I've lost my passport.",cat:'Emergencies',icon:'🆘'},
+  {pt:"Onde fica o hospital mais próximo?",en:"Where is the nearest hospital?",cat:'Emergencies',icon:'🆘'},
+  {pt:"Posso sentar aqui?",en:"May I sit here?",cat:'Social',icon:'💬'},
+  {pt:"Você quer sair para jantar?",en:"Would you like to go out for dinner?",cat:'Social',icon:'💬'},
+  {pt:"Que legal!",en:"How cool / awesome!",cat:'Social',icon:'💬'},
+  {pt:"Parabéns!",en:"Congratulations!",cat:'Social',icon:'💬'},
+  {pt:"Boa sorte!",en:"Good luck!",cat:'Social',icon:'💬'},
+  {pt:"Sou de Londres.",en:"I'm from London.",cat:'Social',icon:'💬'},
+  {pt:"Je voudrais réserver une place.",en:"I'd like to book a seat.",cat:'Travel',icon:'✈️'},
+  {pt:"Quero reservar uma passagem.",en:"I'd like to book a ticket.",cat:'Travel',icon:'✈️'},
+  {pt:"A que horas sai o próximo ônibus?",en:"What time does the next bus leave?",cat:'Travel',icon:'✈️'},
+  {pt:"Meu voo foi cancelado.",en:"My flight was cancelled.",cat:'Travel',icon:'✈️'},
+  {pt:"Onde posso pegar um táxi?",en:"Where can I get a taxi?",cat:'Travel',icon:'✈️'},
+  {pt:"Quero alugar um carro.",en:"I'd like to rent a car.",cat:'Travel',icon:'✈️'},
+  {pt:"Preciso de um médico.",en:"I need a doctor.",cat:'Health',icon:'🏥'},
+  {pt:"Estou com dor de cabeça.",en:"I have a headache.",cat:'Health',icon:'🏥'},
+  {pt:"Estou com febre.",en:"I have a fever.",cat:'Health',icon:'🏥'},
+  {pt:"Sou alérgico à penicilina.",en:"I'm allergic to penicillin.",cat:'Health',icon:'🏥'},
+  {pt:"Onde fica a farmácia mais próxima?",en:"Where is the nearest pharmacy?",cat:'Health',icon:'🏥'},
 ];
 
-// STATE
-let cardIndex = 0;
-let filteredWords = [...words];
-let mastery = {};
-let quizCorrect = 0, quizWrong = 0, quizStreak = 0;
-let currentSentenceFilter = 'all';
-let quizAnswered = false;
-let quizCard = null;
+// SRS
+const SRS_INTERVALS=[0,1,3,7];
+function today(){return new Date().toISOString().split('T')[0];}
+function isDue(s){if(!s||!s.nextReview)return true;return s.nextReview<=today();}
+function getNextReview(g){if(g===0)return today();const d=new Date();d.setDate(d.getDate()+SRS_INTERVALS[g]);return d.toISOString().split('T')[0];}
+function formatNextReview(ds){if(!ds)return 'Not started';if(ds<=today())return 'Due now';const d=new Date(ds+'T00:00:00');const diff=Math.ceil((d-new Date())/(1000*60*60*24));if(diff===1)return 'Tomorrow';return 'In '+diff+' days';}
 
-words.forEach(w => mastery[w.pt] = 0);
+// PERSISTENCE
+const STORAGE_KEY='helena_portuguese_v2';
+function saveProgress(){
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify({mastery,srs,quizCorrect,quizWrong,quizStreak}));}catch(e){}
+  const ind=document.getElementById('saveIndicator');
+  ind.classList.add('show');setTimeout(()=>ind.classList.remove('show'),2000);
+}
+function loadProgress(){
+  try{
+    const raw=localStorage.getItem(STORAGE_KEY);
+    if(!raw)return;
+    const data=JSON.parse(raw);
+    if(data.mastery)Object.assign(mastery,data.mastery);
+    if(data.srs)Object.assign(srs,data.srs);
+    if(typeof data.quizCorrect==='number')quizCorrect=data.quizCorrect;
+    if(typeof data.quizWrong==='number')quizWrong=data.quizWrong;
+    if(typeof data.quizStreak==='number')quizStreak=data.quizStreak;
+  }catch(e){}
+}
+function confirmReset(){
+  if(confirm('Reset all progress? This cannot be undone.')){
+    localStorage.removeItem(STORAGE_KEY);
+    words.forEach(w=>{mastery[w.pt]=0;srs[w.pt]={};});
+    quizCorrect=0;quizWrong=0;quizStreak=0;
+    updateStats();renderProgress();
+  }
+}
+
+// STATE
+let cardIndex=0,filteredWords=[...words],mastery={},srs={};
+let quizCorrect=0,quizWrong=0,quizStreak=0,currentSentenceFilter='all';
+let quizAnswered=false,quizCard=null,srsMode=false,srsQueue=[];
+words.forEach(w=>{mastery[w.pt]=0;srs[w.pt]={};});
+loadProgress();
 
 // TABS
-function showTab(name) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('panel-' + name).classList.add('active');
-  event.target.classList.add('active');
-  if(name === 'sentences') renderSentences();
-  if(name === 'progress') renderProgress();
+function showTab(name,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  btn.classList.add('active');
+  if(name==='sentences')renderSentences();
+  if(name==='progress')renderProgress();
 }
 
 // FLASHCARDS
-function renderCard() {
-  const card = filteredWords[cardIndex];
+function renderCard(){
+  const card=srsMode?srsQueue[cardIndex]:filteredWords[cardIndex];
+  if(!card)return;
   document.getElementById('flashcard').classList.remove('flipped');
-  document.getElementById('fcCategory').textContent = card.cat;
-  document.getElementById('fcCategoryBack').textContent = card.cat;
-  document.getElementById('fcPortuguese').textContent = card.pt;
-  document.getElementById('fcEnglish').textContent = card.en;
-  document.getElementById('fcPronunciation').textContent = card.ipa;
-  document.getElementById('fcPronunciationBack').textContent = card.ipa;
-  document.getElementById('fcExample').textContent = card.ex;
-  document.getElementById('fcExampleEn').textContent = card.exEn;
-  document.getElementById('fcCounter').textContent = `Card ${cardIndex+1} of ${filteredWords.length}`;
+  ['fcCategory','fcCategoryBack'].forEach(id=>document.getElementById(id).textContent=card.cat);
+  document.getElementById('fcPortuguese').textContent=card.pt;
+  document.getElementById('fcEnglish').textContent=card.en;
+  document.getElementById('fcPronunciation').textContent=card.ipa;
+  document.getElementById('fcPronunciationBack').textContent=card.ipa;
+  document.getElementById('fcExample').textContent=card.ex;
+  document.getElementById('fcExampleEn').textContent=card.exEn;
+  const total=srsMode?srsQueue.length:filteredWords.length;
+  document.getElementById('fcCounter').textContent='Card '+(cardIndex+1)+' of '+total;
+  const sr=srs[card.pt];
+  document.getElementById('fcSrsInfo').textContent=sr&&sr.nextReview?'Next: '+formatNextReview(sr.nextReview):'';
   updateStats();
 }
-
-function flipCard() {
+function flipCard(){
   document.getElementById('flashcard').classList.toggle('flipped');
-  const card = filteredWords[cardIndex];
-  if(mastery[card.pt] === 0) { mastery[card.pt] = 1; updateStats(); }
+  const card=srsMode?srsQueue[cardIndex]:filteredWords[cardIndex];
+  if(mastery[card.pt]===0){mastery[card.pt]=1;saveProgress();updateStats();}
 }
-
-function nextCard() { cardIndex = (cardIndex + 1) % filteredWords.length; renderCard(); }
-function prevCard() { cardIndex = (cardIndex - 1 + filteredWords.length) % filteredWords.length; renderCard(); }
-
-function markCard(level) {
-  mastery[filteredWords[cardIndex].pt] = level;
-  updateStats();
-  nextCard();
+function nextCard(){const t=srsMode?srsQueue.length:filteredWords.length;cardIndex=(cardIndex+1)%t;renderCard();}
+function prevCard(){const t=srsMode?srsQueue.length:filteredWords.length;cardIndex=(cardIndex-1+t)%t;renderCard();}
+function markCard(grade){
+  const card=srsMode?srsQueue[cardIndex]:filteredWords[cardIndex];
+  if(grade===0)mastery[card.pt]=Math.max(0,mastery[card.pt]);
+  else if(grade>=2)mastery[card.pt]=Math.min(2,mastery[card.pt]+1);
+  else mastery[card.pt]=Math.max(1,mastery[card.pt]);
+  srs[card.pt]={nextReview:getNextReview(grade),lastGrade:grade,lastReviewed:today()};
+  saveProgress();updateStats();nextCard();
 }
-
-function shuffleCards() {
-  filteredWords = filteredWords.sort(() => Math.random() - 0.5);
-  cardIndex = 0; renderCard();
+function shuffleCards(){filteredWords=filteredWords.sort(()=>Math.random()-0.5);cardIndex=0;renderCard();}
+function filterCategory(){
+  const val=document.getElementById('categorySelect').value;
+  filteredWords=val==='all'?[...words]:words.filter(w=>w.cat===val);
+  srsMode=false;document.getElementById('srsModeBar').style.display='none';
+  cardIndex=0;renderCard();
 }
-
-function filterCategory() {
-  const val = document.getElementById('categorySelect').value;
-  filteredWords = val === 'all' ? [...words] : words.filter(w => w.cat === val);
-  cardIndex = 0; renderCard();
+function startSrsMode(){
+  srsQueue=words.filter(w=>isDue(srs[w.pt])&&mastery[w.pt]>0).sort(()=>Math.random()-0.5);
+  if(srsQueue.length===0){srsQueue=words.filter(w=>mastery[w.pt]===0).slice(0,20);}
+  if(srsQueue.length===0){alert('All caught up! No cards due. 🎉');return;}
+  srsMode=true;cardIndex=0;
+  document.getElementById('srsModeBar').style.display='flex';
+  document.getElementById('srsDueCount').textContent=srsQueue.length;
+  renderCard();
 }
-
-function speakWord() {
-  const card = filteredWords[cardIndex];
-  const utter = new SpeechSynthesisUtterance(card.pt);
-  utter.lang = 'pt-BR';
-  utter.rate = 0.85;
-  speechSynthesis.speak(utter);
+function exitSrsMode(){srsMode=false;document.getElementById('srsModeBar').style.display='none';filterCategory();}
+function speakWord(){
+  const card=srsMode?srsQueue[cardIndex]:filteredWords[cardIndex];
+  const u=new SpeechSynthesisUtterance(card.pt);u.lang='pt-BR';u.rate=0.85;speechSynthesis.speak(u);
 }
 
 // SENTENCES
-function renderSentences() {
-  const grid = document.getElementById('sentencesGrid');
-  const filtered = currentSentenceFilter === 'all' ? sentences : sentences.filter(s => s.cat === currentSentenceFilter);
-  grid.innerHTML = filtered.map(s => `
+function renderSentences(){
+  const filtered=currentSentenceFilter==='all'?sentences:sentences.filter(s=>s.cat===currentSentenceFilter);
+  document.getElementById('sentencesGrid').innerHTML=filtered.map(s=>`
     <div class="sentence-card">
       <div class="sentence-icon">${s.icon}</div>
       <div class="sentence-content">
@@ -988,128 +584,101 @@ function renderSentences() {
         <div class="sentence-en">${s.en}</div>
       </div>
       <button class="sentence-audio" onclick="speakSentence('${s.pt.replace(/'/g,"\\'")}')">🔊</button>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
-
-function filterSentences(cat, el) {
-  currentSentenceFilter = cat;
-  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-  el.classList.add('active');
-  renderSentences();
+function filterSentences(cat,el){
+  currentSentenceFilter=cat;
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');renderSentences();
 }
-
-function speakSentence(text) {
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = 'pt-BR';
-  utter.rate = 0.85;
-  speechSynthesis.speak(utter);
-}
+function speakSentence(text){const u=new SpeechSynthesisUtterance(text);u.lang='pt-BR';u.rate=0.85;speechSynthesis.speak(u);}
 
 // QUIZ
-function loadQuizQuestion() {
-  quizAnswered = false;
-  document.getElementById('quizFeedback').textContent = '';
-  document.getElementById('quizFeedback').className = 'quiz-feedback';
-  document.getElementById('nextQuizBtn').style.display = 'none';
-
-  quizCard = words[Math.floor(Math.random() * words.length)];
-  const ptToEn = Math.random() > 0.4;
-  document.getElementById('quizLabel').textContent = ptToEn ? 'What does this mean in English?' : 'How do you say this in Portuguese?';
-  document.getElementById('quizWord').textContent = ptToEn ? quizCard.pt : quizCard.en;
-  document.getElementById('quizType').textContent = ptToEn ? quizCard.ipa : quizCard.cat;
-
-  let wrong = words.filter(w => w.pt !== quizCard.pt).sort(() => Math.random() - 0.5).slice(0, 3);
-  let options = [quizCard, ...wrong].sort(() => Math.random() - 0.5);
-
-  document.getElementById('quizOptions').innerHTML = options.map(opt => {
-    const label = ptToEn ? opt.en : opt.pt;
-    const isCorrect = opt.pt === quizCard.pt;
-    return `<button class="quiz-option" onclick="checkAnswer(this, ${isCorrect}, '${quizCard.pt.replace(/'/g,"\\'")}')">${label}</button>`;
+function loadQuizQuestion(){
+  quizAnswered=false;
+  document.getElementById('quizFeedback').textContent='';
+  document.getElementById('quizFeedback').className='quiz-feedback';
+  document.getElementById('nextQuizBtn').style.display='none';
+  quizCard=words[Math.floor(Math.random()*words.length)];
+  const ptToEn=Math.random()>0.4;
+  document.getElementById('quizLabel').textContent=ptToEn?'What does this mean in English?':'How do you say this in Portuguese?';
+  document.getElementById('quizWord').textContent=ptToEn?quizCard.pt:quizCard.en;
+  document.getElementById('quizType').textContent=ptToEn?quizCard.ipa:quizCard.cat;
+  const wrong=words.filter(w=>w.pt!==quizCard.pt).sort(()=>Math.random()-0.5).slice(0,3);
+  document.getElementById('quizOptions').innerHTML=[quizCard,...wrong].sort(()=>Math.random()-0.5).map(opt=>{
+    const label=ptToEn?opt.en:opt.pt;
+    const isCorrect=opt.pt===quizCard.pt;
+    return '<button class="quiz-option" onclick="checkAnswer(this,'+isCorrect+",'"+(quizCard.pt.replace(/'/g,"\\'"))+"')\">"+label+'</button>';
   }).join('');
 }
-
-function checkAnswer(btn, correct, wordPt) {
-  if(quizAnswered) return;
-  quizAnswered = true;
-  const fb = document.getElementById('quizFeedback');
-  if(correct) {
-    btn.classList.add('correct');
-    quizCorrect++; quizStreak++;
-    fb.textContent = '✨ Muito bem! Correct!';
-    fb.className = 'quiz-feedback correct';
-    mastery[wordPt] = Math.min(2, (mastery[wordPt] || 0) + 1);
-  } else {
-    btn.classList.add('wrong');
-    quizWrong++; quizStreak = 0;
-    const w = words.find(w => w.pt === wordPt);
-    const ans = document.getElementById('quizLabel').textContent.includes('English') ? w.en : w.pt;
-    fb.textContent = `Não — the answer was: "${ans}"`;
-    fb.className = 'quiz-feedback wrong';
+function checkAnswer(btn,correct,wordPt){
+  if(quizAnswered)return;quizAnswered=true;
+  const fb=document.getElementById('quizFeedback');
+  if(correct){
+    btn.classList.add('correct');quizCorrect++;quizStreak++;
+    fb.textContent='✨ Muito bem! Correct!';fb.className='quiz-feedback correct';
+    mastery[wordPt]=Math.min(2,(mastery[wordPt]||0)+1);
+    srs[wordPt]={nextReview:getNextReview(2),lastGrade:2,lastReviewed:today()};
+  }else{
+    btn.classList.add('wrong');quizWrong++;quizStreak=0;
+    const w=words.find(w=>w.pt===wordPt);
+    const ans=document.getElementById('quizLabel').textContent.includes('English')?w.en:w.pt;
+    fb.textContent='Não — the answer was: "'+ans+'"';fb.className='quiz-feedback wrong';
+    srs[wordPt]={nextReview:getNextReview(0),lastGrade:0,lastReviewed:today()};
   }
-  document.querySelectorAll('.quiz-option').forEach(b => b.disabled = true);
-  document.getElementById('nextQuizBtn').style.display = 'inline-block';
-  document.getElementById('qCorrect').textContent = quizCorrect;
-  document.getElementById('qWrong').textContent = quizWrong;
-  document.getElementById('qTotal').textContent = quizCorrect + quizWrong;
-  updateStats();
+  document.querySelectorAll('.quiz-option').forEach(b=>b.disabled=true);
+  document.getElementById('nextQuizBtn').style.display='inline-block';
+  document.getElementById('qCorrect').textContent=quizCorrect;
+  document.getElementById('qWrong').textContent=quizWrong;
+  document.getElementById('qTotal').textContent=quizCorrect+quizWrong;
+  saveProgress();updateStats();
 }
-
-function resetQuiz() {
-  quizCorrect = 0; quizWrong = 0; quizStreak = 0;
-  ['qCorrect','qWrong','qTotal'].forEach(id => document.getElementById(id).textContent = 0);
-  document.getElementById('quizFeedback').textContent = '';
-  document.getElementById('nextQuizBtn').style.display = 'none';
-  document.getElementById('quizOptions').innerHTML = '';
-  document.getElementById('quizWord').textContent = '—';
-  updateStats();
-  loadQuizQuestion();
+function resetQuiz(){
+  quizCorrect=0;quizWrong=0;quizStreak=0;
+  ['qCorrect','qWrong','qTotal'].forEach(id=>document.getElementById(id).textContent=0);
+  document.getElementById('quizFeedback').textContent='';
+  document.getElementById('nextQuizBtn').style.display='none';
+  document.getElementById('quizOptions').innerHTML='';
+  document.getElementById('quizWord').textContent='—';
+  saveProgress();updateStats();loadQuizQuestion();
 }
 
 // PROGRESS
-function renderProgress() {
-  const mastered = words.filter(w => mastery[w.pt] === 2).length;
-  const learning = words.filter(w => mastery[w.pt] === 1).length;
-  const total = quizCorrect + quizWrong;
-  const acc = total > 0 ? Math.round((quizCorrect/total)*100)+'%' : '—';
-  document.getElementById('pMastered').textContent = mastered;
-  document.getElementById('pLearning').textContent = learning;
-  document.getElementById('pAccuracy').textContent = acc;
-  document.getElementById('pStreak').textContent = quizStreak;
-
-  const list = document.getElementById('masteryList');
-  const seen = words.filter(w => mastery[w.pt] > 0).sort((a,b) => mastery[b.pt]-mastery[a.pt]);
-  if(seen.length === 0) {
-    list.innerHTML = '<div class="word-mastery-item" style="grid-column:1/-1;color:var(--text-light);font-style:italic;">Start flipping flashcards to see your progress here.</div>';
-    return;
-  }
-  list.innerHTML = seen.map(w => `
-    <div class="word-mastery-item">
-      <span style="font-family:'Libre Baskerville',serif;">${w.pt}</span>
-      <span style="color:var(--text-light)">${w.en}</span>
-      <span><span class="mastery-dot mastery-${mastery[w.pt]}"></span></span>
-    </div>
-  `).join('');
+function renderProgress(){
+  const mastered=words.filter(w=>mastery[w.pt]===2).length;
+  const learning=words.filter(w=>mastery[w.pt]===1).length;
+  const due=words.filter(w=>isDue(srs[w.pt])&&mastery[w.pt]>0).length;
+  const total=quizCorrect+quizWrong;
+  document.getElementById('pMastered').textContent=mastered;
+  document.getElementById('pLearning').textContent=learning;
+  document.getElementById('pDue').textContent=due;
+  document.getElementById('pAccuracy').textContent=total>0?Math.round((quizCorrect/total)*100)+'%':'—';
+  document.getElementById('pStreak').textContent=quizStreak;
+  const seen=words.filter(w=>mastery[w.pt]>0).sort((a,b)=>mastery[b.pt]-mastery[a.pt]);
+  document.getElementById('masteryList').innerHTML=seen.length===0
+    ?'<div class="word-mastery-item" style="grid-column:1/-1;color:var(--text-light);font-style:italic;padding:1rem;">Start flipping flashcards to see your progress here.</div>'
+    :seen.map(w=>{
+      const sr=srs[w.pt];const due=isDue(sr)?'due':'';
+      return '<div class="word-mastery-item"><span style="font-family:\'Libre Baskerville\',serif;">'+w.pt+'</span><span style="color:var(--text-light);font-size:0.82rem;">'+w.en+'</span><span><span class="mastery-dot mastery-'+mastery[w.pt]+'"></span></span><span class="next-review '+due+'">'+(sr&&sr.nextReview?formatNextReview(sr.nextReview):'—')+'</span></div>';
+    }).join('');
+}
+function updateStats(){
+  const mastered=words.filter(w=>mastery[w.pt]===2).length;
+  const learning=words.filter(w=>mastery[w.pt]===1).length;
+  const due=words.filter(w=>isDue(srs[w.pt])&&mastery[w.pt]>0).length;
+  const pct=Math.round((mastered/words.length)*100);
+  const total=quizCorrect+quizWrong;
+  const acc=total>0?Math.round((quizCorrect/total)*100)+'%':'0%';
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('progressPct').textContent=pct+'%';
+  document.getElementById('statMastered').textContent=mastered;
+  document.getElementById('statLearning').textContent=learning;
+  document.getElementById('statDue').textContent=due;
+  document.getElementById('statQuizScore').textContent=acc;
+  document.getElementById('statStreak').textContent=quizStreak;
 }
 
-function updateStats() {
-  const mastered = words.filter(w => mastery[w.pt] === 2).length;
-  const learning = words.filter(w => mastery[w.pt] === 1).length;
-  const pct = Math.round((mastered / words.length) * 100);
-  const total = quizCorrect + quizWrong;
-  const acc = total > 0 ? Math.round((quizCorrect/total)*100)+'%' : '0%';
-  document.getElementById('progressBar').style.width = pct + '%';
-  document.getElementById('progressPct').textContent = pct + '%';
-  document.getElementById('statMastered').textContent = mastered;
-  document.getElementById('statLearning').textContent = learning;
-  document.getElementById('statQuizScore').textContent = acc;
-  document.getElementById('statStreak').textContent = quizStreak;
-}
-
-// INIT
-renderCard();
-renderSentences();
-loadQuizQuestion();
+renderCard();renderSentences();loadQuizQuestion();updateStats();
 </script>
 </body>
 </html>
