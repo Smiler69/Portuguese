@@ -39,11 +39,11 @@
   .flashcard-controls{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;}
   .category-select{font-family:'DM Sans',sans-serif;font-size:0.75rem;padding:0.4rem 0.8rem;border:1px solid var(--border);background:var(--ivory);color:var(--green);border-radius:2px;cursor:pointer;outline:none;}
   .fc-counter{font-family:'Lora',serif;font-style:italic;color:var(--text-light);font-size:0.92rem;}
-  .flashcard-scene{perspective:1000px;cursor:pointer;margin-bottom:1.2rem;min-height:300px;}
-  .flashcard{width:100%;min-height:300px;position:relative;transform-style:preserve-3d;transition:transform 0.55s cubic-bezier(0.4,0,0.2,1);}
-  .flashcard.flipped{transform:rotateY(180deg);}
-  .fc-face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--border);border-radius:3px;background:var(--ivory);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.8rem;box-shadow:0 4px 30px rgba(26,71,49,0.08),inset 0 0 0 6px var(--cream);}
-  .fc-back{transform:rotateY(180deg);background:var(--green);box-shadow:0 4px 30px rgba(26,71,49,0.2),inset 0 0 0 6px rgba(255,255,255,0.04);}
+  .flashcard-scene{perspective:1000px;-webkit-perspective:1000px;cursor:pointer;margin-bottom:1.2rem;min-height:300px;}
+  .flashcard{width:100%;min-height:300px;position:relative;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transition:transform 0.55s cubic-bezier(0.4,0,0.2,1);}
+  .flashcard.flipped{transform:rotateY(180deg);-webkit-transform:rotateY(180deg);}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:1px solid var(--border);border-radius:3px;background:var(--ivory);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.8rem;box-shadow:0 4px 30px rgba(26,71,49,0.08),inset 0 0 0 6px var(--cream);}
+  .fc-back{transform:rotateY(180deg);-webkit-transform:rotateY(180deg);background:var(--green);box-shadow:0 4px 30px rgba(26,71,49,0.2),inset 0 0 0 6px rgba(255,255,255,0.04);}
   .fc-hint{position:absolute;top:0.8rem;right:1rem;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-light);opacity:0.6;}
   .fc-back .fc-hint{color:rgba(255,255,255,0.35);}
   .fc-srs-info{position:absolute;top:0.8rem;left:1rem;font-size:0.65rem;color:var(--gold);opacity:0.8;}
@@ -579,38 +579,38 @@
 <script>
 const words=[
   {pt:'olá',en:'hello',ipa:'/o.ˈlɐ/',cat:'Essentials',ex:'Olá, tudo bem?',exEn:'Hello, how are you?',tip:''},
-  {pt:'bom dia',en:'good morning',ipa:'/bõ ˈdʒi.ɐ/',cat:'Essentials',ex:'Bom dia, como vai?',exEn:'Good morning!',tip:'"Bom" masculine, "boa" feminine.'},
+  {pt:'bom dia',en:'good morning',ipa:'/bõ ˈdʒi.ɐ/',cat:'Essentials',ex:'Bom dia, como vai?',exEn:'Good morning!',tip:'Bom masculine, boa feminine.'},
   {pt:'boa tarde',en:'good afternoon',ipa:'/ˈbo.ɐ ˈtaʁ.dʒi/',cat:'Essentials',ex:'Boa tarde!',exEn:'Good afternoon!',tip:''},
   {pt:'boa noite',en:'good evening / night',ipa:'/ˈbo.ɐ ˈnoj.tʃi/',cat:'Essentials',ex:'Boa noite!',exEn:'Good evening!',tip:'Used as greeting AND to say goodnight.'},
-  {pt:'tchau',en:'bye / goodbye',ipa:'/ˈtʃaw/',cat:'Essentials',ex:'Tchau, até logo!',exEn:'Bye, see you soon!',tip:'From Italian "ciao"!'},
-  {pt:'até logo',en:'see you soon',ipa:'/a.ˈtɛ ˈlo.ɡu/',cat:'Essentials',ex:'Até logo!',exEn:'See you soon!',tip:'"Até amanhã" = see you tomorrow.'},
+  {pt:'tchau',en:'bye / goodbye',ipa:'/ˈtʃaw/',cat:'Essentials',ex:'Tchau, até logo!',exEn:'Bye, see you soon!',tip:'From Italian ciao!'},
+  {pt:'até logo',en:'see you soon',ipa:'/a.ˈtɛ ˈlo.ɡu/',cat:'Essentials',ex:'Até logo!',exEn:'See you soon!',tip:'Até amanhã = see you tomorrow.'},
   {pt:'por favor',en:'please',ipa:'/poʁ fa.ˈvoʁ/',cat:'Essentials',ex:'Um café, por favor.',exEn:'A coffee, please.',tip:'Goes at the end of requests.'},
   {pt:'obrigado / obrigada',en:'thank you',ipa:'/o.bɾi.ˈga.du/',cat:'Essentials',ex:'Muito obrigada!',exEn:'Thank you very much!',tip:'Men say obrigado, women say obrigada.'},
-  {pt:'de nada',en:"you're welcome",ipa:'/dʒi ˈna.dɐ/',cat:'Essentials',ex:'De nada!',exEn:"You're welcome!",tip:'Also: "com prazer" = with pleasure.'},
+  {pt:'de nada',en:"you're welcome",ipa:'/dʒi ˈna.dɐ/',cat:'Essentials',ex:'De nada!',exEn:"You're welcome!",tip:'Also: com prazer = with pleasure.'},
   {pt:'com licença',en:'excuse me',ipa:'/kõ li.ˈsẽ.sɐ/',cat:'Essentials',ex:'Com licença!',exEn:'Excuse me!',tip:''},
-  {pt:'desculpe',en:'sorry',ipa:'/dʒis.ˈkuw.pi/',cat:'Essentials',ex:'Desculpe, não entendi.',exEn:"Sorry, I didn't understand.",tip:'Casually: "desculpa".'},
+  {pt:'desculpe',en:'sorry',ipa:'/dʒis.ˈkuw.pi/',cat:'Essentials',ex:'Desculpe, não entendi.',exEn:"Sorry, I didn't understand.",tip:'Casually: desculpa.'},
   {pt:'sim',en:'yes',ipa:'/sĩ/',cat:'Essentials',ex:'Sim!',exEn:'Yes!',tip:''},
   {pt:'não',en:'no',ipa:'/nɐ̃w̃/',cat:'Essentials',ex:'Não, obrigado.',exEn:'No, thank you.',tip:''},
   {pt:'talvez',en:'maybe',ipa:'/taw.ˈves/',cat:'Essentials',ex:'Talvez amanhã.',exEn:'Maybe tomorrow.',tip:''},
-  {pt:'claro',en:'of course',ipa:'/ˈkla.ɾu/',cat:'Essentials',ex:'Claro!',exEn:'Of course!',tip:'Also "lógico".'},
-  {pt:'tudo bem',en:'everything OK',ipa:'/ˈtu.du bẽj̃/',cat:'Essentials',ex:'Tudo bem?',exEn:'Everything OK?',tip:'Reply: "tudo bem!" or "tudo bom!"'},
+  {pt:'claro',en:'of course',ipa:'/ˈkla.ɾu/',cat:'Essentials',ex:'Claro!',exEn:'Of course!',tip:'Also lógico.'},
+  {pt:'tudo bem',en:'everything OK',ipa:'/ˈtu.du bẽj̃/',cat:'Essentials',ex:'Tudo bem?',exEn:'Everything OK?',tip:'Reply: tudo bem! or tudo bom!'},
   {pt:'como',en:'how',ipa:'/ˈko.mu/',cat:'Essentials',ex:'Como vai?',exEn:'How are you?',tip:''},
-  {pt:'onde',en:'where',ipa:'/ˈõ.dʒi/',cat:'Essentials',ex:'Onde fica?',exEn:'Where is it?',tip:'"Onde fica?" = where is it located?'},
+  {pt:'onde',en:'where',ipa:'/ˈõ.dʒi/',cat:'Essentials',ex:'Onde fica?',exEn:'Where is it?',tip:'Onde fica? = where is it located?'},
   {pt:'quando',en:'when',ipa:'/ˈkwɐ̃.du/',cat:'Essentials',ex:'Quando você chega?',exEn:'When do you arrive?',tip:''},
-  {pt:'por que',en:'why',ipa:'/poʁ ˈke/',cat:'Essentials',ex:'Por que não?',exEn:'Why not?',tip:'"Por que" = why. "Porque" = because.'},
+  {pt:'por que',en:'why',ipa:'/poʁ ˈke/',cat:'Essentials',ex:'Por que não?',exEn:'Why not?',tip:'Por que = why. Porque = because.'},
   {pt:'quem',en:'who',ipa:'/kẽj̃/',cat:'Essentials',ex:'Quem é você?',exEn:'Who are you?',tip:''},
   {pt:'quanto',en:'how much',ipa:'/ˈkwɐ̃.tu/',cat:'Essentials',ex:'Quanto custa?',exEn:'How much does it cost?',tip:''},
   {pt:'com',en:'with',ipa:'/kõ/',cat:'Essentials',ex:'Com leite.',exEn:'With milk.',tip:''},
   {pt:'sem',en:'without',ipa:'/sẽj̃/',cat:'Essentials',ex:'Sem açúcar.',exEn:'Without sugar.',tip:''},
   {pt:'muito',en:'very / a lot',ipa:'/ˈmuj.tu/',cat:'Essentials',ex:'Muito obrigado!',exEn:'Thank you very much!',tip:''},
   {pt:'também',en:'also / too',ipa:'/tɐ̃.ˈbẽj̃/',cat:'Essentials',ex:'Eu também!',exEn:'Me too!',tip:''},
-  {pt:'mais',en:'more',ipa:'/majs/',cat:'Essentials',ex:'Mais um café.',exEn:'One more coffee.',tip:'"Mais ou menos" = more or less.'},
+  {pt:'mais',en:'more',ipa:'/majs/',cat:'Essentials',ex:'Mais um café.',exEn:'One more coffee.',tip:'Mais ou menos = more or less.'},
   {pt:'tudo',en:'everything',ipa:'/ˈtu.du/',cat:'Essentials',ex:'Tudo bem?',exEn:'Everything OK?',tip:''},
   {pt:'zero',en:'zero',ipa:'/ˈze.ɾu/',cat:'Numbers',ex:'Começa com zero.',exEn:'Starts with zero.',tip:''},
-  {pt:'um / uma',en:'one',ipa:'/ũ / ˈu.mɐ/',cat:'Numbers',ex:'Tenho um filho.',exEn:'I have one child.',tip:'"Um" masculine, "uma" feminine.'},
+  {pt:'um / uma',en:'one',ipa:'/ũ / ˈu.mɐ/',cat:'Numbers',ex:'Tenho um filho.',exEn:'I have one child.',tip:'Um masculine, uma feminine.'},
   {pt:'dois / duas',en:'two',ipa:'/ˈdoj.s/',cat:'Numbers',ex:'Duas cervejas.',exEn:'Two beers.',tip:''},
   {pt:'três',en:'three',ipa:'/ˈtɾes/',cat:'Numbers',ex:'Somos três.',exEn:'Three of us.',tip:''},
-  {pt:'quatro',en:'four',ipa:'/ˈkwa.tɾu/',cat:'Numbers',ex:'Quatro horas.',exEn:'Four o'clock.',tip:''},
+  {pt:'quatro',en:'four',ipa:'/ˈkwa.tɾu/',cat:'Numbers',ex:'Quatro horas.',exEn:"Four o\'clock.",tip:''},
   {pt:'cinco',en:'five',ipa:'/ˈsĩ.ku/',cat:'Numbers',ex:'Cinco minutos.',exEn:'Five minutes.',tip:''},
   {pt:'seis',en:'six',ipa:'/ˈsejs/',cat:'Numbers',ex:'Seis pessoas.',exEn:'Six people.',tip:''},
   {pt:'sete',en:'seven',ipa:'/ˈse.tʃi/',cat:'Numbers',ex:'São sete horas.',exEn:"It's seven.",tip:''},
@@ -621,94 +621,94 @@ const words=[
   {pt:'doze',en:'twelve',ipa:'/ˈdo.zi/',cat:'Numbers',ex:'Doze meses.',exEn:'Twelve months.',tip:''},
   {pt:'vinte',en:'twenty',ipa:'/ˈvĩ.tʃi/',cat:'Numbers',ex:'Vinte reais.',exEn:'Twenty reais.',tip:''},
   {pt:'trinta',en:'thirty',ipa:'/ˈtɾĩ.tɐ/',cat:'Numbers',ex:'Tenho trinta anos.',exEn:'I am thirty.',tip:''},
-  {pt:'cem',en:'one hundred',ipa:'/sẽj̃/',cat:'Numbers',ex:'Cem reais.',exEn:'One hundred reais.',tip:'"Cem" = exactly 100.'},
+  {pt:'cem',en:'one hundred',ipa:'/sẽj̃/',cat:'Numbers',ex:'Cem reais.',exEn:'One hundred reais.',tip:'Cem = exactly 100.'},
   {pt:'mil',en:'one thousand',ipa:'/miw/',cat:'Numbers',ex:'Mil reais.',exEn:'One thousand reais.',tip:''},
   {pt:'hoje',en:'today',ipa:'/ˈo.ʒi/',cat:'Time',ex:'Hoje está lindo!',exEn:"Today it's beautiful!",tip:''},
   {pt:'amanhã',en:'tomorrow',ipa:'/a.mɐ.ˈɲɐ̃/',cat:'Time',ex:'Até amanhã!',exEn:'See you tomorrow!',tip:''},
   {pt:'ontem',en:'yesterday',ipa:'/ˈõ.tẽj̃/',cat:'Time',ex:'Ontem foi ótimo.',exEn:'Yesterday was great.',tip:''},
-  {pt:'agora',en:'now',ipa:'/a.ˈɡo.ɾɐ/',cat:'Time',ex:'Estou pronta agora.',exEn:"I'm ready now.",tip:'"Agora mesmo" = right now.'},
-  {pt:'logo',en:'soon',ipa:'/ˈlo.ɡu/',cat:'Time',ex:'Até logo!',exEn:'See you soon!',tip:'"Logo logo" = very soon!'},
+  {pt:'agora',en:'now',ipa:'/a.ˈɡo.ɾɐ/',cat:'Time',ex:'Estou pronta agora.',exEn:"I'm ready now.",tip:'Agora mesmo = right now.'},
+  {pt:'logo',en:'soon',ipa:'/ˈlo.ɡu/',cat:'Time',ex:'Até logo!',exEn:'See you soon!',tip:'Logo logo = very soon!'},
   {pt:'sempre',en:'always',ipa:'/ˈsẽ.pɾi/',cat:'Time',ex:'Sempre tomo café.',exEn:'I always have coffee.',tip:''},
   {pt:'nunca',en:'never',ipa:'/ˈnũ.kɐ/',cat:'Time',ex:'Nunca fumo.',exEn:'I never smoke.',tip:''},
   {pt:'às vezes',en:'sometimes',ipa:'/az ˈve.zis/',cat:'Time',ex:'Às vezes eu cozinho.',exEn:'Sometimes I cook.',tip:''},
-  {pt:'manhã',en:'morning',ipa:'/mɐ.ˈɲɐ̃/',cat:'Time',ex:'De manhã.',exEn:'In the morning.',tip:'"Da manhã" = a.m.'},
+  {pt:'manhã',en:'morning',ipa:'/mɐ.ˈɲɐ̃/',cat:'Time',ex:'De manhã.',exEn:'In the morning.',tip:'Da manhã = a.m.'},
   {pt:'tarde',en:'afternoon',ipa:'/ˈtaʁ.dʒi/',cat:'Time',ex:'À tarde.',exEn:'In the afternoon.',tip:''},
   {pt:'noite',en:'night / evening',ipa:'/ˈnoj.tʃi/',cat:'Time',ex:'À noite.',exEn:'At night.',tip:''},
   {pt:'semana',en:'week',ipa:'/se.ˈmɐ.nɐ/',cat:'Time',ex:'Na semana que vem.',exEn:'Next week.',tip:''},
   {pt:'mês',en:'month',ipa:'/mes/',cat:'Time',ex:'O mês de junho.',exEn:'The month of June.',tip:''},
   {pt:'ano',en:'year',ipa:'/ˈɐ.nu/',cat:'Time',ex:'Feliz Ano Novo!',exEn:'Happy New Year!',tip:''},
-  {pt:'hora',en:'hour / time',ipa:'/ˈo.ɾɐ/',cat:'Time',ex:'Que horas são?',exEn:'What time is it?',tip:'"São duas horas" = It's two o'clock.'},
+  {pt:'hora',en:'hour / time',ipa:'/ˈo.ɾɐ/',cat:'Time',ex:'Que horas são?',exEn:'What time is it?',tip:'Sao duas horas = it is two o clock'},
   {pt:'eu',en:'I',ipa:'/ˈew/',cat:'People',ex:'Eu sou inglesa.',exEn:'I am English.',tip:''},
-  {pt:'você',en:'you',ipa:'/vo.ˈse/',cat:'People',ex:'Você fala português?',exEn:'Do you speak Portuguese?',tip:'"O senhor/a senhora" is very formal.'},
+  {pt:'você',en:'you',ipa:'/vo.ˈse/',cat:'People',ex:'Você fala português?',exEn:'Do you speak Portuguese?',tip:'O senhor/a senhora is very formal.'},
   {pt:'ele / ela',en:'he / she',ipa:'/ˈe.li / ˈe.lɐ/',cat:'People',ex:'Ela se chama Ana.',exEn:'Her name is Ana.',tip:''},
-  {pt:'a gente / nós',en:'we',ipa:'/ɐ ˈʒẽ.tʃi/',cat:'People',ex:'A gente adora o Brasil.',exEn:'We love Brazil.',tip:'"A gente" takes 3rd person singular verb!'},
+  {pt:'a gente / nós',en:'we',ipa:'/ɐ ˈʒẽ.tʃi/',cat:'People',ex:'A gente adora o Brasil.',exEn:'We love Brazil.',tip:'A gente takes 3rd person singular verb!'},
   {pt:'eles / elas',en:'they',ipa:'/ˈe.lis/',cat:'People',ex:'Eles chegam amanhã.',exEn:"They're arriving tomorrow.",tip:''},
   {pt:'amigo / amiga',en:'friend',ipa:'/a.ˈmi.ɡu/',cat:'People',ex:'Minha melhor amiga.',exEn:'My best friend.',tip:''},
-  {pt:'família',en:'family',ipa:'/fa.ˈmi.ljɐ/',cat:'People',ex:'Minha família.',exEn:'My family.',tip:'"Minha" = my (f). "Meu" = my (m).'},
+  {pt:'família',en:'family',ipa:'/fa.ˈmi.ljɐ/',cat:'People',ex:'Minha família.',exEn:'My family.',tip:'Minha = my (f). Meu = my (m).'},
   {pt:'homem',en:'man',ipa:'/ˈo.mẽj̃/',cat:'People',ex:'O homem é alto.',exEn:'The man is tall.',tip:''},
   {pt:'mulher',en:'woman / wife',ipa:'/mu.ˈʎeʁ/',cat:'People',ex:'Minha mulher.',exEn:'My wife.',tip:'Means both woman and wife.'},
   {pt:'criança',en:'child',ipa:'/kɾi.ˈɐ̃.sɐ/',cat:'People',ex:'A criança brinca.',exEn:'The child plays.',tip:'Feminine even for a boy.'},
-  {pt:'pai',en:'father',ipa:'/ˈpaj/',cat:'People',ex:'Meu pai é médico.',exEn:'My father is a doctor.',tip:'"Meus pais" = my parents!'},
-  {pt:'mãe',en:'mother',ipa:'/mɐ̃j̃/',cat:'People',ex:'Minha mãe.',exEn:'My mother.',tip:'The "ã" is a nasal vowel.'},
-  {pt:'irmão / irmã',en:'brother / sister',ipa:'/iʁ.ˈmɐ̃w̃/',cat:'People',ex:'Meu irmão.',exEn:'My brother.',tip:'"Meus irmãos" = siblings.'},
+  {pt:'pai',en:'father',ipa:'/ˈpaj/',cat:'People',ex:'Meu pai é médico.',exEn:'My father is a doctor.',tip:'Meus pais = my parents!'},
+  {pt:'mãe',en:'mother',ipa:'/mɐ̃j̃/',cat:'People',ex:'Minha mãe.',exEn:'My mother.',tip:'The ã is a nasal vowel.'},
+  {pt:'irmão / irmã',en:'brother / sister',ipa:'/iʁ.ˈmɐ̃w̃/',cat:'People',ex:'Meu irmão.',exEn:'My brother.',tip:'Meus irmãos = siblings.'},
   {pt:'marido',en:'husband',ipa:'/ma.ˈɾi.du/',cat:'People',ex:'Meu marido.',exEn:'My husband.',tip:''},
-  {pt:'filho / filha',en:'son / daughter',ipa:'/ˈfi.ʎu/',cat:'People',ex:'Minha filha.',exEn:'My daughter.',tip:'"Meus filhos" = my children.'},
-  {pt:'namorado / namorada',en:'boyfriend / girlfriend',ipa:'/na.mo.ˈɾa.du/',cat:'People',ex:'Meu namorado.',exEn:'My boyfriend.',tip:'From "amor" (love).'},
-  {pt:'casa',en:'house / home',ipa:'/ˈka.zɐ/',cat:'Places',ex:'Vou para casa.',exEn:"I'm going home.",tip:'"Em casa" = at home.'},
+  {pt:'filho / filha',en:'son / daughter',ipa:'/ˈfi.ʎu/',cat:'People',ex:'Minha filha.',exEn:'My daughter.',tip:'Meus filhos = my children.'},
+  {pt:'namorado / namorada',en:'boyfriend / girlfriend',ipa:'/na.mo.ˈɾa.du/',cat:'People',ex:'Meu namorado.',exEn:'My boyfriend.',tip:'From amor (love).'},
+  {pt:'casa',en:'house / home',ipa:'/ˈka.zɐ/',cat:'Places',ex:'Vou para casa.',exEn:"I'm going home.",tip:'Em casa = at home.'},
   {pt:'apartamento',en:'apartment',ipa:'/a.paʁ.ta.ˈmẽ.tu/',cat:'Places',ex:'Moro num apartamento.',exEn:'I live in an apartment.',tip:''},
   {pt:'rua',en:'street',ipa:'/ˈʁu.ɐ/',cat:'Places',ex:'Nessa rua.',exEn:'On this street.',tip:''},
   {pt:'cidade',en:'city',ipa:'/si.ˈda.dʒi/',cat:'Places',ex:'São Paulo é incrível.',exEn:'São Paulo is incredible.',tip:'Largest city in South America!'},
-  {pt:'país',en:'country',ipa:'/pa.ˈis/',cat:'Places',ex:'O Brasil é lindo.',exEn:'Brazil is beautiful.',tip:'"o Brasil" (m), "a França" (f).'},
-  {pt:'restaurante',en:'restaurant',ipa:'/ʁes.taw.ˈɾɐ̃.tʃi/',cat:'Places',ex:'Vamos ao restaurante.',exEn:"We're going to the restaurant.",tip:'"Ao" = "a + o".'},
+  {pt:'país',en:'country',ipa:'/pa.ˈis/',cat:'Places',ex:'O Brasil é lindo.',exEn:'Brazil is beautiful.',tip:'o Brasil (m), a França (f).'},
+  {pt:'restaurante',en:'restaurant',ipa:'/ʁes.taw.ˈɾɐ̃.tʃi/',cat:'Places',ex:'Vamos ao restaurante.',exEn:"We're going to the restaurant.",tip:'Ao = a + o.'},
   {pt:'padaria',en:'bakery',ipa:'/pa.da.ˈɾi.ɐ/',cat:'Places',ex:'A padaria abre às seis.',exEn:'The bakery opens at six.',tip:'Serves snacks and drinks too!'},
   {pt:'hotel',en:'hotel',ipa:'/o.ˈtɛw/',cat:'Places',ex:'O hotel fica perto da praia.',exEn:'The hotel is near the beach.',tip:''},
   {pt:'aeroporto',en:'airport',ipa:'/a.e.ɾo.ˈpoʁ.tu/',cat:'Places',ex:'O aeroporto está longe.',exEn:'The airport is far.',tip:''},
   {pt:'praia',en:'beach',ipa:'/ˈpɾaj.ɐ/',cat:'Places',ex:'Adoro a praia.',exEn:'I love the beach.',tip:'Brazil has over 7,000km of coastline!'},
-  {pt:'mercado',en:'market / supermarket',ipa:'/meʁ.ˈka.du/',cat:'Places',ex:'Vou ao mercado.',exEn:'I go to the market.',tip:'"Feira" = outdoor market.'},
+  {pt:'mercado',en:'market / supermarket',ipa:'/meʁ.ˈka.du/',cat:'Places',ex:'Vou ao mercado.',exEn:'I go to the market.',tip:'Feira = outdoor market.'},
   {pt:'hospital',en:'hospital',ipa:'/os.pi.ˈtaw/',cat:'Places',ex:'O hospital fica no centro.',exEn:'The hospital is in the centre.',tip:''},
   {pt:'farmácia',en:'pharmacy',ipa:'/faʁ.ˈma.sjɐ/',cat:'Places',ex:'A farmácia está aberta.',exEn:'The pharmacy is open.',tip:''},
   {pt:'museu',en:'museum',ipa:'/mu.ˈzew/',cat:'Places',ex:'O museu é incrível.',exEn:'The museum is incredible.',tip:''},
-  {pt:'banco',en:'bank',ipa:'/ˈbɐ̃.ku/',cat:'Places',ex:'O banco fecha às seis.',exEn:'The bank closes at six.',tip:'"Caixa eletrônico" = ATM.'},
+  {pt:'banco',en:'bank',ipa:'/ˈbɐ̃.ku/',cat:'Places',ex:'O banco fecha às seis.',exEn:'The bank closes at six.',tip:'Caixa eletrônico = ATM.'},
   {pt:'loja',en:'shop / store',ipa:'/ˈlo.ʒɐ/',cat:'Places',ex:'A loja está fechada.',exEn:'The shop is closed.',tip:''},
-  {pt:'pão',en:'bread',ipa:'/pɐ̃w̃/',cat:'Food',ex:'Um pão de queijo.',exEn:'A cheese bread.',tip:'"Pão de queijo" — Brazil's most beloved snack!'},
-  {pt:'café',en:'coffee',ipa:'/ka.ˈfɛ/',cat:'Food',ex:'Tomo café todo dia.',exEn:'I have coffee every day.',tip:'Brazil is the world's largest coffee producer!'},
-  {pt:'água',en:'water',ipa:'/ˈa.ɡwɐ/',cat:'Food',ex:'Uma garrafa de água.',exEn:'A bottle of water.',tip:'"Com gás" = sparkling.'},
+  {pt:'pão',en:'bread',ipa:'/pɐ̃w̃/',cat:'Food',ex:'Um pão de queijo.',exEn:'A cheese bread.',tip:'Pão de queijo — Brazil\'s most beloved snack!'},
+  {pt:'café',en:'coffee',ipa:'/ka.ˈfɛ/',cat:'Food',ex:'Tomo café todo dia.',exEn:'I have coffee every day.',tip:'Brazil is the world\'s largest coffee producer!'},
+  {pt:'água',en:'water',ipa:'/ˈa.ɡwɐ/',cat:'Food',ex:'Uma garrafa de água.',exEn:'A bottle of water.',tip:'Com gás = sparkling.'},
   {pt:'suco',en:'juice',ipa:'/ˈsu.ku/',cat:'Food',ex:'Um suco de laranja.',exEn:'An orange juice.',tip:'Fresh juice is everywhere in Brazil!'},
-  {pt:'cerveja',en:'beer',ipa:'/seʁ.ˈve.ʒɐ/',cat:'Food',ex:'Uma cerveja gelada.',exEn:'A cold beer.',tip:'"Uma gelada" = a cold beer!'},
-  {pt:'churrasco',en:'barbecue',ipa:'/ʃu.ˈʁas.ku/',cat:'Food',ex:'Um churrasco no domingo.',exEn:'A barbecue on Sunday.',tip:'"Churrascaria" = steakhouse.'},
+  {pt:'cerveja',en:'beer',ipa:'/seʁ.ˈve.ʒɐ/',cat:'Food',ex:'Uma cerveja gelada.',exEn:'A cold beer.',tip:'Uma gelada = a cold beer!'},
+  {pt:'churrasco',en:'barbecue',ipa:'/ʃu.ˈʁas.ku/',cat:'Food',ex:'Um churrasco no domingo.',exEn:'A barbecue on Sunday.',tip:'Churrascaria = steakhouse.'},
   {pt:'feijão',en:'beans',ipa:'/fej.ˈʒɐ̃w̃/',cat:'Food',ex:'Arroz com feijão.',exEn:'Rice and beans.',tip:'The cornerstone of Brazilian daily food!'},
   {pt:'arroz',en:'rice',ipa:'/a.ˈʁos/',cat:'Food',ex:'Arroz com feijão todo dia.',exEn:'Rice and beans every day.',tip:''},
   {pt:'fruta',en:'fruit',ipa:'/ˈfɾu.tɐ/',cat:'Food',ex:'Frutas deliciosas.',exEn:'Delicious fruits.',tip:'Manga, abacaxi, maracujá!'},
-  {pt:'carne',en:'meat',ipa:'/ˈkaʁ.ni/',cat:'Food',ex:'Não como carne.',exEn:"I don't eat meat.",tip:'"Frango" = chicken.'},
+  {pt:'carne',en:'meat',ipa:'/ˈkaʁ.ni/',cat:'Food',ex:'Não como carne.',exEn:"I don't eat meat.",tip:'Frango = chicken.'},
   {pt:'frango',en:'chicken',ipa:'/ˈfɾɐ̃.ɡu/',cat:'Food',ex:'Frango grelhado.',exEn:'Grilled chicken.',tip:''},
-  {pt:'sobremesa',en:'dessert',ipa:'/so.bɾi.ˈme.zɐ/',cat:'Food',ex:'O que tem de sobremesa?',exEn:"What's for dessert?",tip:'"Brigadeiro" is Brazil's most beloved dessert!'},
+  {pt:'sobremesa',en:'dessert',ipa:'/so.bɾi.ˈme.zɐ/',cat:'Food',ex:'O que tem de sobremesa?',exEn:"What's for dessert?",tip:'Brigadeiro is Brazil\'s most beloved dessert!'},
   {pt:'almoço',en:'lunch',ipa:'/aw.ˈmo.su/',cat:'Food',ex:'Almoço juntos?',exEn:'Lunch together?',tip:'Main meal in Brazil, noon-2pm.'},
   {pt:'jantar',en:'dinner',ipa:'/ʒɐ̃.ˈtaʁ/',cat:'Food',ex:'O jantar é às oito.',exEn:'Dinner is at eight.',tip:''},
   {pt:'açúcar',en:'sugar',ipa:'/a.ˈsu.kaʁ/',cat:'Food',ex:'Com açúcar.',exEn:'With sugar.',tip:''},
   {pt:'sal',en:'salt',ipa:'/saw/',cat:'Food',ex:'Pode passar o sal?',exEn:'Can you pass the salt?',tip:''},
   {pt:'queijo',en:'cheese',ipa:'/ˈkej.ʒu/',cat:'Food',ex:'Pão de queijo!',exEn:'Cheese bread!',tip:''},
-  {pt:'ser',en:'to be (permanent)',ipa:'/seʁ/',cat:'Actions',ex:'Sou inglesa.',exEn:'I am English.',tip:'"Ser" vs "estar" — the biggest challenge in Portuguese!'},
-  {pt:'estar',en:'to be (temporary)',ipa:'/es.ˈtaʁ/',cat:'Actions',ex:'Estou bem.',exEn:"I'm fine.",tip:'"Estou" = right now. "Sou" = permanently.'},
-  {pt:'ter',en:'to have',ipa:'/teʁ/',cat:'Actions',ex:'Tenho fome.',exEn:'I am hungry.',tip:'"Ter" used for feelings: "ter fome", "ter medo".'},
-  {pt:'fazer',en:'to do / make',ipa:'/fa.ˈzeʁ/',cat:'Actions',ex:'O que você está fazendo?',exEn:'What are you doing?',tip:'"Fazer" is very versatile.'},
-  {pt:'ir',en:'to go',ipa:'/ˈiʁ/',cat:'Actions',ex:'Vamos à praia.',exEn:"We're going to the beach.",tip:'"Vou + infinitive" = near future!'},
+  {pt:'ser',en:'to be (permanent)',ipa:'/seʁ/',cat:'Actions',ex:'Sou inglesa.',exEn:'I am English.',tip:'Ser vs estar — the biggest challenge in Portuguese!'},
+  {pt:'estar',en:'to be (temporary)',ipa:'/es.ˈtaʁ/',cat:'Actions',ex:'Estou bem.',exEn:"I'm fine.",tip:'Estou = right now. Sou = permanently.'},
+  {pt:'ter',en:'to have',ipa:'/teʁ/',cat:'Actions',ex:'Tenho fome.',exEn:'I am hungry.',tip:'Ter used for feelings: ter fome, ter medo.'},
+  {pt:'fazer',en:'to do / make',ipa:'/fa.ˈzeʁ/',cat:'Actions',ex:'O que você está fazendo?',exEn:'What are you doing?',tip:'Fazer is very versatile.'},
+  {pt:'ir',en:'to go',ipa:'/ˈiʁ/',cat:'Actions',ex:'Vamos à praia.',exEn:"We're going to the beach.",tip:'Vou + infinitive = near future!'},
   {pt:'vir',en:'to come',ipa:'/ˈviʁ/',cat:'Actions',ex:'Você pode vir?',exEn:'Can you come?',tip:''},
   {pt:'falar',en:'to speak / talk',ipa:'/fa.ˈlaʁ/',cat:'Actions',ex:'Falo um pouco de português.',exEn:'I speak a little Portuguese.',tip:'-AR verbs: remove -ar, add -o, -a, -a, -amos, -am.'},
   {pt:'comer',en:'to eat',ipa:'/ko.ˈmeʁ/',cat:'Actions',ex:'Gostamos de comer fora.',exEn:'We like to eat out.',tip:'-ER verbs: remove -er, add -o, -e, -e, -emos, -em.'},
   {pt:'beber',en:'to drink',ipa:'/be.ˈbeʁ/',cat:'Actions',ex:'Quero beber alguma coisa.',exEn:'I want to drink something.',tip:''},
-  {pt:'entender',en:'to understand',ipa:'/ẽ.tẽ.ˈdeʁ/',cat:'Actions',ex:'Não entendo.',exEn:"I don't understand.",tip:'Put "não" before verb to negate.'},
-  {pt:'saber',en:'to know (a fact)',ipa:'/sa.ˈbeʁ/',cat:'Actions',ex:'Não sei.',exEn:"I don't know.",tip:'"Saber" = know facts. "Conhecer" = know people/places.'},
-  {pt:'querer',en:'to want',ipa:'/ke.ˈɾeʁ/',cat:'Actions',ex:'Quero aprender português.',exEn:'I want to learn Portuguese.',tip:'"Gostaria" = I would like (politer).'},
-  {pt:'poder',en:'to be able to / can',ipa:'/po.ˈdeʁ/',cat:'Actions',ex:'Você pode repetir?',exEn:'Can you repeat?',tip:'"Pode?" alone = can you? / may I?'},
-  {pt:'precisar',en:'to need',ipa:'/pɾe.si.ˈzaʁ/',cat:'Actions',ex:'Preciso de ajuda.',exEn:'I need help.',tip:'"Precisar de" always needs "de"!'},
-  {pt:'amar',en:'to love',ipa:'/a.ˈmaʁ/',cat:'Actions',ex:'Amo o Brasil!',exEn:'I love Brazil!',tip:'"Te amo" = I love you.'},
-  {pt:'gostar',en:'to like',ipa:'/ɡos.ˈtaʁ/',cat:'Actions',ex:'Gosto muito de música.',exEn:'I really like music.',tip:'"Gostar de" always needs "de"!'},
-  {pt:'procurar',en:'to look for',ipa:'/pɾo.ku.ˈɾaʁ/',cat:'Actions',ex:'Estou procurando a farmácia.',exEn:"I'm looking for the pharmacy.",tip:'Already means "to look for"!'},
+  {pt:'entender',en:'to understand',ipa:'/ẽ.tẽ.ˈdeʁ/',cat:'Actions',ex:'Não entendo.',exEn:"I don't understand.",tip:'Put não before verb to negate.'},
+  {pt:'saber',en:'to know (a fact)',ipa:'/sa.ˈbeʁ/',cat:'Actions',ex:'Não sei.',exEn:"I don't know.",tip:'Saber = know facts. Conhecer = know people/places.'},
+  {pt:'querer',en:'to want',ipa:'/ke.ˈɾeʁ/',cat:'Actions',ex:'Quero aprender português.',exEn:'I want to learn Portuguese.',tip:'Gostaria = I would like (politer).'},
+  {pt:'poder',en:'to be able to / can',ipa:'/po.ˈdeʁ/',cat:'Actions',ex:'Você pode repetir?',exEn:'Can you repeat?',tip:'Pode? alone = can you? / may I?'},
+  {pt:'precisar',en:'to need',ipa:'/pɾe.si.ˈzaʁ/',cat:'Actions',ex:'Preciso de ajuda.',exEn:'I need help.',tip:'Precisar de always needs de!'},
+  {pt:'amar',en:'to love',ipa:'/a.ˈmaʁ/',cat:'Actions',ex:'Amo o Brasil!',exEn:'I love Brazil!',tip:'Te amo = I love you.'},
+  {pt:'gostar',en:'to like',ipa:'/ɡos.ˈtaʁ/',cat:'Actions',ex:'Gosto muito de música.',exEn:'I really like music.',tip:'Gostar de always needs de!'},
+  {pt:'procurar',en:'to look for',ipa:'/pɾo.ku.ˈɾaʁ/',cat:'Actions',ex:'Estou procurando a farmácia.',exEn:"I'm looking for the pharmacy.",tip:'Already means to look for!'},
   {pt:'comprar',en:'to buy',ipa:'/kõ.ˈpɾaʁ/',cat:'Actions',ex:'Quero comprar um souvenir.',exEn:'I want to buy a souvenir.',tip:''},
-  {pt:'pagar',en:'to pay',ipa:'/pa.ˈɡaʁ/',cat:'Actions',ex:'Quero pagar.',exEn:'I want to pay.',tip:'"Dividir a conta" = split the bill.'},
+  {pt:'pagar',en:'to pay',ipa:'/pa.ˈɡaʁ/',cat:'Actions',ex:'Quero pagar.',exEn:'I want to pay.',tip:'Dividir a conta = split the bill.'},
   {pt:'ligar',en:'to call / phone',ipa:'/li.ˈɡaʁ/',cat:'Actions',ex:'Vou ligar um táxi.',exEn:"I'll call a taxi.",tip:''},
   {pt:'reservar',en:'to book / reserve',ipa:'/ʁe.zeʁ.ˈvaʁ/',cat:'Actions',ex:'Reservei uma mesa.',exEn:"I've booked a table.",tip:''},
-  {pt:'esperar',en:'to wait / hope',ipa:'/es.pe.ˈɾaʁ/',cat:'Actions',ex:'Preciso esperar.',exEn:'I need to wait.',tip:'"Esperar" = wait AND hope.'},
+  {pt:'esperar',en:'to wait / hope',ipa:'/es.pe.ˈɾaʁ/',cat:'Actions',ex:'Preciso esperar.',exEn:'I need to wait.',tip:'Esperar = wait AND hope.'},
   {pt:'sair',en:'to leave / go out',ipa:'/sa.ˈiʁ/',cat:'Actions',ex:'Saio amanhã.',exEn:"I'm leaving tomorrow.",tip:''},
   {pt:'chegar',en:'to arrive',ipa:'/ʃe.ˈɡaʁ/',cat:'Actions',ex:'Chego ao meio-dia.',exEn:"I'm arriving at noon.",tip:''},
   {pt:'morar',en:'to live / reside',ipa:'/mo.ˈɾaʁ/',cat:'Actions',ex:'Moro em Londres.',exEn:'I live in London.',tip:''},
@@ -716,155 +716,155 @@ const words=[
   {pt:'estudar',en:'to study',ipa:'/es.tu.ˈdaʁ/',cat:'Actions',ex:'Estudo português todo dia.',exEn:'I study Portuguese every day.',tip:''},
   {pt:'grande',en:'big / large',ipa:'/ˈɡɾɐ̃.dʒi/',cat:'Descriptions',ex:'É muito grande.',exEn:"It's very large.",tip:'Adjectives usually come AFTER the noun.'},
   {pt:'pequeno / pequena',en:'small / little',ipa:'/pe.ˈke.nu/',cat:'Descriptions',ex:'Um café pequeno.',exEn:'A small coffee.',tip:'Agree with gender.'},
-  {pt:'bonito / bonita',en:'beautiful / handsome',ipa:'/bo.ˈni.tu/',cat:'Descriptions',ex:'Que dia bonito!',exEn:'What a beautiful day!',tip:'"Lindo/linda" is stronger.'},
-  {pt:'bom / boa',en:'good',ipa:'/bõ / ˈbo.ɐ/',cat:'Descriptions',ex:'A comida estava boa demais.',exEn:'The food was incredibly good.',tip:'"Demais" = incredibly.'},
+  {pt:'bonito / bonita',en:'beautiful / handsome',ipa:'/bo.ˈni.tu/',cat:'Descriptions',ex:'Que dia bonito!',exEn:'What a beautiful day!',tip:'Lindo/linda is stronger.'},
+  {pt:'bom / boa',en:'good',ipa:'/bõ / ˈbo.ɐ/',cat:'Descriptions',ex:'A comida estava boa demais.',exEn:'The food was incredibly good.',tip:'Demais = incredibly.'},
   {pt:'ruim',en:'bad',ipa:'/ʁuˈĩ/',cat:'Descriptions',ex:'O tempo está ruim.',exEn:'The weather is bad.',tip:'Same for both genders.'},
-  {pt:'caro / cara',en:'expensive',ipa:'/ˈka.ɾu/',cat:'Descriptions',ex:'Está um pouco caro.',exEn:"It's a bit expensive.",tip:'"Cara" also means "guy" (slang)!'},
-  {pt:'grátis',en:'free (no cost)',ipa:'/ˈɡɾa.tʃis/',cat:'Descriptions',ex:'É grátis.',exEn:"It's free.",tip:'Also "de graça".'},
+  {pt:'caro / cara',en:'expensive',ipa:'/ˈka.ɾu/',cat:'Descriptions',ex:'Está um pouco caro.',exEn:"It's a bit expensive.",tip:'Cara also means guy (slang)!'},
+  {pt:'grátis',en:'free (no cost)',ipa:'/ˈɡɾa.tʃis/',cat:'Descriptions',ex:'É grátis.',exEn:"It's free.",tip:'Also de graça.'},
   {pt:'quente',en:'hot / warm',ipa:'/ˈkẽ.tʃi/',cat:'Descriptions',ex:'Está muito quente.',exEn:"It's very hot.",tip:''},
   {pt:'frio',en:'cold',ipa:'/ˈfɾi.u/',cat:'Descriptions',ex:'Hoje está frio.',exEn:"Today it's cold.",tip:''},
   {pt:'novo / nova',en:'new',ipa:'/ˈno.vu/',cat:'Descriptions',ex:'Uma bolsa nova.',exEn:'A new bag.',tip:''},
   {pt:'velho / velha',en:'old',ipa:'/ˈve.ʎu/',cat:'Descriptions',ex:'Este prédio é muito velho.',exEn:'This building is very old.',tip:''},
-  {pt:'rápido / rápida',en:'fast / quick',ipa:'/ˈʁa.pi.du/',cat:'Descriptions',ex:'O metrô é rápido.',exEn:'The metro is fast.',tip:'Add "-mente" to make adverbs.'},
+  {pt:'rápido / rápida',en:'fast / quick',ipa:'/ˈʁa.pi.du/',cat:'Descriptions',ex:'O metrô é rápido.',exEn:'The metro is fast.',tip:'Add -mente to make adverbs.'},
   {pt:'devagar',en:'slow / slowly',ipa:'/de.va.ˈɡaʁ/',cat:'Descriptions',ex:'Fale mais devagar.',exEn:'Please speak more slowly.',tip:'Already an adverb!'},
   {pt:'fácil',en:'easy',ipa:'/ˈfa.siw/',cat:'Descriptions',ex:'O português não é fácil!',exEn:"Portuguese isn't easy!",tip:'Same for both genders.'},
   {pt:'difícil',en:'difficult',ipa:'/dʒi.ˈfi.siw/',cat:'Descriptions',ex:'A gramática é difícil.',exEn:'Grammar is difficult.',tip:''},
-  {pt:'feliz',en:'happy',ipa:'/fe.ˈlis/',cat:'Descriptions',ex:'Estou muito feliz.',exEn:'I am very happy.',tip:'Use "estar". Same for both genders.'},
-  {pt:'cansado / cansada',en:'tired',ipa:'/kɐ̃.ˈza.du/',cat:'Descriptions',ex:'Estou cansada.',exEn:'I am tired.',tip:'Use "estar".'},
+  {pt:'feliz',en:'happy',ipa:'/fe.ˈlis/',cat:'Descriptions',ex:'Estou muito feliz.',exEn:'I am very happy.',tip:'Use estar. Same for both genders.'},
+  {pt:'cansado / cansada',en:'tired',ipa:'/kɐ̃.ˈza.du/',cat:'Descriptions',ex:'Estou cansada.',exEn:'I am tired.',tip:'Use estar.'},
   {pt:'doente',en:'ill / sick',ipa:'/do.ˈẽ.tʃi/',cat:'Descriptions',ex:'Estou doente.',exEn:'I am sick.',tip:'Same for both genders.'},
   {pt:'lindo / linda',en:'gorgeous / beautiful',ipa:'/ˈlĩ.du/',cat:'Descriptions',ex:'Que vista linda!',exEn:'What a gorgeous view!',tip:'Very commonly used in Brazil!'},
-  {pt:'legal',en:'cool / great',ipa:'/le.ˈɡaw/',cat:'Descriptions',ex:'Que legal!',exEn:'How cool!',tip:'Literally "lawful" but means "cool" in Brazil!'},
-  {pt:'cheio / cheia',en:'full',ipa:'/ˈʃe.ju/',cat:'Descriptions',ex:'O copo está cheio.',exEn:'The glass is full.',tip:'"Cheio de" = full of.'},
+  {pt:'legal',en:'cool / great',ipa:'/le.ˈɡaw/',cat:'Descriptions',ex:'Que legal!',exEn:'How cool!',tip:'Literally lawful but means cool in Brazil!'},
+  {pt:'cheio / cheia',en:'full',ipa:'/ˈʃe.ju/',cat:'Descriptions',ex:'O copo está cheio.',exEn:'The glass is full.',tip:'Cheio de = full of.'},
   {pt:'vazio / vazia',en:'empty',ipa:'/va.ˈzi.u/',cat:'Descriptions',ex:'A garrafa está vazia.',exEn:'The bottle is empty.',tip:''},
-  {pt:'passagem',en:'ticket',ipa:'/pa.ˈsa.ʒẽj̃/',cat:'Travel',ex:'Uma passagem de ida e volta.',exEn:'A return ticket.',tip:'"Ida e volta" = return.'},
+  {pt:'passagem',en:'ticket',ipa:'/pa.ˈsa.ʒẽj̃/',cat:'Travel',ex:'Uma passagem de ida e volta.',exEn:'A return ticket.',tip:'Ida e volta = return.'},
   {pt:'passaporte',en:'passport',ipa:'/pa.sa.ˈpoʁ.tʃi/',cat:'Travel',ex:'Meu passaporte.',exEn:'My passport.',tip:''},
-  {pt:'mala',en:'suitcase',ipa:'/ˈma.lɐ/',cat:'Travel',ex:'Perdi minha mala.',exEn:"I've lost my suitcase.",tip:'"Mochila" = backpack.'},
+  {pt:'mala',en:'suitcase',ipa:'/ˈma.lɐ/',cat:'Travel',ex:'Perdi minha mala.',exEn:"I've lost my suitcase.",tip:'Mochila = backpack.'},
   {pt:'táxi',en:'taxi',ipa:'/ˈtak.si/',cat:'Travel',ex:'Vou chamar um táxi.',exEn:"I'll call a taxi.",tip:'Uber and 99 are very popular in Brazil.'},
-  {pt:'ônibus',en:'bus',ipa:'/ˈo.ni.bus/',cat:'Travel',ex:'O ônibus chega em cinco minutos.',exEn:'The bus arrives in five minutes.',tip:'Portugal says "autocarro"!'},
-  {pt:'metrô',en:'metro / subway',ipa:'/me.ˈtɾo/',cat:'Travel',ex:'Pegue o metrô.',exEn:'Take the metro.',tip:'"Pegar" = to take/catch.'},
+  {pt:'ônibus',en:'bus',ipa:'/ˈo.ni.bus/',cat:'Travel',ex:'O ônibus chega em cinco minutos.',exEn:'The bus arrives in five minutes.',tip:'Portugal says autocarro!'},
+  {pt:'metrô',en:'metro / subway',ipa:'/me.ˈtɾo/',cat:'Travel',ex:'Pegue o metrô.',exEn:'Take the metro.',tip:'Pegar = to take/catch.'},
   {pt:'avião',en:'plane',ipa:"/a.vˈjɐ̃w̃/",cat:'Travel',ex:'O avião decola ao meio-dia.',exEn:'The plane takes off at noon.',tip:''},
   {pt:'carro',en:'car',ipa:'/ˈka.ʁu/',cat:'Travel',ex:'Estou alugando um carro.',exEn:"I'm renting a car.",tip:''},
   {pt:'direita',en:'right',ipa:'/dʒi.ˈɾej.tɐ/',cat:'Travel',ex:'Vire à direita.',exEn:'Turn right.',tip:''},
   {pt:'esquerda',en:'left',ipa:'/es.ˈkeʁ.dɐ/',cat:'Travel',ex:'Vire à esquerda.',exEn:'Turn left.',tip:''},
   {pt:'em frente',en:'straight ahead',ipa:'/ẽj̃ ˈfɾẽ.tʃi/',cat:'Travel',ex:'Siga em frente.',exEn:'Go straight ahead.',tip:''},
   {pt:'perto de',en:'near / close to',ipa:'/ˈpeʁ.tu dʒi/',cat:'Travel',ex:'Fica perto da praia.',exEn:"It's near the beach.",tip:''},
-  {pt:'longe de',en:'far from',ipa:'/ˈlõ.ʒi dʒi/',cat:'Travel',ex:'Está longe daqui.',exEn:"It's far from here.",tip:'"Daqui" = from here.'},
+  {pt:'longe de',en:'far from',ipa:'/ˈlõ.ʒi dʒi/',cat:'Travel',ex:'Está longe daqui.',exEn:"It's far from here.",tip:'Daqui = from here.'},
   {pt:'norte',en:'north',ipa:'/ˈnoʁ.tʃi/',cat:'Travel',ex:'O norte do Brasil.',exEn:'The north of Brazil.',tip:'norte, sul, leste, oeste.'},
   {pt:'sul',en:'south',ipa:'/suw/',cat:'Travel',ex:'O sul tem um clima mais frio.',exEn:'The south has a cooler climate.',tip:''},
-  {pt:'mapa',en:'map',ipa:'/ˈma.pɐ/',cat:'Travel',ex:'Tem um mapa da cidade?',exEn:'Do you have a city map?',tip:'"Mapa" is masculine: "o mapa".'},
+  {pt:'mapa',en:'map',ipa:'/ˈma.pɐ/',cat:'Travel',ex:'Tem um mapa da cidade?',exEn:'Do you have a city map?',tip:'Mapa is masculine: o mapa.'},
   {pt:'médico / médica',en:'doctor',ipa:'/ˈme.dʒi.ku/',cat:'Health',ex:'Preciso de um médico.',exEn:'I need a doctor.',tip:''},
-  {pt:'dor',en:'pain',ipa:'/doʁ/',cat:'Health',ex:'Tenho uma dor aqui.',exEn:'I have a pain here.',tip:'"Dor de cabeça" = headache.'},
+  {pt:'dor',en:'pain',ipa:'/doʁ/',cat:'Health',ex:'Tenho uma dor aqui.',exEn:'I have a pain here.',tip:'Dor de cabeça = headache.'},
   {pt:'alergia',en:'allergy',ipa:'/a.leʁ.ˈʒi.ɐ/',cat:'Health',ex:'Tenho alergia.',exEn:'I have an allergy.',tip:''},
   {pt:'remédio',en:'medicine',ipa:'/ʁe.ˈme.dʒju/',cat:'Health',ex:'Preciso de remédio.',exEn:'I need medication.',tip:''},
   {pt:'emergência',en:'emergency',ipa:'/e.meʁ.ˈʒẽ.sjɐ/',cat:'Health',ex:'É uma emergência!',exEn:"It's an emergency!",tip:'192 (SAMU), 193 (Fire), 190 (Police).'},
   {pt:'febre',en:'fever',ipa:'/ˈfe.bɾi/',cat:'Health',ex:'Estou com febre.',exEn:'I have a fever.',tip:''},
   {pt:'tosse',en:'cough',ipa:'/ˈto.si/',cat:'Health',ex:'Tenho uma tosse.',exEn:'I have a cough.',tip:''},
   {pt:'farmácia',en:'pharmacy',ipa:'/faʁ.ˈma.sjɐ/',cat:'Health',ex:'Onde fica a farmácia?',exEn:'Where is the pharmacy?',tip:''},
-  {pt:'ferida',en:'wound / injury',ipa:'/fe.ˈɾi.dɐ/',cat:'Health',ex:'Tenho uma ferida no joelho.',exEn:'I have a wound on my knee.',tip:'"Ferido(a)" = injured.'},
-  {pt:'receita',en:'prescription / recipe',ipa:'/ʁe.ˈsej.tɐ/',cat:'Health',ex:'Preciso de uma receita médica.',exEn:'I need a prescription.',tip:'"Receita" = prescription AND recipe! Context tells you which.'},
-  {pt:'tempo',en:'weather / time',ipa:'/ˈtẽ.pu/',cat:'Weather',ex:'Como está o tempo?',exEn:"What's the weather like?",tip:'"Tempo" = weather AND time.'},
-  {pt:'sol',en:'sun / sunshine',ipa:'/soɫ/',cat:'Weather',ex:'Está com sol.',exEn:"It's sunny.",tip:'"Tomar sol" = to sunbathe.'},
-  {pt:'chuva',en:'rain',ipa:'/ˈʃu.vɐ/',cat:'Weather',ex:'Vai chover.',exEn:"It's going to rain.",tip:'"Está chovendo" = it is raining.'},
+  {pt:'ferida',en:'wound / injury',ipa:'/fe.ˈɾi.dɐ/',cat:'Health',ex:'Tenho uma ferida no joelho.',exEn:'I have a wound on my knee.',tip:'Ferido(a) = injured.'},
+  {pt:'receita',en:'prescription / recipe',ipa:'/ʁe.ˈsej.tɐ/',cat:'Health',ex:'Preciso de uma receita médica.',exEn:'I need a prescription.',tip:'Receita = prescription AND recipe! Context tells you which.'},
+  {pt:'tempo',en:'weather / time',ipa:'/ˈtẽ.pu/',cat:'Weather',ex:'Como está o tempo?',exEn:"What's the weather like?",tip:'Tempo = weather AND time.'},
+  {pt:'sol',en:'sun / sunshine',ipa:'/soɫ/',cat:'Weather',ex:'Está com sol.',exEn:"It's sunny.",tip:'Tomar sol = to sunbathe.'},
+  {pt:'chuva',en:'rain',ipa:'/ˈʃu.vɐ/',cat:'Weather',ex:'Vai chover.',exEn:"It's going to rain.",tip:'Está chovendo = it is raining.'},
   {pt:'vento',en:'wind',ipa:'/ˈvẽ.tu/',cat:'Weather',ex:'Está muito ventoso.',exEn:"It's very windy.",tip:''},
-  {pt:'nuvem',en:'cloud',ipa:'/ˈnu.vẽj̃/',cat:'Weather',ex:'Tem muitas nuvens.',exEn:"It's cloudy.",tip:'"Nublado" = cloudy.'},
+  {pt:'nuvem',en:'cloud',ipa:'/ˈnu.vẽj̃/',cat:'Weather',ex:'Tem muitas nuvens.',exEn:"It's cloudy.",tip:'Nublado = cloudy.'},
   {pt:'calor',en:'heat / hot weather',ipa:'/ka.ˈloʁ/',cat:'Weather',ex:'O calor está intenso.',exEn:'The heat is intense.',tip:''},
   {pt:'chuviscar',en:'to drizzle',ipa:'/ʃu.vis.ˈkaʁ/',cat:'Weather',ex:'Está chuviscando.',exEn:"It's drizzling.",tip:''},
   {pt:'verão',en:'summer',ipa:'/ve.ˈɾɐ̃w̃/',cat:'Weather',ex:'O verão no Brasil é quente.',exEn:'Summer in Brazil is hot.',tip:'Brazilian summer = December-March!'},
   {pt:'inverno',en:'winter',ipa:'/ĩ.ˈveʁ.nu/',cat:'Weather',ex:'O inverno é mais fresco.',exEn:'The winter is cooler.',tip:''},
   {pt:'outono',en:'autumn',ipa:'/ow.ˈto.nu/',cat:'Weather',ex:'As folhas caem no outono.',exEn:'The leaves fall in autumn.',tip:'Brazil has four seasons but they are less distinct than in Europe.'},
   {pt:'primavera',en:'spring',ipa:'/pɾi.ma.ˈve.ɾɐ/',cat:'Weather',ex:'A primavera é linda.',exEn:'Spring is beautiful.',tip:''},
-  {pt:'quarto',en:'bedroom / room',ipa:'/ˈkwaʁ.tu/',cat:'Home',ex:'O quarto é confortável.',exEn:'The room is comfortable.',tip:'"Banheiro" = bathroom.'},
-  {pt:'cozinha',en:'kitchen / cooking',ipa:'/ko.ˈzi.ɲɐ/',cat:'Home',ex:'Adoro a cozinha brasileira.',exEn:'I love Brazilian cuisine.',tip:'"Cozinha" = kitchen AND cuisine.'},
+  {pt:'quarto',en:'bedroom / room',ipa:'/ˈkwaʁ.tu/',cat:'Home',ex:'O quarto é confortável.',exEn:'The room is comfortable.',tip:'Banheiro = bathroom.'},
+  {pt:'cozinha',en:'kitchen / cooking',ipa:'/ko.ˈzi.ɲɐ/',cat:'Home',ex:'Adoro a cozinha brasileira.',exEn:'I love Brazilian cuisine.',tip:'Cozinha = kitchen AND cuisine.'},
   {pt:'sala',en:'living room',ipa:'/ˈsa.lɐ/',cat:'Home',ex:'Na sala.',exEn:'In the living room.',tip:''},
   {pt:'banheiro',en:'bathroom',ipa:'/bɐ.ˈɲej.ɾu/',cat:'Home',ex:'Onde fica o banheiro?',exEn:'Where is the bathroom?',tip:'Always polite to ask!'},
   {pt:'cama',en:'bed',ipa:'/ˈkɐ.mɐ/',cat:'Home',ex:'Vou para a cama.',exEn:"I'm going to bed.",tip:''},
-  {pt:'celular',en:'mobile phone',ipa:'/se.lu.ˈlaʁ/',cat:'Home',ex:'Meu celular está sem bateria.',exEn:'My phone is out of battery.',tip:'Brazilians say "celular" not "telemóvel"!'},
+  {pt:'celular',en:'mobile phone',ipa:'/se.lu.ˈlaʁ/',cat:'Home',ex:'Meu celular está sem bateria.',exEn:'My phone is out of battery.',tip:'Brazilians say celular not telemóvel!'},
   {pt:'chave',en:'key',ipa:'/ˈʃa.vi/',cat:'Home',ex:'Perdi minha chave.',exEn:"I've lost my key.",tip:''},
-  {pt:'dinheiro',en:'money',ipa:'/dʒi.ˈɲej.ɾu/',cat:'Home',ex:'Não tenho dinheiro.',exEn:"I don't have any money.",tip:'"Troco" = change (money back).'},
-  {pt:'cartão de crédito',en:'credit card',ipa:'/kaʁ.ˈtɐ̃w̃ dʒi ˈkɾe.dʒi.tu/',cat:'Home',ex:'Aceita cartão de crédito?',exEn:'Do you accept credit cards?',tip:'"Pix" = instant bank transfer, hugely popular!'},
-  {pt:'internet',en:'internet / Wi-Fi',ipa:'/ĩ.teʁ.ˈnɛtʃi/',cat:'Home',ex:'Tem Wi-Fi aqui?',exEn:'Is there Wi-Fi here?',tip:'"Qual é a senha?" = What is the password?'},
+  {pt:'dinheiro',en:'money',ipa:'/dʒi.ˈɲej.ɾu/',cat:'Home',ex:'Não tenho dinheiro.',exEn:"I don't have any money.",tip:'Troco = change (money back).'},
+  {pt:'cartão de crédito',en:'credit card',ipa:'/kaʁ.ˈtɐ̃w̃ dʒi ˈkɾe.dʒi.tu/',cat:'Home',ex:'Aceita cartão de crédito?',exEn:'Do you accept credit cards?',tip:'Pix = instant bank transfer, hugely popular!'},
+  {pt:'internet',en:'internet / Wi-Fi',ipa:'/ĩ.teʁ.ˈnɛtʃi/',cat:'Home',ex:'Tem Wi-Fi aqui?',exEn:'Is there Wi-Fi here?',tip:'Qual é a senha? = What is the password?'},
   {pt:'janela',en:'window',ipa:'/ʒa.ˈne.lɐ/',cat:'Home',ex:'Abre a janela, por favor.',exEn:'Open the window, please.',tip:''},
   {pt:'porta',en:'door',ipa:'/ˈpoʁ.tɐ/',cat:'Home',ex:'Fecha a porta.',exEn:'Close the door.',tip:''},
-  {pt:'amor',en:'love',ipa:'/a.ˈmoʁ/',cat:'Emotions',ex:'Amor é tudo!',exEn:'Love is everything!',tip:'"Te amo" = I love you.'},
-  {pt:'alegria',en:'joy / happiness',ipa:'/a.le.ˈɡɾi.ɐ/',cat:'Emotions',ex:'Que alegria te ver!',exEn:'What a joy to see you!',tip:'"Alegre" = happy.'},
-  {pt:'medo',en:'fear',ipa:'/ˈme.du/',cat:'Emotions',ex:'Estou com medo.',exEn:"I'm scared.",tip:'"Tenho medo de..." = I'm afraid of...'},
-  {pt:'raiva',en:'anger',ipa:'/ˈʁaj.vɐ/',cat:'Emotions',ex:'Estou com raiva.',exEn:"I'm angry.",tip:'"Que raiva!" = How annoying!'},
-  {pt:'tristeza',en:'sadness',ipa:'/tɾis.ˈte.zɐ/',cat:'Emotions',ex:'Sinto muita tristeza.',exEn:'I feel great sadness.',tip:'"Triste" = sad.'},
+  {pt:'amor',en:'love',ipa:'/a.ˈmoʁ/',cat:'Emotions',ex:'Amor é tudo!',exEn:'Love is everything!',tip:'Te amo = I love you.'},
+  {pt:'alegria',en:'joy / happiness',ipa:'/a.le.ˈɡɾi.ɐ/',cat:'Emotions',ex:'Que alegria te ver!',exEn:'What a joy to see you!',tip:'Alegre = happy.'},
+  {pt:'medo',en:'fear',ipa:'/ˈme.du/',cat:'Emotions',ex:'Estou com medo.',exEn:"I'm scared.",tip:'Tenho medo de... = I\'m afraid of...'},
+  {pt:'raiva',en:'anger',ipa:'/ˈʁaj.vɐ/',cat:'Emotions',ex:'Estou com raiva.',exEn:"I'm angry.",tip:'Que raiva! = How annoying!'},
+  {pt:'tristeza',en:'sadness',ipa:'/tɾis.ˈte.zɐ/',cat:'Emotions',ex:'Sinto muita tristeza.',exEn:'I feel great sadness.',tip:'Triste = sad.'},
   {pt:'surpresa',en:'surprise',ipa:'/suʁ.ˈpɾe.zɐ/',cat:'Emotions',ex:'Que surpresa!',exEn:'What a surprise!',tip:''},
   {pt:'saudade',en:'longing / missing someone',ipa:'/saw.ˈda.dʒi/',cat:'Emotions',ex:'Estou com saudade de você.',exEn:"I miss you.",tip:'Uniquely Portuguese — a deep longing with no exact English translation!'},
   {pt:'orgulho',en:'pride',ipa:'/oʁ.ˈɡu.ʎu/',cat:'Emotions',ex:'Tenho orgulho de você.',exEn:"I'm proud of you.",tip:''},
-  {pt:'nervoso / nervosa',en:'nervous',ipa:'/neʁ.ˈvo.zu/',cat:'Emotions',ex:'Estou nervosa.',exEn:"I'm nervous.",tip:'Can also mean "annoyed".'},
-  {pt:'calmo / calma',en:'calm',ipa:'/ˈkaw.mu/',cat:'Emotions',ex:'Fique calmo!',exEn:'Stay calm!',tip:'"Calma!" = calm down!'},
+  {pt:'nervoso / nervosa',en:'nervous',ipa:'/neʁ.ˈvo.zu/',cat:'Emotions',ex:'Estou nervosa.',exEn:"I'm nervous.",tip:'Can also mean annoyed.'},
+  {pt:'calmo / calma',en:'calm',ipa:'/ˈkaw.mu/',cat:'Emotions',ex:'Fique calmo!',exEn:'Stay calm!',tip:'Calma! = calm down!'},
   {pt:'orgulhoso / orgulhosa',en:'proud',ipa:'/oʁ.ɡu.ˈʎo.zu/',cat:'Emotions',ex:'Estou muito orgulhosa de você.',exEn:'I am very proud of you.',tip:''},
   {pt:'tímido / tímida',en:'shy / timid',ipa:'/ˈtʃi.mi.du/',cat:'Emotions',ex:'Ele é um pouco tímido.',exEn:'He is a little shy.',tip:''},
   // SHOPPING (15 — NEW)
   {pt:'preço',en:'price',ipa:'/ˈpɾe.su/',cat:'Shopping',ex:'Qual é o preço?',exEn:'What is the price?',tip:''},
-  {pt:'desconto',en:'discount',ipa:'/dʒis.ˈkõ.tu/',cat:'Shopping',ex:'Tem desconto?',exEn:'Is there a discount?',tip:'"Liquidação" = sale/clearance. "Em promoção" = on special offer.'},
+  {pt:'desconto',en:'discount',ipa:'/dʒis.ˈkõ.tu/',cat:'Shopping',ex:'Tem desconto?',exEn:'Is there a discount?',tip:'Liquidação = sale/clearance. Em promoção = on special offer.'},
   {pt:'promoção',en:'special offer / sale',ipa:'/pɾo.mo.ˈsɐ̃w̃/',cat:'Shopping',ex:'Está em promoção.',exEn:"It's on special offer.",tip:''},
-  {pt:'tamanho',en:'size',ipa:'/ta.ˈmɐ.ɲu/',cat:'Shopping',ex:'Qual é o seu tamanho?',exEn:'What is your size?',tip:'"Número" = shoe size.'},
+  {pt:'tamanho',en:'size',ipa:'/ta.ˈmɐ.ɲu/',cat:'Shopping',ex:'Qual é o seu tamanho?',exEn:'What is your size?',tip:'Número = shoe size.'},
   {pt:'cor',en:'colour',ipa:'/koʁ/',cat:'Shopping',ex:'Gosto dessa cor.',exEn:'I like this colour.',tip:'Colours always agree with the noun gender!'},
   {pt:'vermelho / vermelha',en:'red',ipa:'/veʁ.ˈme.ʎu/',cat:'Shopping',ex:'O vestido vermelho.',exEn:'The red dress.',tip:''},
-  {pt:'azul',en:'blue',ipa:'/a.ˈzuw/',cat:'Shopping',ex:'Um suéter azul.',exEn:'A blue jumper.',tip:'"Azul" is the same for both genders.'},
-  {pt:'verde',en:'green',ipa:'/ˈveʁ.dʒi/',cat:'Shopping',ex:'Sapatos verdes.',exEn:'Green shoes.',tip:'"Verde" is same for both genders.'},
+  {pt:'azul',en:'blue',ipa:'/a.ˈzuw/',cat:'Shopping',ex:'Um suéter azul.',exEn:'A blue jumper.',tip:'Azul is the same for both genders.'},
+  {pt:'verde',en:'green',ipa:'/ˈveʁ.dʒi/',cat:'Shopping',ex:'Sapatos verdes.',exEn:'Green shoes.',tip:'Verde is same for both genders.'},
   {pt:'preto / preta',en:'black',ipa:'/ˈpɾe.tu/',cat:'Shopping',ex:'Uma bolsa preta.',exEn:'A black bag.',tip:''},
   {pt:'branco / branca',en:'white',ipa:'/ˈbɾɐ̃.ku/',cat:'Shopping',ex:'Uma camisa branca.',exEn:'A white shirt.',tip:''},
-  {pt:'presente',en:'gift / present',ipa:'/pɾe.ˈzẽ.tʃi/',cat:'Shopping',ex:'Estou procurando um presente.',exEn:"I'm looking for a gift.",tip:'"Dar um presente" = to give a gift.'},
-  {pt:'caixa',en:'checkout / cashier',ipa:'/ˈkaj.ʃɐ/',cat:'Shopping',ex:'A caixa fica ali.',exEn:'The checkout is over there.',tip:'"Caixa eletrônico" = ATM.'},
+  {pt:'presente',en:'gift / present',ipa:'/pɾe.ˈzẽ.tʃi/',cat:'Shopping',ex:'Estou procurando um presente.',exEn:"I'm looking for a gift.",tip:'Dar um presente = to give a gift.'},
+  {pt:'caixa',en:'checkout / cashier',ipa:'/ˈkaj.ʃɐ/',cat:'Shopping',ex:'A caixa fica ali.',exEn:'The checkout is over there.',tip:'Caixa eletrônico = ATM.'},
   {pt:'recibo',en:'receipt',ipa:'/ʁe.ˈsi.bu/',cat:'Shopping',ex:'Posso ter um recibo?',exEn:'Can I have a receipt?',tip:''},
-  {pt:'troco',en:'change (money)',ipa:'/ˈtɾo.ku/',cat:'Shopping',ex:'Tem troco?',exEn:'Do you have change?',tip:'"Troco" = coins/change returned. "Não tenho troco" = I don't have change.'},
-  {pt:'vitrine',en:'shop window',ipa:'/vi.ˈtɾi.ni/',cat:'Shopping',ex:'Vi na vitrine.',exEn:'I saw it in the shop window.',tip:'Brazil says "vitrine". Portugal says "montra".'},
+  {pt:'troco',en:'change (money)',ipa:'/ˈtɾo.ku/',cat:'Shopping',ex:'Tem troco?',exEn:'Do you have change?',tip:'Troco = coins/change returned. Não tenho troco = I don\'t have change.'},
+  {pt:'vitrine',en:'shop window',ipa:'/vi.ˈtɾi.ni/',cat:'Shopping',ex:'Vi na vitrine.',exEn:'I saw it in the shop window.',tip:'Brazil says vitrine. Portugal says montra.'},
   // NATURE (15 — NEW)
-  {pt:'mar',en:'sea',ipa:'/maʁ/',cat:'Nature',ex:'O mar está lindo.',exEn:'The sea is beautiful.',tip:'"Mar" is masculine: "o mar".'},
+  {pt:'mar',en:'sea',ipa:'/maʁ/',cat:'Nature',ex:'O mar está lindo.',exEn:'The sea is beautiful.',tip:'Mar is masculine: o mar.'},
   {pt:'montanha',en:'mountain',ipa:'/mõ.ˈtɐ.ɲɐ/',cat:'Nature',ex:'Adoro a montanha.',exEn:'I love the mountains.',tip:''},
   {pt:'floresta',en:'forest',ipa:'/flo.ˈʁɛs.tɐ/',cat:'Nature',ex:'A floresta amazônica.',exEn:'The Amazon forest.',tip:'The Amazon covers over half of Brazil!'},
-  {pt:'rio',en:'river',ipa:'/ˈʁi.u/',cat:'Nature',ex:'O Rio Amazonas é enorme.',exEn:'The Amazon River is huge.',tip:'"Rio" = river AND the city Rio de Janeiro!'},
+  {pt:'rio',en:'river',ipa:'/ˈʁi.u/',cat:'Nature',ex:'O Rio Amazonas é enorme.',exEn:'The Amazon River is huge.',tip:'Rio = river AND the city Rio de Janeiro!'},
   {pt:'lago',en:'lake',ipa:'/ˈla.ɡu/',cat:'Nature',ex:'O lago é tranquilo.',exEn:'The lake is peaceful.',tip:''},
   {pt:'árvore',en:'tree',ipa:'/ˈaʁ.vo.ɾi/',cat:'Nature',ex:'Há belas árvores no parque.',exEn:'There are beautiful trees in the park.',tip:''},
   {pt:'flor',en:'flower',ipa:'/floʁ/',cat:'Nature',ex:'As flores são lindas.',exEn:'The flowers are beautiful.',tip:''},
-  {pt:'animal',en:'animal',ipa:'/a.ni.ˈmaw/',cat:'Nature',ex:'Adoro animais.',exEn:'I love animals.',tip:'Plural: "animais".'},
-  {pt:'cachorro',en:'dog',ipa:'/ka.ˈʃo.ʁu/',cat:'Nature',ex:'Meu cachorro se chama Max.',exEn:'My dog is called Max.',tip:'"Cachorro" is the most common Brazilian word for dog. "Cão" is more formal.'},
+  {pt:'animal',en:'animal',ipa:'/a.ni.ˈmaw/',cat:'Nature',ex:'Adoro animais.',exEn:'I love animals.',tip:'Plural: animais.'},
+  {pt:'cachorro',en:'dog',ipa:'/ka.ˈʃo.ʁu/',cat:'Nature',ex:'Meu cachorro se chama Max.',exEn:'My dog is called Max.',tip:'Cachorro is the most common Brazilian word for dog. Cão is more formal.'},
   {pt:'gato',en:'cat',ipa:'/ˈɡa.tu/',cat:'Nature',ex:'O gato dorme no sofá.',exEn:'The cat sleeps on the sofa.',tip:''},
   {pt:'pássaro',en:'bird',ipa:'/ˈpa.sa.ɾu/',cat:'Nature',ex:'Os pássaros cantam de manhã.',exEn:'The birds sing in the morning.',tip:'Brazil has over 1,800 bird species — the most biodiverse country on earth!'},
   {pt:'céu',en:'sky',ipa:'/sɛw/',cat:'Nature',ex:'O céu está azul.',exEn:'The sky is blue.',tip:''},
-  {pt:'sol',en:'sun',ipa:'/soɫ/',cat:'Nature',ex:'O sol brilha.',exEn:'The sun is shining.',tip:'"Tomar sol" = to sunbathe.'},
-  {pt:'estrela',en:'star',ipa:'/es.ˈtɾe.lɐ/',cat:'Nature',ex:'As estrelas brilham à noite.',exEn:'The stars shine at night.',tip:'"Ver as estrelas" = to watch the stars.'},
-  {pt:'lua',en:'moon',ipa:'/ˈlu.ɐ/',cat:'Nature',ex:'A lua está cheia esta noite.',exEn:'The moon is full tonight.',tip:'"Lua cheia" = full moon.'},
+  {pt:'sol',en:'sun',ipa:'/soɫ/',cat:'Nature',ex:'O sol brilha.',exEn:'The sun is shining.',tip:'Tomar sol = to sunbathe.'},
+  {pt:'estrela',en:'star',ipa:'/es.ˈtɾe.lɐ/',cat:'Nature',ex:'As estrelas brilham à noite.',exEn:'The stars shine at night.',tip:'Ver as estrelas = to watch the stars.'},
+  {pt:'lua',en:'moon',ipa:'/ˈlu.ɐ/',cat:'Nature',ex:'A lua está cheia esta noite.',exEn:'The moon is full tonight.',tip:'Lua cheia = full moon.'},
 ];
 
 const verbs=[
-  {pt:'ser',en:'to be (permanent)',type:'irregular',tip:'Essential verb for identity. Past "fui" is shared with "ir" — context tells them apart.',
+  {pt:'ser',en:'to be (permanent)',type:'irregular',tip:'Essential verb for identity. Past fui is shared with ir — context tells them apart.',
    present:{forms:[{p:'eu',f:'sou'},{p:'você/ele/ela',f:'é'},{p:'nós/a gente',f:'somos'},{p:'vocês/eles',f:'são'},{p:'tu',f:'és'},{p:'nós (alt)',f:'somos'}],note:'For identity, nationality, profession, permanent characteristics.'},
    past:{forms:[{p:'eu',f:'fui'},{p:'você/ele/ela',f:'foi'},{p:'nós/a gente',f:'fomos'},{p:'vocês/eles',f:'foram'},{p:'tu',f:'foste'},{p:'nós (alt)',f:'fomos'}],note:'Pretérito perfeito: "fui" = I was. Same forms as "ir" past — context tells them apart.'},
-   future:{forms:[{p:'eu',f:'serei'},{p:'você/ele/ela',f:'será'},{p:'nós/a gente',f:'seremos'},{p:'vocês/eles',f:'serão'},{p:'tu',f:'serás'},{p:'nós (alt)',f:'seremos'}],note:'Simple future. "Vou ser" (near future) = I'm going to be.'},
+   future:{forms:[{p:'eu',f:'serei'},{p:'você/ele/ela',f:'será'},{p:'nós/a gente',f:'seremos'},{p:'vocês/eles',f:'serão'},{p:'tu',f:'serás'},{p:'nós (alt)',f:'seremos'}],note:'Simple future. "Vou ser" (near future) = I\'m going to be.'},
    examples:[{pt:'Fui muito feliz quando era criança.',en:'I was very happy when I was a child.'},{pt:'Vou ser médica.',en:"I'm going to be a doctor."}]},
-  {pt:'estar',en:'to be (temporary)',type:'irregular',tip:'"Estava" = imperfect past (ongoing state). "Estive" = I was (completed). Use "estava" for feelings and descriptions in the past.',
+  {pt:'estar',en:'to be (temporary)',type:'irregular',tip:'Estava = imperfect past (ongoing state). Estive = I was (completed). Use estava for feelings and descriptions in the past.',
    present:{forms:[{p:'eu',f:'estou'},{p:'você/ele/ela',f:'está'},{p:'nós/a gente',f:'estamos'},{p:'vocês/eles',f:'estão'},{p:'tu',f:'estás'},{p:'nós (alt)',f:'estamos'}],note:'For temporary states, feelings, location.'},
    past:{forms:[{p:'eu',f:'estava'},{p:'você/ele/ela',f:'estava'},{p:'nós/a gente',f:'estávamos'},{p:'vocês/eles',f:'estavam'},{p:'tu',f:'estavas'},{p:'nós (alt)',f:'estávamos'}],note:'Imperfect: "estava" = I was (ongoing). "Estive" = I was (completed stay/visit).'},
-   future:{forms:[{p:'eu',f:'estarei'},{p:'você/ele/ela',f:'estará'},{p:'nós/a gente',f:'estaremos'},{p:'vocês/eles',f:'estarão'},{p:'tu',f:'estarás'},{p:'nós (alt)',f:'estaremos'}],note:'Simple future. "Vou estar" = I'm going to be.'},
+   future:{forms:[{p:'eu',f:'estarei'},{p:'você/ele/ela',f:'estará'},{p:'nós/a gente',f:'estaremos'},{p:'vocês/eles',f:'estarão'},{p:'tu',f:'estarás'},{p:'nós (alt)',f:'estaremos'}],note:'Simple future. "Vou estar" = I\'m going to be.'},
    examples:[{pt:'Estava muito cansada ontem.',en:'I was very tired yesterday.'},{pt:'Vou estar em casa amanhã.',en:"I'll be at home tomorrow."}]},
-  {pt:'ter',en:'to have',type:'irregular',tip:'"Tinha" = imperfect past (I used to have). "Tive" = I had (completed). Also used for feelings: "tinha fome" = I was hungry.',
+  {pt:'ter',en:'to have',type:'irregular',tip:'Tinha = imperfect past (I used to have). Tive = I had (completed). Also used for feelings: tinha fome = I was hungry.',
    present:{forms:[{p:'eu',f:'tenho'},{p:'você/ele/ela',f:'tem'},{p:'nós/a gente',f:'temos'},{p:'vocês/eles',f:'têm'},{p:'tu',f:'tens'},{p:'nós (alt)',f:'temos'}],note:'For possession and feelings: "ter fome" = to be hungry.'},
    past:{forms:[{p:'eu',f:'tinha'},{p:'você/ele/ela',f:'tinha'},{p:'nós/a gente',f:'tínhamos'},{p:'vocês/eles',f:'tinham'},{p:'tu',f:'tinhas'},{p:'nós (alt)',f:'tínhamos'}],note:'Imperfect: "tinha" = I had (habitual/ongoing). "Tive" = I had (completed action).'},
-   future:{forms:[{p:'eu',f:'terei'},{p:'você/ele/ela',f:'terá'},{p:'nós/a gente',f:'teremos'},{p:'vocês/eles',f:'terão'},{p:'tu',f:'terás'},{p:'nós (alt)',f:'teremos'}],note:'Simple future. "Vou ter" = I'm going to have.'},
+   future:{forms:[{p:'eu',f:'terei'},{p:'você/ele/ela',f:'terá'},{p:'nós/a gente',f:'teremos'},{p:'vocês/eles',f:'terão'},{p:'tu',f:'terás'},{p:'nós (alt)',f:'teremos'}],note:'Simple future. "Vou ter" = I\'m going to have.'},
    examples:[{pt:'Quando era criança, tinha um cachorro.',en:'When I was a child, I had a dog.'},{pt:'Vou ter tempo amanhã.',en:"I'll have time tomorrow."}]},
-  {pt:'fazer',en:'to do / make',type:'irregular',tip:'Past: "fiz" (I did/made). Very irregular! "O que você fez?" = What did you do? Extremely common in conversation.',
+  {pt:'fazer',en:'to do / make',type:'irregular',tip:'Past: fiz (I did/made). Very irregular! O que você fez? = What did you do? Extremely common in conversation.',
    present:{forms:[{p:'eu',f:'faço'},{p:'você/ele/ela',f:'faz'},{p:'nós/a gente',f:'fazemos'},{p:'vocês/eles',f:'fazem'},{p:'tu',f:'fazes'},{p:'nós (alt)',f:'fazemos'}],note:'Very versatile: fazer compras, fazer uma pergunta, fazer falta.'},
    past:{forms:[{p:'eu',f:'fiz'},{p:'você/ele/ela',f:'fez'},{p:'nós/a gente',f:'fizemos'},{p:'vocês/eles',f:'fizeram'},{p:'tu',f:'fizeste'},{p:'nós (alt)',f:'fizemos'}],note:'Highly irregular past! "Fiz" = I did/made.'},
    future:{forms:[{p:'eu',f:'farei'},{p:'você/ele/ela',f:'fará'},{p:'nós/a gente',f:'faremos'},{p:'vocês/eles',f:'farão'},{p:'tu',f:'farás'},{p:'nós (alt)',f:'faremos'}],note:'Future: far + endings.'},
    examples:[{pt:'O que você fez no fim de semana?',en:'What did you do at the weekend?'},{pt:'Vou fazer um churrasco amanhã.',en:"I'll have a barbecue tomorrow."}]},
-  {pt:'ir',en:'to go',type:'irregular',tip:'Past of "ir" = "fui" — same as "ser" past! "Fui ao mercado" = I went to the market. "Vou" + infinitive = near future, very common in Brazil.',
-   present:{forms:[{p:'eu',f:'vou'},{p:'você/ele/ela',f:'vai'},{p:'nós/a gente',f:'vamos'},{p:'vocês/eles',f:'vão'},{p:'tu',f:'vais'},{p:'nós (alt)',f:'vamos'}],note:'"Vou + infinitive" = near future: "vou comer" = I'm going to eat!'},
+  {pt:'ir',en:'to go',type:'irregular',tip:'Past of ir = fui — same as ser past! Fui ao mercado = I went to the market. Vou + infinitive = near future, very common in Brazil.',
+   present:{forms:[{p:'eu',f:'vou'},{p:'você/ele/ela',f:'vai'},{p:'nós/a gente',f:'vamos'},{p:'vocês/eles',f:'vão'},{p:'tu',f:'vais'},{p:'nós (alt)',f:'vamos'}],note:'"Vou + infinitive" = near future: "vou comer" = I\'m going to eat!'},
    past:{forms:[{p:'eu',f:'fui'},{p:'você/ele/ela',f:'foi'},{p:'nós/a gente',f:'fomos'},{p:'vocês/eles',f:'foram'},{p:'tu',f:'foste'},{p:'nós (alt)',f:'fomos'}],note:'Same forms as "ser" past! "Fui ao mercado" = I went to the market.'},
    future:{forms:[{p:'eu',f:'irei'},{p:'você/ele/ela',f:'irá'},{p:'nós/a gente',f:'iremos'},{p:'vocês/eles',f:'irão'},{p:'tu',f:'irás'},{p:'nós (alt)',f:'iremos'}],note:'Simple future. "Vou ir" (near future) is more common in everyday speech.'},
    examples:[{pt:'Fui ao mercado ontem.',en:'I went to the market yesterday.'},{pt:'Vamos à praia amanhã.',en:"We'll go to the beach tomorrow."}]},
-  {pt:'querer',en:'to want',type:'irregular',tip:'Past: "quis" (I wanted). "Não quis sair" = I didn't want to go out. "Gostaria" = I would like — use in restaurants!',
+  {pt:'querer',en:'to want',type:'irregular',tip:'Past: quis (I wanted). Não quis sair = I didn\'t want to go out. "Gostaria" = I would like — use in restaurants!',
    present:{forms:[{p:'eu',f:'quero'},{p:'você/ele/ela',f:'quer'},{p:'nós/a gente',f:'queremos'},{p:'vocês/eles',f:'querem'},{p:'tu',f:'queres'},{p:'nós (alt)',f:'queremos'}],note:'"Gostaria" = I would like (polite). Use in restaurants!'},
-   past:{forms:[{p:'eu',f:'quis'},{p:'você/ele/ela',f:'quis'},{p:'nós/a gente',f:'quisemos'},{p:'vocês/eles',f:'quiseram'},{p:'tu',f:'quiseste'},{p:'nós (alt)',f:'quisemos'}],note:'Irregular past: "quis" = I wanted. "Não quis" = I refused/didn't want to.'},
-   future:{forms:[{p:'eu',f:'vou querer'},{p:'você/ele/ela',f:'vai querer'},{p:'nós/a gente',f:'vamos querer'},{p:'vocês/eles',f:'vão querer'},{p:'tu',f:'vais querer'},{p:'nós (alt)',f:'vamos querer'}],note:'Near future most common in Brazil: "vou querer" = I'm going to want.'},
+   past:{forms:[{p:'eu',f:'quis'},{p:'você/ele/ela',f:'quis'},{p:'nós/a gente',f:'quisemos'},{p:'vocês/eles',f:'quiseram'},{p:'tu',f:'quiseste'},{p:'nós (alt)',f:'quisemos'}],note:'Irregular past: "quis" = I wanted. "Não quis" = I refused/didn\'t want to.'},
+   future:{forms:[{p:'eu',f:'vou querer'},{p:'você/ele/ela',f:'vai querer'},{p:'nós/a gente',f:'vamos querer'},{p:'vocês/eles',f:'vão querer'},{p:'tu',f:'vais querer'},{p:'nós (alt)',f:'vamos querer'}],note:'Near future most common in Brazil: "vou querer" = I\'m going to want.'},
    examples:[{pt:'Não quis sair ontem.',en:"I didn't want to go out yesterday."},{pt:'Vou querer um café.',en:"I'll have a coffee."}]},
-  {pt:'poder',en:'to be able to / can',type:'irregular',tip:'Past: "pude" (I was able to). "Não pude vir" = I couldn't come. "Consegui" is also used for "I managed to" in everyday speech.',
+  {pt:'poder',en:'to be able to / can',type:'irregular',tip:'Past: pude (I was able to). Não pude vir = I couldn\'t come. "Consegui" is also used for "I managed to" in everyday speech.',
    present:{forms:[{p:'eu',f:'posso'},{p:'você/ele/ela',f:'pode'},{p:'nós/a gente',f:'podemos'},{p:'vocês/eles',f:'podem'},{p:'tu',f:'podes'},{p:'nós (alt)',f:'podemos'}],note:'"Pode?" alone = can you? / may I? Very commonly used.'},
-   past:{forms:[{p:'eu',f:'pude'},{p:'você/ele/ela',f:'pôde'},{p:'nós/a gente',f:'pudemos'},{p:'vocês/eles',f:'puderam'},{p:'tu',f:'pudeste'},{p:'nós (alt)',f:'pudemos'}],note:'Irregular past: "pude" = I was able to. "Não pude vir" = I couldn't come.'},
+   past:{forms:[{p:'eu',f:'pude'},{p:'você/ele/ela',f:'pôde'},{p:'nós/a gente',f:'pudemos'},{p:'vocês/eles',f:'puderam'},{p:'tu',f:'pudeste'},{p:'nós (alt)',f:'pudemos'}],note:'Irregular past: "pude" = I was able to. "Não pude vir" = I couldn\'t come.'},
    future:{forms:[{p:'eu',f:'poderei'},{p:'você/ele/ela',f:'poderá'},{p:'nós/a gente',f:'poderemos'},{p:'vocês/eles',f:'poderão'},{p:'tu',f:'poderás'},{p:'nós (alt)',f:'poderemos'}],note:'Simple future. "Vou poder" (near future) is also common.'},
    examples:[{pt:'Não pude vir ontem.',en:"I couldn't come yesterday."},{pt:'Amanhã poderei te ajudar.',en:"Tomorrow I'll be able to help you."}]},
   {pt:'falar',en:'to speak / talk',type:'-AR regular',tip:'The model for ALL regular -AR verbs. Past: -ei (eu), -ou (você). Future: keep infinitive + endings.',
@@ -872,22 +872,22 @@ const verbs=[
    past:{forms:[{p:'eu',f:'falei'},{p:'você/ele/ela',f:'falou'},{p:'nós/a gente',f:'falamos'},{p:'vocês/eles',f:'falaram'},{p:'tu',f:'falaste'},{p:'nós (alt)',f:'falamos'}],note:'Regular -AR past: -ei, -ou, -ou, -amos, -aram. Very regular!'},
    future:{forms:[{p:'eu',f:'falarei'},{p:'você/ele/ela',f:'falará'},{p:'nós/a gente',f:'falaremos'},{p:'vocês/eles',f:'falarão'},{p:'tu',f:'falarás'},{p:'nós (alt)',f:'falaremos'}],note:'Future: falar + -ei, -á, -á, -emos, -ão. Works for all regular -AR verbs!'},
    examples:[{pt:'Falei com ele ontem.',en:'I spoke to him yesterday.'},{pt:'Falarei com você amanhã.',en:"I'll speak to you tomorrow."}]},
-  {pt:'comer',en:'to eat',type:'-ER regular',tip:'Model for regular -ER verbs. Past: "comi" (I ate). "O que você comeu?" = What did you eat? Very common question!',
+  {pt:'comer',en:'to eat',type:'-ER regular',tip:'Model for regular -ER verbs. Past: comi (I ate). O que você comeu? = What did you eat? Very common question!',
    present:{forms:[{p:'eu',f:'como'},{p:'você/ele/ela',f:'come'},{p:'nós/a gente',f:'comemos'},{p:'vocês/eles',f:'comem'},{p:'tu',f:'comes'},{p:'nós (alt)',f:'comemos'}],note:'Regular -ER: remove -er, add -o, -e, -e, -emos, -em.'},
    past:{forms:[{p:'eu',f:'comi'},{p:'você/ele/ela',f:'comeu'},{p:'nós/a gente',f:'comemos'},{p:'vocês/eles',f:'comeram'},{p:'tu',f:'comeste'},{p:'nós (alt)',f:'comemos'}],note:'Regular -ER past: -i, -eu, -eu, -emos, -eram. "Comi" = I ate.'},
    future:{forms:[{p:'eu',f:'comerei'},{p:'você/ele/ela',f:'comerá'},{p:'nós/a gente',f:'comeremos'},{p:'vocês/eles',f:'comerão'},{p:'tu',f:'comerás'},{p:'nós (alt)',f:'comeremos'}],note:'Future: comer + -ei, -á, -á, -emos, -ão.'},
    examples:[{pt:'O que você comeu no jantar?',en:'What did you eat for dinner?'},{pt:'Vou comer feijoada amanhã.',en:"I'll eat feijoada tomorrow."}]},
-  {pt:'saber',en:'to know',type:'irregular',tip:'Past: "soube" (I knew/found out). "Soube da notícia" = I found out the news. Different from "conhecer" (to know people/places).',
+  {pt:'saber',en:'to know',type:'irregular',tip:'Past: soube (I knew/found out). Soube da notícia = I found out the news. Different from conhecer (to know people/places).',
    present:{forms:[{p:'eu',f:'sei'},{p:'você/ele/ela',f:'sabe'},{p:'nós/a gente',f:'sabemos'},{p:'vocês/eles',f:'sabem'},{p:'tu',f:'sabes'},{p:'nós (alt)',f:'sabemos'}],note:'"Saber" = know facts. "Sei nadar" = I know how to swim.'},
    past:{forms:[{p:'eu',f:'soube'},{p:'você/ele/ela',f:'soube'},{p:'nós/a gente',f:'soubemos'},{p:'vocês/eles',f:'souberam'},{p:'tu',f:'soubeste'},{p:'nós (alt)',f:'soubemos'}],note:'Irregular past: "soube" = I knew/found out.'},
    future:{forms:[{p:'eu',f:'saberei'},{p:'você/ele/ela',f:'saberá'},{p:'nós/a gente',f:'saberemos'},{p:'vocês/eles',f:'saberão'},{p:'tu',f:'saberás'},{p:'nós (alt)',f:'saberemos'}],note:'Future: saber + endings.'},
    examples:[{pt:'Soube da notícia ontem.',en:'I found out the news yesterday.'},{pt:'Vou saber a resposta amanhã.',en:"I'll know the answer tomorrow."}]},
-  {pt:'gostar',en:'to like',type:'-AR regular (+ de)',tip:'Past: "gostei" (I liked). "Gostei muito do jantar!" = I really liked the dinner! Always remember "de" after "gostar".',
+  {pt:'gostar',en:'to like',type:'-AR regular (+ de)',tip:'Past: gostei (I liked). Gostei muito do jantar! = I really liked the dinner! Always remember de after gostar.',
    present:{forms:[{p:'eu',f:'gosto'},{p:'você/ele/ela',f:'gosta'},{p:'nós/a gente',f:'gostamos'},{p:'vocês/eles',f:'gostam'},{p:'tu',f:'gostas'},{p:'nós (alt)',f:'gostamos'}],note:'"Gostar de" = to like. ALWAYS needs "de": "gosto de café".'},
    past:{forms:[{p:'eu',f:'gostei'},{p:'você/ele/ela',f:'gostou'},{p:'nós/a gente',f:'gostamos'},{p:'vocês/eles',f:'gostaram'},{p:'tu',f:'gostaste'},{p:'nós (alt)',f:'gostamos'}],note:'Regular -AR past: "gostei" = I liked. "Gostou?" = Did you like it?'},
    future:{forms:[{p:'eu',f:'gostarei'},{p:'você/ele/ela',f:'gostará'},{p:'nós/a gente',f:'gostaremos'},{p:'vocês/eles',f:'gostarão'},{p:'tu',f:'gostarás'},{p:'nós (alt)',f:'gostaremos'}],note:'Future: gostar + endings. "Vou gostar" is more common in speech.'},
    examples:[{pt:'Gostei muito do jantar!',en:'I really liked the dinner!'},{pt:'Vai gostar do Brasil.',en:'You will like Brazil.'}]},
-  {pt:'precisar',en:'to need',type:'-AR regular (+ de)',tip:'Past: "precisei" (I needed). Regular -AR verb. Always followed by "de".',
+  {pt:'precisar',en:'to need',type:'-AR regular (+ de)',tip:'Past: precisei (I needed). Regular -AR verb. Always followed by de.',
    present:{forms:[{p:'eu',f:'preciso'},{p:'você/ele/ela',f:'precisa'},{p:'nós/a gente',f:'precisamos'},{p:'vocês/eles',f:'precisam'},{p:'tu',f:'precisas'},{p:'nós (alt)',f:'precisamos'}],note:'"Precisar de" = to need. Always needs "de": "preciso de água".'},
    past:{forms:[{p:'eu',f:'precisei'},{p:'você/ele/ela',f:'precisou'},{p:'nós/a gente',f:'precisamos'},{p:'vocês/eles',f:'precisaram'},{p:'tu',f:'precisaste'},{p:'nós (alt)',f:'precisamos'}],note:'Regular -AR past: "precisei" = I needed.'},
    future:{forms:[{p:'eu',f:'precisarei'},{p:'você/ele/ela',f:'precisará'},{p:'nós/a gente',f:'precisaremos'},{p:'vocês/eles',f:'precisarão'},{p:'tu',f:'precisarás'},{p:'nós (alt)',f:'precisaremos'}],note:'Future: precisar + endings.'},
@@ -1228,28 +1228,87 @@ function selectVerb(i){
   renderVerbCard();checkAchievements();
 }
 function renderVerbCard(){
-  const v=verbs[currentVerbIndex];
-  const tenseHtml=(tenseKey)=>{
-    const t=v[tenseKey];
-    const conjRows=t.forms.map(f=>'<div class="conj-cell"><span class="conj-pronoun">'+f.p+'</span><span class="conj-form">'+f.f+'</span><button class="conj-audio" onclick="speakConj(''+f.f.replace(/'/g,"\'")+'')" title="Listen">🔊</button></div>').join('');
-    return '<div class="tense-panel" id="tense-'+tenseKey+'" style="display:none;"><div class="conj-grid">'+conjRows+'</div><div class="tense-note">'+t.note+'</div></div>';
-  };
-  const examples=v.examples.map(e=>'<div class="verb-example"><div class="verb-example-pt">'+e.pt+'</div><div class="verb-example-en">'+e.en+'</div></div>').join('');
-  document.getElementById('verbDisplay').innerHTML=
-    '<div class="verb-card">'+
-    '<div class="verb-header"><div><span class="verb-title">'+v.pt+'</span>&nbsp;<span class="verb-meaning">'+v.en+'</span></div><span class="verb-type">'+v.type+'</span></div>'+
-    '<div class="verb-tip">💡 '+v.tip+'</div>'+
-    '<div class="tense-tabs">'+
-    '<button class="tense-tab active" onclick="showTense('present',this)">Present<span class="tense-label">eu falo</span></button>'+
-    '<button class="tense-tab" onclick="showTense('past',this)">Past<span class="tense-label">eu falei</span></button>'+
-    '<button class="tense-tab" onclick="showTense('future',this)">Future<span class="tense-label">eu falarei</span></button>'+
-    '</div>'+
-    tenseHtml('present')+tenseHtml('past')+tenseHtml('future')+
-    examples+'</div>'+
-    '<div style="display:flex;gap:0.5rem;justify-content:center;margin-top:0.5rem;">'+
-    '<button class="btn btn-outline" onclick="selectVerb('+((currentVerbIndex-1+verbs.length)%verbs.length)+')">← Anterior</button>'+
-    '<button class="btn btn-primary" onclick="selectVerb('+((currentVerbIndex+1)%verbs.length)+')">Próximo →</button></div>';
-  showTense('present',document.querySelector('.tense-tab'));
+  var v=verbs[currentVerbIndex];
+  var prevIdx=(currentVerbIndex-1+verbs.length)%verbs.length;
+  var nextIdx=(currentVerbIndex+1)%verbs.length;
+  var container=document.getElementById('verbDisplay');
+  container.innerHTML='';
+  var card=document.createElement('div');
+  card.className='verb-card';
+  card.innerHTML='<div class="verb-header"><div><span class="verb-title">'+v.pt+'</span>&nbsp;<span class="verb-meaning">'+v.en+'</span></div><span class="verb-type">'+v.type+'</span></div><div class="verb-tip">&#x1F4A1; '+v.tip+'</div>';
+  var tenseTabsDiv=document.createElement('div');
+  tenseTabsDiv.className='tense-tabs';
+  var tenseNames=['present','past','future'];
+  var tenseLabels=['Present','Past','Future'];
+  var tenseSubs=['eu falo','passado','eu falarei'];
+  for(var ti=0;ti<3;ti++){
+    (function(tKey,tLabel,tSub,isActive){
+      var btn=document.createElement('button');
+      btn.className='tense-tab'+(isActive?' active':'');
+      btn.innerHTML=tLabel+'<span class="tense-label">'+tSub+'</span>';
+      btn.addEventListener('click',function(){showTense(tKey,btn);});
+      tenseTabsDiv.appendChild(btn);
+    })(tenseNames[ti],tenseLabels[ti],tenseSubs[ti],ti===0);
+  }
+  card.appendChild(tenseTabsDiv);
+  for(var pi=0;pi<3;pi++){
+    var t=v[tenseNames[pi]];
+    var panel=document.createElement('div');
+    panel.className='tense-panel';
+    panel.id='tense-'+tenseNames[pi];
+    panel.style.display='none';
+    var grid=document.createElement('div');
+    grid.className='conj-grid';
+    for(var fi=0;fi<t.forms.length;fi++){
+      var f=t.forms[fi];
+      var cell=document.createElement('div');
+      cell.className='conj-cell';
+      var pronoun=document.createElement('span');
+      pronoun.className='conj-pronoun';
+      pronoun.textContent=f.p;
+      var form=document.createElement('span');
+      form.className='conj-form';
+      form.textContent=f.f;
+      var audioBtn=document.createElement('button');
+      audioBtn.className='conj-audio';
+      audioBtn.textContent='\uD83D\uDD0A';
+      audioBtn.title='Listen';
+      (function(formText){
+        audioBtn.addEventListener('click',function(){speakConj(formText);});
+      })(f.f);
+      cell.appendChild(pronoun);
+      cell.appendChild(form);
+      cell.appendChild(audioBtn);
+      grid.appendChild(cell);
+    }
+    var note=document.createElement('div');
+    note.className='tense-note';
+    note.textContent=t.note;
+    panel.appendChild(grid);
+    panel.appendChild(note);
+    card.appendChild(panel);
+  }
+  for(var ei=0;ei<v.examples.length;ei++){
+    var ex=document.createElement('div');
+    ex.className='verb-example';
+    ex.innerHTML='<div class="verb-example-pt">'+v.examples[ei].pt+'</div><div class="verb-example-en">'+v.examples[ei].en+'</div>';
+    card.appendChild(ex);
+  }
+  container.appendChild(card);
+  var nav=document.createElement('div');
+  nav.style.cssText='display:flex;gap:0.5rem;justify-content:center;margin-top:0.5rem;';
+  var prevBtn=document.createElement('button');
+  prevBtn.className='btn btn-outline';
+  prevBtn.textContent='\u2190 Anterior';
+  prevBtn.addEventListener('click',function(){selectVerb(prevIdx);});
+  var nextBtn=document.createElement('button');
+  nextBtn.className='btn btn-primary';
+  nextBtn.textContent='Pr\u00f3ximo \u2192';
+  nextBtn.addEventListener('click',function(){selectVerb(nextIdx);});
+  nav.appendChild(prevBtn);
+  nav.appendChild(nextBtn);
+  container.appendChild(nav);
+  showTense('present',tenseTabsDiv.querySelector('.tense-tab'));
 }
 function showTense(tense,btn){
   tensesViewed.add(tense);
@@ -1258,11 +1317,35 @@ function showTense(tense,btn){
   const el=document.getElementById('tense-'+tense);if(el)el.style.display='block';
   if(btn)btn.classList.add('active');checkAchievements();
 }
-function speakConj(form){const u=new SpeechSynthesisUtterance(form);u.lang='pt-BR';u.rate=0.85;speechSynthesis.speak(u);}
+function speakConj(form){var u=new SpeechSynthesisUtterance(form);u.lang='pt-BR';u.rate=0.85;speechSynthesis.speak(u);}
+function speakConjSafe(btn){var form=btn.getAttribute('data-conj');if(form)speakConj(form);}
 
 function renderSentences(){
-  const filtered=currentSentenceFilter==='all'?sentences:sentences.filter(s=>s.cat===currentSentenceFilter);
-  document.getElementById('sentencesGrid').innerHTML=filtered.map(s=>'<div class="sentence-card"><div class="sentence-icon">'+s.icon+'</div><div class="sentence-content"><div class="sentence-situation">'+s.cat+'</div><div class="sentence-pt">'+s.pt+'</div><div class="sentence-en">'+s.en+'</div></div><button class="sentence-audio" onclick="speakSentence(''+s.pt.replace(/'/g,"\'")+'')">🔊</button></div>').join('');
+  var currentFilter=currentSentenceFilter;
+  var filtered=currentFilter==='all'?sentences:sentences.filter(function(s){return s.cat===currentFilter;});
+  var grid=document.getElementById('sentencesGrid');
+  grid.innerHTML='';
+  for(var i=0;i<filtered.length;i++){
+    var s=filtered[i];
+    var card=document.createElement('div');
+    card.className='sentence-card';
+    var icon=document.createElement('div');
+    icon.className='sentence-icon';
+    icon.textContent=s.icon;
+    var body=document.createElement('div');
+    body.className='sentence-content';
+    body.innerHTML='<div class="sentence-situation">'+s.cat+'</div><div class="sentence-pt">'+s.pt+'</div><div class="sentence-en">'+s.en+'</div>';
+    var audioBtn=document.createElement('button');
+    audioBtn.className='sentence-audio';
+    audioBtn.textContent='\uD83D\uDD0A';
+    (function(text){
+      audioBtn.addEventListener('click',function(){speakSentence(text);});
+    })(s.pt);
+    card.appendChild(icon);
+    card.appendChild(body);
+    card.appendChild(audioBtn);
+    grid.appendChild(card);
+  }
 }
 function filterSentences(cat,el){
   currentSentenceFilter=cat;
@@ -1277,15 +1360,24 @@ function loadQuizQuestion(){
   document.getElementById('quizFeedback').className='quiz-feedback';
   document.getElementById('nextQuizBtn').style.display='none';
   quizCard=words[Math.floor(Math.random()*words.length)];
-  const ptToEn=Math.random()>0.4;
+  var ptToEn=Math.random()>0.4;
   document.getElementById('quizLabel').textContent=ptToEn?'What does this mean in English?':'How do you say this in Portuguese?';
   document.getElementById('quizWord').textContent=ptToEn?quizCard.pt:quizCard.en;
   document.getElementById('quizType').textContent=ptToEn?quizCard.ipa:quizCard.cat;
-  const wrong=words.filter(w=>w.pt!==quizCard.pt).sort(()=>Math.random()-0.5).slice(0,3);
-  document.getElementById('quizOptions').innerHTML=[quizCard,...wrong].sort(()=>Math.random()-0.5).map(opt=>{
-    const label=ptToEn?opt.en:opt.pt;const isCorrect=opt.pt===quizCard.pt;
-    return '<button class="quiz-option" onclick="checkAnswer(this,'+isCorrect+',''+quizCard.pt.replace(/'/g,"\'")+'')">'+ label+'</button>';
-  }).join('');
+  var wrong=words.filter(function(w){return w.pt!==quizCard.pt;}).sort(function(){return Math.random()-0.5;}).slice(0,3);
+  var options=[quizCard].concat(wrong).sort(function(){return Math.random()-0.5;});
+  var container=document.getElementById('quizOptions');
+  container.innerHTML='';
+  for(var i=0;i<options.length;i++){
+    var opt=options[i];
+    var btn=document.createElement('button');
+    btn.className='quiz-option';
+    btn.textContent=ptToEn?opt.en:opt.pt;
+    (function(isCorrect,wordPt){
+      btn.addEventListener('click',function(){checkAnswer(btn,isCorrect,wordPt);});
+    })(opt.pt===quizCard.pt, opt.pt);
+    container.appendChild(btn);
+  }
 }
 function checkAnswer(btn,correct,wordPt){
   if(quizAnswered)return;quizAnswered=true;
@@ -1428,7 +1520,7 @@ let dailyCandidates=[];
 
 function getDailyCandidates(){
   const due=words.filter(w=>isDue(srs[w.pt])&&mastery[w.pt]>0)
-    .sort((a,b)=>(srs[a.pt]?.nextReview||'')-(srs[b.pt]?.nextReview||''));
+    .sort((a,b)=>((srs[a.pt]&&srs[a.pt].nextReview)||'')-((srs[b.pt]&&srs[b.pt].nextReview)||''));
   const unseen=words.filter(w=>mastery[w.pt]===0).sort(()=>Math.random()-0.5);
   const weak=words.filter(w=>mastery[w.pt]===1&&!isDue(srs[w.pt])).sort(()=>Math.random()-0.5);
   const seen=new Set();const result=[];
@@ -1478,7 +1570,7 @@ function showNextCandidate(){
   document.getElementById('dailySelIpa').textContent=card.ipa;
   document.getElementById('dailySelExample').textContent=card.ex;
   document.getElementById('dailySelExampleEn').textContent=card.exEn;
-  const hint=mastery[card.pt]===0?'Palavra nova':'Última revisão: '+formatNextReview(srs[card.pt]?.nextReview);
+  const hint=mastery[card.pt]===0?'Palavra nova':'Última revisão: '+formatNextReview((srs[card.pt]&&srs[card.pt].nextReview));
   document.getElementById('dailySelHint').textContent=hint;
   document.getElementById('dailySubtitle').textContent=
     dailyWords.length+' de 10 escolhidas · '+dailyKnownCount+' puladas';
