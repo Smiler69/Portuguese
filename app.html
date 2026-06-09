@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fala Português — Learn Brazilian Portuguese v7</title>
+<title>Fala Português — Linguavita</title>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root{--cream:#F4F1EA;--ivory:#FDFBF6;--green:#1A4731;--green-mid:#2D6A4F;--gold:#D4A017;--gold-light:#EDD98A;--blue:#1B3A6B;--teal:#3A7D6E;--text:#1E1A10;--text-light:#5C5440;--border:rgba(212,160,23,0.28);}
@@ -245,10 +245,10 @@
   <button class="popup-close" onclick="closePopup()">Incrível !</button>
 </div>
 <header>
-  <div class="header-ornament">✦ &nbsp; Uma bela aventura &nbsp; ✦</div>
+  <div class="header-ornament">✦ &nbsp; Language for Life &nbsp; ✦</div>
   <h1>Fala <em>Português</em> ?</h1>
-  <p class="subtitle">An elegant journey into Brazilian Portuguese</p>
-  <div class="save-indicator" id="saveIndicator">✓ Progresso salvo</div>
+  <p class="subtitle">Linguavita — Language for Life</p>
+  <div class="save-indicator" id="saveIndicator">✓ Progresso salvo — Linguavita</div>
 </header>
 <div class="progress-section">
   <div class="progress-label"><span>Vocabulary Mastered</span><span id="progressPct">0%</span></div>
@@ -1369,14 +1369,15 @@ function loadQuizQuestion(){
   var container=document.getElementById('quizOptions');
   container.innerHTML='';
   for(var i=0;i<options.length;i++){
-    var opt=options[i];
-    var btn=document.createElement('button');
-    btn.className='quiz-option';
-    btn.textContent=ptToEn?opt.en:opt.pt;
-    (function(isCorrect,wordPt){
+    (function(opt){
+      var btn=document.createElement('button');
+      btn.className='quiz-option';
+      btn.textContent=ptToEn?opt.en:opt.pt;
+      var isCorrect=opt.pt===quizCard.pt;
+      var wordPt=opt.pt;
       btn.addEventListener('click',function(){checkAnswer(btn,isCorrect,wordPt);});
-    })(opt.pt===quizCard.pt, opt.pt);
-    container.appendChild(btn);
+      container.appendChild(btn);
+    })(options[i]);
   }
 }
 function checkAnswer(btn,correct,wordPt){
@@ -1460,26 +1461,56 @@ function filterSentCards(){
 }
 
 function makeBlankedSentence(sentence, word){
-  const escaped=word.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-  const rx=new RegExp('\\b'+escaped+'\\b','i');
-  const blank='<span class="sentcard-blank">'+' '.repeat(Math.max(6,word.length+2))+'</span>';
-  if(rx.test(sentence)){return sentence.replace(rx,blank);}
-  const parts=sentence.trim().split(' ');
-  parts[parts.length-1]='<span class="sentcard-blank">'+' '.repeat(8)+'</span>';
-  return parts.join(' ');
+  var blank='<span class="sentcard-blank">'+'&nbsp;'.repeat(Math.max(6,word.length+2))+'</span>';
+  // Try word boundary match first
+  var escaped=word.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  var rx=new RegExp('(^|[\\s,;:!?])('+escaped+')([\\s,;:!?]|$)','i');
+  var result=sentence;
+  var matched=false;
+  if(rx.test(sentence)){
+    result=sentence.replace(rx,function(m,pre,w,post){return pre+blank+post;});
+    matched=true;
+  }
+  // Check result has enough visible context (at least 2 other words)
+  var visibleText=result.replace(/<[^>]+>/g,'').trim();
+  var visibleWords=visibleText.split(/\s+/).filter(function(w){return w.length>0;});
+  if(matched && visibleWords.length>=2){
+    return {html:result, hasContext:true};
+  }
+  // Fallback: try blanking any occurrence without word boundaries
+  var rx2=new RegExp('('+escaped+')','i');
+  if(rx2.test(sentence)){
+    var result2=sentence.replace(rx2,blank);
+    var visible2=result2.replace(/<[^>]+>/g,'').trim();
+    var words2=visible2.split(/\s+/).filter(function(w){return w.length>0;});
+    if(words2.length>=2){
+      return {html:result2, hasContext:true};
+    }
+  }
+  // Not enough context — return sentence without blanking, flag it
+  return {html:sentence, hasContext:false};
 }
 
 function renderSentCard(){
   if(sentCardWords.length===0)return;
-  const card=sentCardWords[sentCardIndex];
+  var card=sentCardWords[sentCardIndex];
   document.getElementById('sentFlashcard').classList.remove('flipped');
   document.getElementById('sentFcCategory').textContent=card.cat;
   document.getElementById('sentFcCategoryBack').textContent=card.cat;
-  document.getElementById('sentFcSentence').innerHTML=makeBlankedSentence(card.ex,card.pt);
+  var blanked=makeBlankedSentence(card.ex, card.pt);
+  var frontSentEl=document.getElementById('sentFcSentence');
+  var promptEl=document.querySelector('.sentcard-prompt');
+  if(blanked.hasContext){
+    frontSentEl.innerHTML=blanked.html;
+    promptEl.textContent='Qual é a palavra que falta?';
+  } else {
+    frontSentEl.innerHTML='<span style="color:var(--text-light);font-style:italic;font-size:1rem;">'+card.exEn+'</span><br><br>'+card.ex;
+    promptEl.textContent='Como você diz a palavra em destaque em português?';
+  }
   document.getElementById('sentFcWord').textContent=card.pt;
   document.getElementById('sentFcSentenceFull').textContent=card.ex;
   document.getElementById('sentFcTranslation').textContent=card.exEn;
-  const tipEl=document.getElementById('sentFcTip');
+  var tipEl=document.getElementById('sentFcTip');
   if(card.tip){tipEl.style.display='block';document.getElementById('sentFcTipText').textContent=card.tip;}
   else{tipEl.style.display='none';}
   document.getElementById('sentCardCounter').textContent='Card '+(sentCardIndex+1)+' de '+sentCardWords.length;
@@ -1710,5 +1741,11 @@ function showBackupMsg(msg,colour){
 }
 renderCard();renderSentences();loadQuizQuestion();updateStats();updateStreakUI();
 </script>
+<div style="text-align:center;padding:1.5rem;border-top:1px solid rgba(201,168,76,0.2);margin-top:2rem;">
+  <p style="font-family:serif;font-style:italic;font-size:0.75rem;color:#888;letter-spacing:0.1em;">
+    Linguavita — Language for Life &nbsp;·&nbsp; 
+    <a href="mailto:contactus@linguavita.app" style="color:inherit;text-decoration:none;">contactus@linguavita.app</a>
+  </p>
+</div>
 </body>
 </html>
